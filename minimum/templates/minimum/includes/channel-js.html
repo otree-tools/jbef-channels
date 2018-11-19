@@ -1,0 +1,44 @@
+<script>
+    $(function () {
+        {# The following lines define the path to oTree server       #}
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        {#  the ws_path corresponds to url_pattern that is defined in our consumers.py file. we need player.id #}
+        {# to find the corresponding player in the database #}
+        var ws_path = ws_scheme + '://' + window.location.host + "/tasktracker/{{ player.id }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+
+        {# several variables to get information from inputs and manage button clicks  #}
+        var $answer = $('input#answer');
+        var $btn_answer = $("button.answer");
+        {#  The following event happens when we receive data from server       #}
+        socket.onmessage = function (event) {
+            {#  We convert the data to javascript object:  #}
+            var obj = jQuery.parseJSON(event.data);
+            {# we show a new task            #}
+            $('h1.question').html(obj.task_body);
+            {# ...and we update counters of correct and total answers #}
+            $('span#num_tasks_total').html(obj.num_tasks_total);
+            $('span#num_tasks_correct').html(obj.num_tasks_correct);
+        };
+        {# The following is triggered when a user clicks on answer button #}
+        $btn_answer.on("click", function () {
+            {#  we wrap its answer to a javascript object #}
+            var msg = {'answer': $answer.val()};
+            if (socket.readyState === WebSocket.OPEN) {
+                {# we convert it to json format and send it back to server #}
+                socket.send(JSON.stringify(msg));
+            }
+            ;
+            {# ... and the last: we clear out the input field so a user can insert a new answer for the next task #}
+            $("input#answer").val('');
+        });
+        {# the following code is needed to prevent the form from submittion if a person hits enter button #}
+        $answer.keydown(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $btn_answer.click();
+                return false;
+            }
+        });
+    });
+</script>

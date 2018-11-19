@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Counting task
+{% endblock %}
+
+{% block content %}
+    <div>What is the difference between 100 and the number below?</div>
+    {#  in the following heading we show the task body (integer to substract from 100  #}
+    <h1 class="question">{{ player.task_body }}</h1>
+    <div class="form-row align-items-center">
+        {# The following input is where the answer should be inserted   #}
+        <input type="number" id="answer" class="form-control">
+        {#  button that sends answers back to server #}
+        <button class="answer btn btn-success" type="button">Answer</button>
+    </div>
+    {# The following two spans show n. total and  correct tasks  #}
+    <p> Tasks attempted so far: <span id="num_tasks_total">{{ player.num_tasks_total }}</span></p>
+    <p> Tasks correct so far: <span id="num_tasks_correct"> {{ player.num_tasks_correct }}</span></p>
+{% endblock %}
+{% block scripts %}
+    {#  Here we include javascript block where we connect via websockets to oTree server  #}
+    {% include 'minimum/includes/channel-js.html' %}
+{% endblock %}
+
+
