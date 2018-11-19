@@ -1,0 +1,85 @@
+<script>
+    var statement_type = '{{ player.action_name }}';
+    var l = function (x) {
+        console.log(x);
+    };
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/market_channel/{{ player.id }}/{{ group.pk }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+
+
+        var $asks_container = $('tbody.asks_container');
+        var $bids_container = $('tbody.bids_container');
+        var $spread_container = $('tbody.spread_container');
+        var $repo_container = $('tbody.repo_container');
+        var $contracts_container = $('tbody.contracts_container');
+        var $form_container = $('div.form_container');
+        var $profit_container = $('tbody.profit_container');
+        var $market_over_modal = $('div.market_over_modal');
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            $asks_container.html(obj.asks);
+            $bids_container.html(obj.bids);
+            $spread_container.html(obj.spread);
+            $repo_container.html(obj.repo);
+            $contracts_container.html(obj.contracts);
+            $profit_container.html(obj.profit);
+            $form_container.html(obj.form);
+            var has_over_message = obj.hasOwnProperty('presence');
+            if (has_over_message) {
+                l(obj.presence);
+                if (obj.presence.market_over === true) {
+                    $market_over_modal.find('.modal-message').html(obj.presence.over_message);
+                    $market_over_modal.modal({backdrop: 'static', keyboard: false}, 'show');
+                    socket.close();
+                }
+            }
+            var has_last_statement = obj.hasOwnProperty('last_statement');
+
+
+            if (has_last_statement) {
+                var last_statement = obj.last_statement;
+                $('#last_statement_price').html(last_statement.price);
+                $('#last_statement_quantity').html(last_statement.quantity);
+            } else {
+                $('#last_statement_price').html('');
+                $('#last_statement_quantity').html('');
+            }
+
+        };
+        $form_container.on('click', 'button#submit_statement', function () {
+            var $price_inp = $('input#price');
+            var $quantity_inp = $('input#quantity_id');
+            var price = $price_inp.val();
+            {#            todo: something more sophisticated to deal with erroneous prices#}
+            if (price > 0) {
+                var msg = {
+                    'action': 'new_statement',
+                    'type': statement_type,
+                    'price': $price_inp.val(),
+                    'quantity': $quantity_inp.val(),
+                };
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(msg));
+                }
+                ;
+                $price_inp.val('');
+            }
+        });
+        $form_container.on('click', 'button#retract_statement', function () {
+
+            var msg = {
+                'action': 'retract_statement',
+
+            };
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(msg));
+            }
+            ;
+        });
+
+
+    })
+    ;
+</script>

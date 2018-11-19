@@ -1,0 +1,8 @@
+{% for c in contracts %}
+    <tr>
+        <td class="filterable-cell">{{ c.cost_value }}</td>
+        <td class="filterable-cell">{{ c.price }}</td>
+        <td class="filterable-cell">{{ c.item.quantity }}</td>
+        <td class="filterable-cell">{{ c.profit }}</td>
+    </tr>
+{% endfor %}

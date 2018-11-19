@@ -1,0 +1,39 @@
+{% extends 'double_auction/includes/base_block.html' %}
+{% block title %}Bid-ask spread:{% endblock %}
+{% block content %}
+    <table class="table table-sm bitaskspread">
+        <thead>
+        <th></th>
+        <th>Price</th>
+        <th>Quantity</th>
+        </thead>
+        <tbody class="spread_container">
+        {% include 'double_auction/includes/spread_to_render.html' %}
+        </tbody>
+    </table>
+
+
+    <table class="table-stripped table table-sm table-bordered  ">
+        <tr>
+            <td>Your role:</td>
+            <td>{{ player.role|capfirst }}</td>
+        </tr>
+        <tr>
+            <td>Period:</td>
+            <td>{{ view.round_number }} of {{ Constants.num_rounds }}</td>
+        </tr>
+        <tr>
+            <td>Time remaining:</td>
+            <td><span class="otree-timer__time-left"></span></td>
+        </tr>
+        <tr>
+            <td>Total period profit:</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Session earnings:</td>
+            <td>1</td>
+        </tr>
+    </table>
+
+{% endblock %}

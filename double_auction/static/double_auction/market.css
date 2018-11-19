@@ -1,0 +1,54 @@
+
+.bitaskspread td, .bitaskspread th {
+    text-align: center;
+}
+
+.toprow {
+    min-height:40vh;
+}
+.bottomrow{
+    min-height:30vh;
+}
+
+.header-fixed {
+    width: 100%
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+    display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: 200px;
+}
+
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+
+    float: left;
+    line-height: 0.3em;
+}
+
+.tablecol-4 > tbody > tr > td,
+.tablecol-4 > thead > tr > th {
+    width: 25%;
+}
+
+.tablecol-2 > tbody > tr > td,
+.tablecol-2 > thead > tr > th {
+    width: 50%;
+}

@@ -1,0 +1,101 @@
+{% extends "global/PageExt.html" %}
+{% load otree static humanize %}
+{# TODO: delete this file later #}
+{% block title %}
+    Firm-Worker Revenue
+{% endblock %}
+
+{% block inner_content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th colspan="2" class="text-center">Worker-contribution</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {#        TODO: redo this later!!! #}
+
+        {% if player.role == 'firm' %}
+            <tr>
+                <td>Worker's contribution to worker-firm revenue:</td>
+                <td>{{ group.worker.contribution }}</td>
+            </tr>
+            <thead>
+            <tr>
+                <th colspan="2" class="text-center">Firm-contribution</th>
+            </tr>
+            </thead>
+            <tr>
+                <td>Your performance in the {{ subsession.get_task_type_display }}:</td>
+                <td>{{ player.ret_performance }}</td>
+            </tr>
+
+
+            <tr>
+                <td>Your rank relative to other firm:</td>
+                <td>{{ player.ret_rank }}</td>
+            </tr>
+            <tr>
+                <td>Your contribution to worker-firm revenue:</td>
+                <td>{{ player.contribution }}</td>
+            </tr>
+            <tr>
+
+            </tbody>
+
+        {% else %}
+            <tbody>
+            <tr>
+                <td>Your performance in the {{ subsession.get_task_type_display }}:</td>
+                <td>{{ player.ret_performance }}</td>
+            </tr>
+
+            <tr>
+                <td>Your rank relative to two other workers:</td>
+                <td>{{ player.ret_rank }}</td>
+            </tr>
+            <tr>
+                <td>Your contribution to worker-firm revenue:</td>
+                <td>{{ group.worker.contribution }}</td>
+            </tr>
+
+            </tbody>
+            <thead>
+            <tr>
+                <th colspan="2" class="text-center">Firm-contribution</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Firm contribution to worker-firm revenue:</td>
+                <td>{{ group.firm.contribution }}</td>
+            </tr>
+
+            </tbody>
+        {% endif %}
+        <td colspan="2" class="text-center">
+            You will know the {{ player.get_another.role }}-contribution and the {{ player.get_another.role }} will know
+            the {{ player.role }}-contribution.
+        </td>
+        <thead>
+        <tr class="table-primary">
+            <th>Revenue:</th>
+            <th>{{ group.revenue }}</th>
+        </tr>
+        </thead>
+
+    </table>
+
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

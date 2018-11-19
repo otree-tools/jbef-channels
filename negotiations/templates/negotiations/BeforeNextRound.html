@@ -1,0 +1,43 @@
+{% extends "global/PageExt.html" %}
+{% load otree static %}
+{% block title %}
+
+{% endblock %}
+
+{% block inner_content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="my-3">
+                You have completed {{ subsession.block_round_number }} of the {{ curblock_len }}
+                round{{ curblock_len|pluralize }} in
+                Block {{ subsession.block_name }}.
+            </div>
+
+            {% if subsession.end_of_block_A_round %}
+                <div class="my-3">
+                    Next, you will begin a NEW BLOCK called Block B.
+                </div>
+            {% else %}
+                <div class="my-3">
+                    Next, you will complete another round in Block {{ subsession.block_name }}.
+                </div>
+            {% endif %}
+            <div class="my-3">
+                Recall that worker-firm pairs are randomly generated at the beginning of each round. Thus you are
+                unlikely to be paired with the same person in the next round.
+            </div>
+        </div>
+    </div>
+    <div class="my-3">
+        {% next_button %}
+    </div>
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

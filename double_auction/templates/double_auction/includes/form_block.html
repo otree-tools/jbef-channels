@@ -1,0 +1,36 @@
+{% extends 'double_auction/includes/base_block.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+
+    <table class="table table-sm table-stripped">
+        <thead>
+        <th></th>
+        <th>Price</th>
+        <th>Quantity</th>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Your lask {{ player.action_name }}:</th>
+            <td id="last_statement_price">{% if player.get_last_statement %}
+                {{ player.get_last_statement.price }}{% endif %}</td>
+            <td id="last_statement_quantity">{% if player.get_last_statement %}
+                {{ player.get_last_statement.quantity }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+        <div class="form_container">
+            {% include 'double_auction/includes/form_to_render.html' %}
+        </div>
+
+    <table class="table table-sm bitaskspread">
+        <thead>
+        <th></th>
+        <th>Price</th>
+        <th>Quantity</th>
+        </thead>
+        <tbody class="spread_container">
+        {% include 'double_auction/includes/spread_to_render.html' %}
+        </tbody>
+    </table>
+{% endblock %}

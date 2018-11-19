@@ -1,0 +1,59 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-primary text-lg-center lead" role="alert">
+        Your Participant ID number is: <strong>{{ participant.code }}</strong>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div>This study will consist of two stages. Your bonus will depend on the actions and decisions of both you
+                and others in both stages of the study.
+            </div>
+
+            <div>You will be assigned a Participant ID number and then randomly paired with three other individuals.
+                Your identity will remain anonymous from all participants.
+            </div>
+
+            <div>Please write your ID number down now as you will need to present this to Lab Attendant to receive your
+                earnings for the study.
+            </div>
+
+            <div>On the next screen you will be randomly assigned 1 of 2 roles for the study. The two roles are
+                <span class="orange">“Orange
+                    Player”
+                </span>
+                and
+                <span class="blue">“Blue Player”</span>.
+            </div>
+
+            <div>You have a 1 out of 4 chance to be assigned the
+                <span class="orange">Orange Player</span>
+                role.
+            </div>
+            <div>You have a 3 out of 4 chance to be assigned the
+                <span class="blue">Blue Player</span>
+                role.
+            </div>
+
+            <div>Thus, of your random group of four study participants, 3 will be
+                <span class="blue">“Blue Player”</span>
+                participants and 1 will
+                be a
+                <span class="orange">“Orange Player”</span>
+                participant.
+            </div>
+
+        </div>
+    </div>
+
+    <div class="my-3">
+        {% next_button %}
+    </div>
+
+{% endblock %}

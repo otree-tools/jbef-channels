@@ -1,0 +1,78 @@
+{% extends "otree/BaseAdmin.html" %}
+{% load phil_otree_tags %}
+{% block title %}
+    Tasks data for the session
+{% endblock %}
+
+{% block content %}
+
+    {% if tasks %}
+
+        <table class="table table-hover table-striped table-bordered table-condensed tasktable">
+            <thead>
+            <th>Task id</th>
+            <th>Participant code</th>
+            <th>Role</th>
+            <th>Session code</th>
+            <th>Group code</th>
+            <th>Treatment</th>
+            <th>Digits</th>
+            <th>Letters</th>
+            <th>Question</th>
+            <th>Correct answer</th>
+            <th>Answer by player</th>
+            <th>Is answer correct?</th>
+            <th>Time created</th>
+            <th>Time of submission</th>
+            <th>Duration</th>
+            <th>Page</th>
+            </thead>
+            <tbody>
+            {% for t in tasks %}
+                <tr>
+                    <td>{{ t.pk }}</td>
+                    <td>{{ t.player.participant.code }}</td>
+                    <td>{{ t.player.role }}</td>
+                    <td>{{ t.player.session.code }}</td>
+                    <td>{{ t.player.group.code }}</td>
+                    <td>{{ t.player.group.treatment }}</td>
+                    <td>{{ t.get_digits }}</td>
+                    <td>{{ t.get_letters }}</td>
+                    <td>{{ t.get_question }}</td>
+                    <td>{{ t.get_correct_answer }}</td>
+                    <td>{{ t.answer }}</td>
+                    <td>{{ t.is_correct }}</td>
+                    <td>{{ t.created_at|date:'Y-m-d H:i:s:u' }}</td>
+                    <td>{{ t.updated_at |date:'Y-m-d H:i:s:u' }}</td>
+                    <td>{{ t.delta|format_datetime }}</td>
+                    <td>{{ t.page_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        No information about tasks
+    {% endif %}
+{% endblock %}
+
+{% block internal_styles %}
+    {{ block.super }}
+    <style>
+        .container {
+            margin-left: 0;
+        }
+
+        .tasktable {
+            overflow-x: scroll;
+        }
+    </style>
+{% endblock %}
+
+{% block internal_scripts %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            makeTableDraggable($('.tasktable'));
+        });
+    </script>
+{% endblock %}

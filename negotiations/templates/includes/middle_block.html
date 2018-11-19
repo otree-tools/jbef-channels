@@ -1,0 +1,26 @@
+<div class="row border-bottom  ">
+    <div class="col-12">
+        <h5 class="text-center mt-3">
+            Revenue = {{group.revenue}}
+        </h5>
+        <h5 class="text-center">
+            Suggested wage S = {{group.suggested_wage}}
+        </h5>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-6 text-center">
+        <h5>
+            Negotiate and don't agree:
+        </h5>
+        <div>Worker's wage = S - {{Constants.fine}}</div>
+        <div>Firm's profit = revenue - S - {{Constants.fine}}</div>
+    </div>
+    <div class="col-6 text-center">
+        <h5>
+            Negotiate and agree on W:
+        </h5>
+        <div>Worker's wage = W</div>
+        <div>Firm's profit = revenue - W</div>
+    </div>
+</div>

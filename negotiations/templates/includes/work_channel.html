@@ -1,0 +1,68 @@
+<script>
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/tasktracker/{{ player.id }}/{{ subsession.task_type }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            console.log(obj);
+            if (obj.task.task_type === 1) {
+                console.log(obj.task.body);
+                $("div.numbers.content").each(function (index) {
+                    $(this).html(obj.task.body[index]);
+                });
+            }
+            if (obj.task.task_type === 2) {
+                $('table#task2').empty();
+                $.each(obj.task.body, function (i, row) {
+                    cells = row.split('');
+                    var tr = $('<tr>');
+                    $.each(cells, function (j, cell) {
+                        $('<td>').html(cell).appendTo(tr);
+                    });
+                    $('table#task2').append(tr);
+                });
+            }
+            ;
+            $('span.num_correct').html(obj.num_correct);
+            $('span.num_incorrect').html(obj.num_incorrect);
+            {#            TODO: THe following for debug only!!#}
+            $('span.correct-answer').html(obj.task.correct_answer);
+        };
+        $("button.answer").on("click", function () {
+            $("form").validate({});
+            var $inp = $('input#answer');
+            if ($inp.valid()) {
+                var msg = $inp.val();
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(msg);
+                }
+                ;
+                $inp.val('');
+                $("input#answer").focus();
+            }
+            ;
+        });
+
+        $("input#answer").keydown(function (event) {
+
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("button.answer").click();
+
+                return false;
+            }
+        });
+        $("input#answer").on("focus", function () {
+            var tooltip_id = $(this).attr("aria-describedby");
+            $('#' + tooltip_id).empty();
+        });
+    });
+</script>
+
+<style>
+    table#task2 {
+        white-space: nowrap;
+        width: 1%;
+    }
+</style>

@@ -1,0 +1,178 @@
+{% extends "global/PageExt.html" %}
+{% load otree static phil_otree_tags %}
+
+{% block title %}
+    Negotiations
+{% endblock %}
+
+{% block inner_content %}
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="row border-bottom  ">
+                <div class="col-12">
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item">
+                            The negotiation ends when you agree on a worker’s wage or
+                            when {{ view.timeout_seconds|minutes }}
+                            is up.
+                        </li>
+                        <li class="list-group-item">
+                            The worker’s contribution is $20, $15 or $10 if they were ranked first, second or third. The
+                            firm’s
+                            contribution is $25
+                            or $20 if there were ranked first or second. The worker does not know the firm-contribution,
+                            but the
+                            firm
+                            knows the
+                            worker-contribution.
+                        </li>
+                </div>
+            </div>
+
+            {% include 'includes/middle_block.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h4>Chat:</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+
+            {% chat nickname=player.role %}
+        </div>
+        <div class="col-8">
+
+
+            <div>
+                I propose the following worker’s wage:
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control offer" aria-label="Amount (to the nearest dollar)" name="offer"
+                       data-trigger="focus" required min={{ lb }} max={{ ub }}>
+                <div class="input-group-append">
+                    <button class="btn btn-danger offer " type="button">Send offer</button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <h4>Firm's proposals {% if player.role == 'firm' %}
+                        <span class="text-danger">  <strong>(YOU)</strong></span>{% endif %}</h4>
+                    {% if player.role == 'worker' %}
+                        <button class="btn btn-primary btn-block accept accept-firm-offer">I accept this W</button>
+                    {% endif %}
+                    <table class="table  table-hover firm-offers">
+                        <tbody>
+                        {% for o in group.get_offers_by_firm %}
+                            <tr class="{% if forloop.counter == 1 %}table-success font-weight-bold{% else %}text-muted font-italic font-weight-light{% endif %}">
+                                <td>
+                                    {{ o.amount }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="col-6" id="main">
+                    <h4>Worker's proposals {% if player.role == 'worker' %}
+                        <span class="text-danger">  <strong>(YOU)</strong></span>{% endif %}</h4>
+                    {% if player.role == 'firm' %}
+                        <button class="btn btn-primary btn-block accept accept-worker-offer">I accept this W</button>
+                    {% endif %}
+                    <table class="table  table-hover worker-offers">
+                        <tbody>
+                        {% for o in group.get_offers_by_worker %}
+                            <tr class="{% if forloop.counter == 1 %}table-success font-weight-bold{% else %}text-muted font-italic font-weight-light{% endif %}">
+                                <td>
+                                    {{ o.amount }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+
+        #sticky-sidebar {
+            position: fixed;
+            max-width: 20%;
+        }
+
+        .otree-body {
+            max-width: 1970px
+        }
+
+        button.accept-worker-offer {
+
+            display: {% if group.get_offers_by_worker.exists %}block;{% else %} none;{% endif %}
+        }
+
+        button.accept-firm-offer {
+            display: {% if group.get_offers_by_firm.exists %}block;{% else %} none;{% endif %}
+        }
+
+        div.otree-chat {
+            margin-top: 0px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="{% static "negotiations/js/jquery.validate.js" %}"></script>
+    <script src="{% static "negotiations/js/jquery-validate.bootstrap-tooltip.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").validate({
+                rules: {
+                    offer: {
+                        required: true,
+                        number: true,
+                        min: {{lb}},
+                        max: {{ub}},
+                        digits: true
+                    }
+                },
+
+                tooltip_options: {
+                    offer: {
+                        placement: 'top',
+                        html: true
+                    }
+                },
+                onsubmit: false,
+                onfocusout: false,
+                onkeyup: false,
+            });
+        });
+
+    </script>
+    {% include 'includes/nego_channel.html' %}
+{% endblock %}

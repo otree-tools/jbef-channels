@@ -1,0 +1,45 @@
+{% extends "global/PageExt.html" %}
+{% load otree static phil_otree_tags %}
+
+{% block title %}
+    Task Instructions
+{% endblock %}
+
+{% block inner_content %}
+
+    <div class="card">
+        <div class="card-body">
+            {% if subsession.task_type == 1 %}
+                <h5 class="card-title">Addition task</h5>
+                For the next {{ Constants.ret_timeout_seconds|minutes }} minutes (or
+                {{ Constants.ret_timeout_seconds }} seconds), you will see
+                {{ Constants.num_digits }} boxes
+                containing two-digit numbers.
+                Your task is to add the numbers together. Your possible earnings in this study increase with the number
+                of addition questions you correctly solve.
+            {% endif %}
+            {% if subsession.task_type == 2 %}
+                <h5 class="card-title">Counting 0's task</h5>
+                For the next {{ Constants.ret_timeout_seconds|minutes }} minutes (or {{ Constants.ret_timeout_seconds }}
+                seconds), you will see a
+                number of tables
+                contains 0s and 1s. Your
+                task is to count the number of 0s that appear in each table. Your possible earnings in this study
+                increase
+                with the number tables for which you correctly count the 0s.
+            {% endif %}
+        </div>
+    </div>
+    <div class="my-3">
+        {% next_button %}
+    </div>
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

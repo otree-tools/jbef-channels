@@ -1,0 +1,23 @@
+{% load otree static %}
+
+    <div class="row border-bottom my-3 ">
+        <div class="col-4 ">
+            <h4>You are a {{ player.role }}.</h4>
+        </div>
+
+        <div class="col-4 text-center">
+            {% if player.contribution %}
+                <h4>
+                    Your {{ player.role }}-contribution is {{ player.contribution }}
+                </h4>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            <div class="text-right">
+                <h4>
+                    Block {{ subsession.block_name }}. Round {{ subsession.block_round_number }} out
+                    of {{ curblock_len }}
+                </h4>
+            </div>
+        </div>
+    </div>

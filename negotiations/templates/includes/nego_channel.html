@@ -1,0 +1,65 @@
+<script>
+    $(function () {
+        var role = '{{ player.role|safe }}';
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/offer_channel/{{ player.id }}/{{ group.pk }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            if (obj.accept) {
+                $('form').submit();
+            } else {
+                var $target_table = $('.' + obj.sender + '-offers > tbody');
+                var rows = $target_table.children('tr');
+                $.each(rows, function (i, l) {
+                    $(l).addClass('text-muted font-italic font-weight-light').removeClass('table-success font-weight-bold');
+                });
+                $target_table.prepend('<tr class="table-success font-weight-bold"><td>' + obj.amount + '</td></tr>');
+                if (obj.sender != role) {
+                    $('button.accept').show();
+                }
+                ;
+            }
+            ;
+        };
+
+
+        $("button.offer").on("click", function () {
+            $("form").validate({});
+            var $inp = $('input.offer');
+            if ($inp.valid()) {
+                var msg = {
+                    'type': 'offer',
+                    'amount': $inp.val()
+                };
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(msg));
+                }
+                ;
+                $inp.val('');
+            }
+            ;
+        });
+        $("button.accept").on("click", function () {
+            var msg = {'type': 'accept'};
+
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(msg));
+            }
+            ;
+            $("input.offer").focus();
+        });
+        $("input.offer").keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("button.offer").click();
+                return false;
+            }
+        });
+        $("input.offer").on("focus", function () {
+            var tooltip_id = $(this).attr("aria-describedby");
+            $('#' + tooltip_id).empty();
+        });
+    })
+    ;
+</script>

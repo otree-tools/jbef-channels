@@ -1,0 +1,184 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Consent Form
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+
+
+            <h4>Purpose</h4>
+            <div>You are being asked to be a volunteer in a research study. This study is conducted by Professor Jeffrey
+                Hales
+                (Georgia Institute of Technology) and Jordan Samet (Georgia Institute of Technology). Its purpose is to
+                examine how
+                people make decisions. We intend to recruit up to 200 to 500 subjects.
+
+            </div>
+
+            <h4>Procedures</h4>
+            <div>If you agree to participate in this study, you will first be randomly assigned to your role in the
+                study and
+                then
+                presented with rules to the first stage. You will then participate in the first stage. This participation
+                will
+                vary
+                depending on your randomly assigned role. Afterwards, you will be presented with the rules to the second
+                stage of
+                the study, according to your assigned role. You will then participate in the second stage. As before,
+                your
+                participation will vary depending on your randomly assigned role. Lastly, you will be asked to complete
+                a
+                survey
+                including demographic questions. The experiment will take approximately 40 minutes of your time.
+            </div>
+
+            <h4>Risks/Discomforts</h4>
+            <div>We do not expect that you will encounter any risks or discomforts from participating in this study.
+            </div>
+
+            <h4>Benefits & Costs</h4>
+            <div>Your participation will help us learn more about how people make decisions under various situations.
+                Understanding
+                how people make decisions in response to different information is the first step in understanding how
+                decision-making might be improved.
+            </div>
+
+            <h4>Confidentiality</h4>
+            <div>The researchers will make every effort to protect your privacy. Your responses will be associated with
+                a
+                code number
+                that we assign, but that number is not and will not be connected in any way with your name. In order to
+                receive
+                payment, you will be given a random code at the beginning of the study. Once you have completed the
+                study
+                you will
+                bring your code to the lab attendant who will provide you your payment, based on the code, prior to your
+                departure.
+                Thus, your responses are anonymous. The data will only be accessible to the researchers. In any
+                presentations,
+                written reports or publications, only aggregated results will be presented. Your privacy will be
+                protected
+                to the
+                extent required by law.. You should be aware that the experiment is not being run from a secure https
+                server of the kind typically used to handle credit card transactions, so there is a small possibility
+                that responses could be viewed by unauthorized third parties such as computer hackers. In general, the
+                web page software will log as header lines the IP address of the machine you use to access this page,
+                e.g.,102.403.506.807, but otherwise no other information will be stored unless you explicitly enter it.
+
+            </div>
+
+            <div>To make sure that this research is being carried out in the proper way, the Georgia Institute of
+                Technology
+                Institutional Review Board may review study records. The Office of Human Research Protections may also
+                look
+                at study
+                records.
+            </div>
+
+            <h4>Inclusion/Exclusion Criteria</h4>
+            <div>
+                To participate in this study, you must meet the following two criteria: (1) you must be at least 18
+                years of age and (2) you must be relatively fluent in the English language.
+
+            </div>
+
+            <h4>Compensation</h4>
+            <div>You will receive a payment of $5.00 for participating in this study. In addition, you will receive a
+                bonus,
+                depending on your actions and decisions as well as on the actions and decisions of other study
+                participants.
+                We
+                expect that you should be able to complete this task in around 40 minutes. If you decide at any point
+                that
+                you do
+                not wish to continue participating, you may simply stop by closing the browser window and leaving the
+                experimental
+                lab. You will only receive compensation if you complete the study.
+            </div>
+
+            <h4>In Case of Injury/Harm</h4>
+            <div>If you are injured as a result of being in this study, please contact Dr. Jeffrey Hales at
+                404-894-3897.
+                Neither
+                Georgia Institute of Technology nor the experimenters have made provision for payment of costs
+                associated
+                with any
+                injury resulting from participation in this study.
+            </div>
+
+            <h4>Participant Rights</h4>
+
+            <ul>
+                <li>Your participation in this study is strictly voluntary</li>
+                <li>You have the right to change your mind and leave the study at any time without giving reason</li>
+                <li>You do not waive any of your legal rights by providing your consent</li>
+                <li>You do not have to be in this study if you don't want to be. You have the right to change your mind
+                    and leave the study at any time without giving any reason and without penalty
+                </li>
+            </ul>
+
+            <h4>Questions about the Research</h4>
+            <div>If you have any questions about the study, please contact one of the researchers using the following
+                information:
+
+                <ul>
+                    <li>Jeffrey Hales, Professor, Georgia Institute of Technology, 404-894-3897,
+                        <a href="mailto:jeff.hales@scheller.gatech.edu">jeff.hales@scheller.gatech.edu</a>.
+                    </li>
+
+                    <li>Jordan Samet, PhD Student, Georgia Institute of Technology, 404-894-9474,
+                        <a href="mailto:jordan.samet@scheller.gatech.edu">jordan.samet@scheller.gatech.edu</a>.
+                    </li>
+                </ul>
+            </div>
+
+            <h4>Questions about your Rights as Research Participants</h4>
+            <div>If you have any questions about your rights as a research participant, you may contact Ms. Melanie
+                Clark,
+                Georgia
+                Institute of Technology, Office of Research Integrity Assurance, at 404-894-6942.
+            </div>
+
+            <div>If you complete the task and survey on the computer terminal in front of you, it means that you have
+                read
+                (or have
+                had read to you) the information contained in this letter, and you would like to be a volunteer in this
+                study.
+            </div>
+            <div class="mt-3">
+                <div>Thank you,</div>
+
+                <div class="font-italic">Jordan Samet</div>
+                <div class="font-italic">Jeffrey Hales</div>
+            </div>
+            <div class="mt-3 checkbox">
+                {% for f in form %}
+                    {% formfield f label = 'I have read the Consent Form and agree to continue and participate in the study' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="my-3">
+        {% next_button %}
+    </div>
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .form-check {
+            padding-left: 0px;
+        }
+
+        .checkbox {
+            font-size: 100%;
+            font-style: italic;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}

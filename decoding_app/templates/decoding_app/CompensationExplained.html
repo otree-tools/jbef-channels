@@ -1,0 +1,185 @@
+{% extends "global/Page.html" %}
+{% load otree static humanize phil_otree_tags %}
+
+{% block title %}
+    Stage 1 and Stage 2 Procedures & Compensation
+{% endblock %}
+
+{% block content %}
+    <div>Below is a description of how the Blue and Orange player’s bonus will be affected during Stage 1 and Stage 2
+    </div>
+
+    <h2><u>Stage 1</u></h2>
+
+    <h3>
+        {% bp %}
+        Compensation
+    </h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item ">
+            During the Live Round, each {% bp %} will try to solve as many puzzles as possible.
+        </li>
+        <li class="list-group-item ">
+            Once the Live Round time has expired, {% bps %} will be presented with a screen indicating the number of
+            puzzles they solved correctly: “SOLVED”
+        </li>
+        <li class="list-group-item ">
+            Next, {% bps %} will report the number of puzzles they solved “REPORTED”. They are not required to
+            enter the actual number of puzzles they solved.
+        </li>
+        <li class="list-group-item ">
+            Importantly, the {% bps %}’ bonuses depend on the number of puzzles they REPORT solving “REPORTED”,
+            rather than the number of puzzles they actually solve correctly “SOLVED”.
+        </li>
+
+        <li class="list-group-item ">
+            {% if group.treatment == 'absolute' %}
+                In particular,                {% bps %}                will earn {{ Constants.task_fee_reported }} times
+                the number of puzzles they REPORT solving correctly.
+            {% else %}
+                In particular, {% bps %} will earn {{ Constants.rel_achiever_salary }}  or
+                {{ Constants.rel_low_salary }} , with the
+                {% bp %} who REPORTS the greatest amount earning  {{ Constants.rel_achiever_salary }} and
+                the other {% bps %} earning {{ Constants.rel_low_salary }}.
+            {% endif %}
+        </li>
+
+
+        <li class="list-group-item ">
+            The
+            {% bps %} will report their performance within the following sentence: “I solved number of puzzles”,
+            followed by a “Submit” Button
+        </li>
+        <li class="list-group-item ">
+            {% if group.treatment == 'absolute' %}
+                {% bp %}
+                will earn {{ Constants.task_fee_reported }} times the number of puzzles they report solving
+                correctly
+                <ul>
+                    <li>
+                        {% bp %} earnings = (REPORTED X {{ Constants.task_fee_reported }} per puzzle)
+                    </li>
+                    <li>
+                        Note that each of the {% bp %} ’s earnings are INDEPENDENT of the amount “REPORTED” by the other
+                        {% bps %} in their group
+                    </li>
+                </ul>
+            {% else %}
+                {% bp %} will earn either {{ Constants.rel_achiever_salary }} or
+                {{ Constants.rel_low_salary }}, with the
+                {% bp %} who REPORTS the greatest amount earning {{ Constants.rel_achiever_salary }} and
+                the other {% bps %}  earning {{ Constants.rel_low_salary }}
+                <ul>
+                    <li>
+                        {% bp %} earnings = {{ Constants.rel_achiever_salary }} if their “REPORTED” > “REPORTED” by
+                        other {% bps %}, otherwise {{ Constants.rel_low_salary }}.
+                    </li>
+                    <li>
+                        Note that each of the {% bp %} ’s earnings are DEPENDENT on the “REPORTED” by the
+                        other {% bps %}.
+                    </li>
+                </ul>
+
+            {% endif %}
+        </li>
+        <li class="list-group-item ">
+            While {% bps %} do not have to enter their actual performance, the amounts they are able to report will
+            depend on the Stage 1 decision of the {% op %}, as explained below.
+        </li>
+    </ul>
+
+    <h3 class="mt-3">
+        {% op %} Compensation
+    </h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item ">
+            During the Live Round, the
+            {% op %}
+            will not participate in the Decoding Task but can earn money
+            based on
+            the actual and reported performances of the
+            {% bps %}
+            .
+        </li>
+        <li class="list-group-item ">
+            In particular, the
+            {% op %}
+            ’s earnings will increase with the number of puzzles the
+            {% bps %}
+            solve
+            correctly (SOLVED), but decrease with the number of puzzles reported (REPORTED) by the
+            {% bps %}
+        </li>
+        <li class="list-group-item ">
+            Thus, the
+            {% op %}
+            earn more money when
+            {% bps %}
+            solve a lot of puzzles correctly (SOLVED),
+            but
+            earn less money when
+            {% bps %}
+            report solving more puzzles correctly (REPORTED) than they actually did
+            solve.
+            <ul>
+                <li>
+                    <orange>Orange Player earnings</orange>
+                    = Sum of all {% bps %}
+                    (SOLVED X {{ Constants.task_fee_solved }} per puzzle) – (REPORTED
+                    X {{ Constants.task_fee_reported }} per
+                    puzzle)
+                </li>
+                <li>
+                    Note: this is the sum for all three
+                    {% bps %}
+                    in the group
+                </li>
+                <li>
+                    Also, the {% op %} never sees the individual reports submitted by each {% bp %}
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+    <h3 class="mt-3">
+        {% op %} Decision
+    </h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item ">
+            Prior to {% bps %} beginning the Decoding Task in the Live Round, the {% op %} will be asked to make the
+            following decision
+            <ul>
+                <li>
+                    The
+                    {% op %}
+                    will have the choice to enact a REPORTING RULE for this game that forces the {% bp %}’s report to be
+                    the exact number of puzzles solved correctly. That is, the REPORTING RULE would require
+                    the amount “REPORTED” to equal the amount “SOLVED”. For example, if a {% bp %} actually solved 15
+                    puzzles, their
+                    REPORT will necessarily be 15 puzzles.
+                </li>
+                <li>
+                    If the {% op %} chooses not to enact the REPORTING RULE, each {% bp %}’s amount “REPORTED” could
+                    range between 0 (zero) and {{ Constants.max_report_coef }} ({{ Constants.max_report_coef|apnumber }})
+                    times the amount “SOLVED” For example, if a {% bp %} actually solved 15 puzzles, they could REPORT
+                    between 0 and 30 puzzles
+                </li>
+            </ul>
+        </li>
+
+        <li class="list-group-item ">
+            {% bps %} will not know what decision the {% op %} made until they have completed the Decoding Task in
+            the Live Round and after they have chosen an amount to REPORT. While {% bps %} will not know what the
+            {% op %} decided, the {% op %} will never see what the {% bps %} submit
+        </li>
+    </ul>
+    <h2 class=mt-3><u>Stage 2</u></h2>
+
+    In Stage 2, the
+    {% bps %} will take actions that may affect their earnings, as well as the {% op %}’s earnings.
+
+    <div class="my-3">
+        {% next_button %}
+    </div>
+
+{% endblock %}

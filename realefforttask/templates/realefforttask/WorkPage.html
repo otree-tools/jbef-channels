@@ -1,0 +1,157 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Counting task - round {{ view.round_number }}
+{% endblock %}
+
+{% block content %}
+
+    <head>
+        <style>
+            th, td {
+                padding: 4px 6px 4px 6px;
+            }
+
+            table#box1 {
+                background-color: #ecf2f9;
+            }
+
+            table#box2 {
+                background-color: #ecf2f9;
+            }
+        </style>
+    </head>
+
+    <p>
+        Your task is to first find <b>the largest number in each of the two boxes</b> and then <b>add up the two
+        numbers</b>. <br>
+        Submit your answer in the box below. The correct answer is <span id="correct_answer">{{ task.correct_answer }}</span>!
+    </p>
+
+    <table style="width:100%">
+        <tr>
+            <th class="box-heading"> Box 1</th>
+            <th></th>
+            <th class="box-heading"> Box 2</th>
+        </tr>
+        <tr>
+
+            <!-- NEST ANOTHER TABLE! -->
+            <td class="table-borders">
+                <table class="table-style" style="width:99%" id="box1">
+                    {% for r in task.mat1 %}
+                        <tr>
+                            {% for c in r %}
+                                <td>{{ c }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+
+            <!-- Some space -->
+            <td>
+
+            </td>
+            <!-- NEST ANOTHER TABLE! -->
+            <td class="table-borders">
+                <table class="table-style" style="width:99%" id="box2">
+                    {% for r in task.mat2 %}
+                        <tr>
+                            {% for c in r %}
+                                <td>{{ c }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div>Your answer is:</div>
+    <input type="number" id="answer" class="offer" style="background-color: white" required>
+    <button class="answer btn btn-outline-dark" type="button" data-feedback="false">Answer</button>
+
+    <p> Tasks attempted so far: <span id="tasks_attempted">{{ player.finished_tasks.count }}</span></p>
+    <p> Tasks correct so far: <span id="tasks_correct"> {{ player.num_tasks_correct }}</span></p>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+
+
+        });
+    </script>
+    {% include 'includes/js_work_page.html' %}
+{% endblock %}
+{% block styles %}
+    <style type="text/css">
+        .otree-title {
+            background-color: steelblue;
+            color: white;
+            margin: 10px 0 10px 0;
+            padding: 20px;
+        }
+
+        .otree-timer {
+            background: lightsteelblue;
+            color: white;
+            border-color: white;
+        }
+
+        .otree-body {
+            text-indent: each-line;
+        }
+
+        .box-heading {
+            background-color: steelblue;
+            color: white;
+            margin: 10px 10px 10px 10px;
+            padding: 10px 10px 10px 24px;
+        }
+
+        .table-style {
+            color: black;
+            margin: 10px 10px 10px 10px;
+        }
+
+        .table-borders {
+            border: solid;
+            border: steelblue;
+            background-color: #ecf2f9;
+            align-content: center;
+
+        }
+
+        .offer {
+            background-color: whitesmoke;
+            color: navy;
+            padding: 1px 10px 1px 10px;
+            border: groove;
+            border-color: lightsteelblue;
+            font-weight: bold;
+            margin: 1px;
+        }
+
+        .otree-btn-next {
+            background-color: steelblue;
+            color: white;
+            padding: 5px 10px 5px 10px;
+
+        }
+
+        h2, h3, h4, h5, h6 {
+            font-weight: bolder;
+            color: #24435c;
+        }
+
+    </style>
+{% endblock %}

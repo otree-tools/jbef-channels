@@ -1,0 +1,50 @@
+<script>
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/tasktracker/{{ player.id }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+        var $dectable = $('table#decoding-table tbody');
+        var $inp = $('input#answer');
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            $dectable.empty();
+            $.each(obj.task.body.digits, function (i, dig) {
+                var letr = obj.task.body.letters[i];
+                var tr = $('<tr>');
+                $('<td class="text-center">').html(letr).appendTo(tr);
+                $('<td class="text-center">').html(dig).appendTo(tr);
+
+                $dectable.append(tr);
+            });
+
+            $('span.question').html(obj.task.body.question);
+            $('span.num_correct').html(obj.num_correct);
+        };
+        $("button.answer").on("click", function () {
+            $("form").validate();
+            if ($inp.valid()) {
+                var msg = $inp.val();
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(msg));
+                }
+                ;
+                $inp.val('').focus();
+
+            }
+        });
+
+        $("input#answer").keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("button.answer").click();
+                return false;
+            }
+        });
+        $("input#answer").on("focus", function () {
+            var tooltip_id = $(this).attr("aria-describedby");
+            $('#' + tooltip_id).empty();
+        });
+    })
+    ;
+</script>
+

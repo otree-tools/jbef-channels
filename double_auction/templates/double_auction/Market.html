@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+
+{% block body_main %}
+
+    <div class="container-fluid">
+        <div class="row toprow">
+
+            {% include 'double_auction/includes/form_block.html' %}
+
+
+            {% include 'double_auction/includes/info_block.html' %}
+            {% include 'double_auction/includes/contracts_block.html' %}
+
+        </div>
+
+
+        <div class="row bottomrow ">
+
+            {% include 'double_auction/includes/asks_block.html' %}
+
+            {% include 'double_auction/includes/bids_block.html' %}
+
+            {% include 'double_auction/includes/repository_block.html' %}
+
+        </div>
+
+    </div>
+  {% include 'double_auction/includes/modal.html' %}
+{% endblock %}
+
+{% block styles %}
+    <link href="{% static "double_auction/market.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {% include 'double_auction/channels/market_channel.html' %}
+
+    {% if view.remaining_timeout_seconds != None %}
+        {% include 'otree/includes/TimeLimit.js.html' %}
+    {% endif %}
+    {{ form.media|default:"" }}
+{% endblock %}

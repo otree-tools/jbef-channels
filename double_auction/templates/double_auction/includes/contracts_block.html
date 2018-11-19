@@ -1,0 +1,19 @@
+{% extends 'double_auction/includes/base_block.html' %}
+{% block title %}Contracts{% endblock %}
+{% block content %}
+    <table class="table table-striped header-fixed tablecol-4">
+        <thead>
+        <tr>
+            <th>
+                {% if player.role == 'buyer' %}Value{% else %}Cost{% endif %}
+            </th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Profit</th>
+        </tr>
+        </thead>
+        <tbody class="contracts_container">
+        {% include 'double_auction/includes/contracts_to_render.html' %}
+        </tbody>
+    </table>
+{% endblock %}

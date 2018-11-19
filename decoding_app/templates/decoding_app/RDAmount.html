@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree static phil_otree_tags %}
+
+{% block title %}
+    Stage 2
+{% endblock %}
+
+{% block content %}
+    {% include 'includes/rd_block.html' %}
+    <h5 class="mt-3">
+        {% if player.rd_choice == -1 %}
+            Dollars subtracted from {% op %}’s earnings:
+        {% else %}
+            Dollars added to {% op %}’s earnings:
+        {% endif %}
+    </h5>
+    {% for f in form %}
+        {% formfield f label='' %}
+    {% endfor %}
+    <h5 class="mt-3">
+        Dollars subtracted from my earnings:
+    </h5>
+    <input type="number" disabled id="demo_amount" class="form-control">
+    <div class="my-3">
+        {% next_button %}
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        $(function () {
+            var pun_factor = {{ Constants.rp_coef|json }};
+            $('input#id_rd_amount').on('input', function () {
+                var curvalue = $(this).val();
+                var punishment_sent = curvalue / pun_factor;
+                $('input#demo_amount').val(punishment_sent);
+            })
+        });
+    </script>
+{% endblock %}

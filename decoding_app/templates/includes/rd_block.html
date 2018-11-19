@@ -1,0 +1,54 @@
+{% load otree static phil_otree_tags %}
+<div class="card">
+    <div class="card-body">
+
+        <div>You will now be asked to make a decision that could affect both your earnings as well as the {% op %}’s
+            earnings. Note the other two {% bps %} are presented with the same decision.
+        </div>
+        <div>You have the choice to affect the {% op %}’s earnings, at a cost to you. Specifically:</div>
+        <ul>
+            <li>
+                You can increase the {% op %}’s earnings by ${{ Constants.rp_coef }} for every $1 you give up
+            </li>
+            <li>
+                Or, you can decrease the {% op %}’s earnings by ${{ Constants.rp_coef }} for every $1 you give up
+            </li>
+            <li>
+                Or, you can choose to not affect (no change) the {% op %}’s earnings by NOT giving up any of your Stage
+                1
+                earnings.
+            </li>
+        </ul>
+
+        <div>After all {% bps %}make their decision, one of the three {% bps %} will be selected randomly to have their
+            decision implemented which may affect both their earnings and the {% op %}’s earnings. Thus, your choice has
+            a
+            1 in 3 chance of actually occurring.
+        </div>
+        <ul>
+            <li>
+                If your choice is selected, your earnings as well as the {% op %}’s earnings will be affected by your
+                decision below.
+            </li>
+            <li>
+                If your choice is not selected, neither your earnings nor the {% op %}’s earnings will be affected by
+                your
+                decision below.
+            </li>
+            <li>
+                NOTE: The {% op %} will receive, at a minimum, their show-up fee.
+            </li>
+            <li>
+                NOTE: you can only give up dollars up to your Stage 1 earnings.
+            </li>
+        </ul>
+
+        <div>The {% op %} knows that the {% bps %}’ actions may affect their earnings, however they do NOT know the
+            specific decision you are making or which {% bp %} affected their earnings. They will only be informed
+            whether
+            and by how much their earnings have increased, decreased, or remained the same.
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{% load otree %}
+
+<script>
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/tasktracker/{{ player.id}}";
+        var socket = new ReconnectingWebSocket(ws_path);
+        // Handle messages sent by the server.
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            {# The rest of JS code here is truncated ... #}
+        };
+
+        $("button.answer").on("click", function () {
+            var msg = {
+                'answer': $('input#answer').val(),
+            };
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(msg));
+            }
+            ;
+            $("input#answer").val('');
+        });
+
+    });
+</script>
+

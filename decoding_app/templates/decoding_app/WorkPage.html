@@ -1,0 +1,103 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    {{view.title}}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            In this task you should translate a sequence of numbers into a series of letters from
+            the English alphabet. Below you can see (1) a sequence of NUMBERS (2) a KEY indicating which LETTER
+            represents each NUMBER (3) a text box in which the letter solution should be typed. In each task a new
+            sequence of numbers will appear along with a new key of number to letter relationships.
+        </div>
+    </div>
+
+    <table class="table table-sm " id="decoding-table" >
+        <thead>
+        <tr class="table-success">
+            <th class="text-right">Letter:</th>
+            <th class="text-left">Key:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i,j  in task %}
+            <tr>
+
+                <td class="text-center">{{ j }}</td>
+                <td class="text-center">{{ i }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="card my-3">
+        <div class="card-body">
+            Task to solve:
+            <p class="lead"><span class="question">{{ question }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+            <div class="input-group mb-3">
+                <input type="text" id="answer" class="form-control" required name="answer"
+
+                >
+                <div class="input-group-append">
+                    <button class="answer btn btn-success" type="button">Answer</button>
+                </div>
+            </div>
+
+            <div>Number of correct tasks: <span class="num_correct">{{ player.num_correct }}</span></div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static "decoding_app/js/jquery.validate.js" %}"></script>
+    <script src="{% static "decoding_app/js/jquery-validate.bootstrap-tooltip.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").validate({
+                rules: {
+                    answer: {
+                        required: true,
+
+                        minlength: {{Constants.task_len}},
+                        maxlength: {{Constants.task_len}},
+                    }
+                },
+
+                tooltip_options: {
+                    answer: {
+                        placement: 'bottom',
+                        html: true
+                    }
+                },
+                onsubmit: false,
+                onfocusout: false,
+                onkeyup: false,
+            });
+        });
+
+    </script>
+
+
+    {% include 'includes/work_channel.html' %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+
+    #decoding-table {
+        max-width: 150px;
+        margin: 0px auto;
+    }
+    </style>
+
+{% endblock %}
+
+

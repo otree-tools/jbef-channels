@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="card">
+        <div class="card-body">
+            <div class="text-center">You have been assigned the role of:
+            </div>
+
+            <h1 class="text-center {{ player.role }}">{{ role|upper }}</h1>
+            <div>
+                On the next screen you will be provided some instructions and procedures for Stage 1 of the study.
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3">
+        {% next_button %}
+    </div>
+
+
+
+{% endblock %}

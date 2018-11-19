@@ -1,0 +1,39 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+        <tr>
+            <td>You chose difficulty level</td>
+            <td>{{ player.get_difficulty_level }}</td>
+        </tr>
+        <tr>
+            <td>Each correctly solved task of this level gives you</td>
+            <td>{{ player.get_fee }}</td>
+        </tr>
+        <tr>
+            <td>You tried to solve in this period:</td>
+            <td>{{ player.finished_tasks.count }}</td>
+        </tr>
+        <tr>
+            <td>You solved correctly:</td>
+            <td>{{ player.num_tasks_correct }}</td>
+        </tr>
+        <tr>
+            <td>You solved incorrectly</td>
+            <td>{{ player.num_tasks_incorrect }}</td>
+        </tr>
+        <tr>
+            <td>Your total earnings in this period</td>
+            <td>{{ player.payoff }}</td>
+        </tr>
+
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

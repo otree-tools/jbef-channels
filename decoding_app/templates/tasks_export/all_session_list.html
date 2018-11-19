@@ -1,0 +1,48 @@
+{% extends "otree/BaseAdmin.html" %}
+
+{% block title %}
+    Export tasks data from sessions
+{% endblock %}
+
+{% block content %}
+
+    {% if sessions %}
+
+        <table class="table table-hover table-striped ">
+            <thead>
+            <th>Session code</th>
+            <th>Config name</th>
+            <th>Number of participants</th>
+            <th>Demo</th>
+            <th>For mTurk</th>
+
+            <th></th>
+            </thead>
+            <tbody>
+            {% for s in sessions %}
+                <tr>
+                    <td> <a href="{% url 'tasks_list' s.code %}">{{ s.code }}</a>  </td>
+                    <td>{{ s.config.display_name }}</td>
+                    <td>{{ s.num_participants }}</td>
+                    <td>
+                        <strong>{{ s.is_demo|yesno:'Yes, No' }}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ s.is_for_mturk|yesno:'Yes, No' }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'tasks_export' s.code %}">.CSV</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        No 'Decoding app' sessions have taken place yet.
+    {% endif %}
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends "global/PageExt.html" %}
+{% load otree static %}
+
+{% block title %}
+Firm-Worker payments
+{% endblock %}
+
+{% block inner_content %}
+
+
+
+
+    <div class="card">
+        <div class="card-body text-center">
+            The suggested wage is: <strong>{{ group.suggested_wage }}</strong>
+        </div>
+    </div>
+    <h4 class="my-3">I would like to:</h4>
+    {% formfield group.accept_initial label='' %}
+    {% next_button %}
+    {% include 'includes/info_block.html' %}
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

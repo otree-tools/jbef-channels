@@ -1,0 +1,67 @@
+{% extends "global/Page.html" %}
+{% load otree static phil_otree_tags %}
+
+{% block title %}
+    Procedures for the Decoding Task
+{% endblock %}
+
+{% block content %}
+
+    <div class="card border-dark mb-3">
+
+        <div class="card-body text-dark">
+            <div class="card-text">
+                <ol class="list-group list-group-flush">
+                    <li class="list-group-item ">
+                        The goal is to enter the sequence of letters that correctly corresponds to the sequence of
+                        numbers provided,
+                        using the KEY on the top of the screen.
+                    </li>
+                    <li class="list-group-item ">
+                        All number sequences provided are 8 numbers long
+                    </li>
+                    <li class="list-group-item ">
+                        All correct letters sequences are 8 letters long
+                    </li>
+                    <li class="list-group-item ">
+                        The KEY describing the mapping of numbers to letters will change on each screen (each decoding
+                        puzzle)
+                    </li>
+                    <li class="list-group-item ">
+                        After you have entered the sequence of letters you must click the submit button.
+                    </li>
+                    <li class="list-group-item ">
+                        It is possible to enter an incorrect sequence of letters (i.e., if you click submit with an
+                        incorrect sequence
+                        of letters entered, the game will NOT notify you of your incorrect sequence prior to submission)
+                    </li>
+                    <li class="list-group-item ">
+                        Only CORRECTLY solved Decoding Puzzles will increase your total number of solved puzzles
+                    </li>
+                    <li class="list-group-item ">
+                        There will be a counter on the bottom of the screen indicating the total number of Decoding
+                        Puzzles solved.
+                    </li>
+                    <li class="list-group-item ">
+                        The Live Round will run for <strong>{{ Constants.task_time_seconds|minutes }}</strong>. You
+                        will have a countdown clock on each
+                        screen so you can track your remaining time.
+                    </li>
+                    <li class="list-group-item ">
+                        At no point will you or the {% op %} know the performance (number of successful decoded puzzles)
+                        of any of the other players.
+                    </li>
+                    <li class="list-group-item ">
+                        When all {% bps %} have clicked “Ready” the Live Round will begin.
+                    </li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,5 @@
+{% load phil_otree_tags %}
+"Task id","Participant code","Role","Session","Group code","Treatment","Digits","Letters","Question","Correct answer","Answer by player","Is answer correct?","Time created","Time of submission","Time difference","Page"
+{% for t in tasks %}
+    {{ t.pk }},{{ t.player.participant.code }},{{ t.player.role }},{{ t.player.session.code }},{{ t.player.group.code }},{{ t.player.group.treatment }},{{ t.get_digits }},{{ t.get_letters }},{{ t.get_question }},{{ t.get_correct_answer }},{{ t.answer }},{{ t.is_correct }},"{{ t.created_at|date:'Y-m-d H:i:s:u'  }}","{{ t.updated_at|date:'Y-m-d H:i:s:u' }}",{{t.delta|format_datetime}},{{t.page_name}}
+{% endfor %}

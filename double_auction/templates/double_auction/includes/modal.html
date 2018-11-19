@@ -1,0 +1,21 @@
+<div class="modal market_over_modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Market is closed!</h5>
+            </div>
+            <form action="" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
+                <div class="modal-body">
+                    <div class="modal-message"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-lg btn-danger" role="button" type="submit">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
