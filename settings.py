@@ -4,7 +4,7 @@ from os import environ
 # in SESSION_CONFIGS, except those that explicitly override it.
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
-EXTENSION_APPS = ['minimum']
+EXTENSION_APPS = ['realefforttask']
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
@@ -15,14 +15,47 @@ SESSION_CONFIG_DEFAULTS = {
 }
 
 SESSION_CONFIGS = [
+    # {
+    #     'name': 'minimum_ret',
+    #     'display_name': 'Simple RET example',
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['minimum'],
+    #
+    # },
     {
-        'name': 'minimum_ret',
-        'display_name': 'Simple RET example',
+        'name': 'realefforttask',
+        'display_name': 'Real Effort Task - 2 matrices',
         'num_demo_participants': 1,
-        'app_sequence': ['minimum'],
-
+        'app_sequence': ['realefforttask'],
+        'task': 'TwoMatrices',
+        'task_params': {'difficulty': 10},
+    },
+    {
+        'name': 'realefforttask2',
+        'display_name': 'Real Effort Task - sum of N numbers',
+        'num_demo_participants': 1,
+        'app_sequence': ['realefforttask'],
+        'task': 'SumNumbers',
+        'task_params': {'difficulty': 2},
     },
 
+    {
+        'name': 'realefforttask3',
+        'display_name': 'Real Effort Task - count 0s',
+        'num_demo_participants': 1,
+        'app_sequence': ['realefforttask'],
+        'task': 'CountZeroes',
+        'task_params': {'num_rows': 10, 'num_columns': 5},
+    },
+
+    {
+        'name': 'realefforttask4',
+        'display_name': 'Real Effort Task - Decoding',
+        'num_demo_participants': 1,
+        'app_sequence': ['realefforttask'],
+        'task': 'Decoding',
+        'task_params': {'dict_length': 10, 'task_len': 5},
+    },
 ]
 
 # ISO-639 code

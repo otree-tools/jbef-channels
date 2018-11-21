@@ -1,0 +1,39 @@
+<h3>What is the sum of these numbers</h3>
+<div class="row">
+    {% for i in  numbers %}
+        <div class="square rounded align-middle pagination-centered">
+            <div class="content numbers d-flex align-items-center justify-content-center">
+                {{ i }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+
+    .square {
+        position: relative;
+        width: 10%;
+        padding-bottom: 10%; /* = width for a 1:1 aspect ratio */
+        margin: 1.66%;
+        background-color: #1E1E1E;
+        overflow: hidden;
+    }
+
+    .content {
+        position: absolute;
+        height: 90%; /* = 100% - 2*5% padding */
+        width: 90%; /* = 100% - 2*5% padding */
+        padding: 5%;
+
+    }
+
+    .numbers {
+        font-weight: 400;
+        font-family: 'Lato', verdana, sans-serif;
+        font-size: 40px;
+        color: white;
+    }
+</style>

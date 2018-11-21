@@ -1,0 +1,42 @@
+<div class="card">
+    <div class="card-body">
+        In this task you should translate a sequence of numbers into a series of letters from
+        the English alphabet. Below you can see (1) a sequence of NUMBERS (2) a KEY indicating which LETTER
+        represents each NUMBER (3) a text box in which the letter solution should be typed. In each task a new
+        sequence of numbers will appear along with a new key of number to letter relationships.
+    </div>
+</div>
+
+<table class="table table-sm " id="decoding-table">
+    <thead>
+    <tr class="table-success">
+        <th class="text-right">Letter:</th>
+        <th class="text-left">Key:</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for k,v  in task_dict.items %}
+        <tr>
+
+            <td class="text-center">{{ v }}</td>
+            <td class="text-center">{{ k }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="card my-3">
+    <div class="card-body">
+        Task to solve:
+        <p class="lead"><span class="question">{% for i in question %}{{ i }}{% endfor %}</span>
+        </p>
+    </div>
+</div>
+
+<style>
+
+    #decoding-table {
+        max-width: 150px;
+        margin: 0px auto;
+    }
+</style>

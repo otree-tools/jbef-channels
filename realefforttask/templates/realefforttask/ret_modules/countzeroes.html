@@ -1,0 +1,12 @@
+<h3>How many zeroes are in the table?</h3>
+<table class="table table-sm border" id="task2">
+    <tbody>
+    {% for r in mat %}
+        <tr>
+            {% for c in r %}
+                <td>{{ c }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

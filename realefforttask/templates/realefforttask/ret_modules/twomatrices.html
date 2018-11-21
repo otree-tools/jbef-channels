@@ -1,0 +1,59 @@
+<head>
+    <style>
+        th, td {
+            padding: 4px 6px 4px 6px;
+        }
+
+        table#box1 {
+            background-color: #ecf2f9;
+        }
+
+        table#box2 {
+            background-color: #ecf2f9;
+        }
+    </style>
+</head>
+
+<p>
+    Your task is to first find <b>the largest number in each of the two boxes</b> and then <b>add up the two
+    numbers</b>. <br>
+    Submit your answer in the box below. The correct answer is <span
+        id="correct_answer">{{ correct_answer }}</span>!
+</p>
+
+<table style="width:100%">
+    <tr>
+        <th class="box-heading"> Box 1</th>
+        <th></th>
+        <th class="box-heading"> Box 2</th>
+    </tr>
+    <tr>
+        <td class="table-borders">
+            <table class="table-style" style="width:99%" id="box1">
+                {% for r in mat1 %}
+                    <tr>
+                        {% for c in r %}
+                            <td>{{ c }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </td>
+
+        <!-- Some space -->
+        <td>
+        </td>
+        <td class="table-borders">
+            <table class="table-style" style="width:99%" id="box2">
+                {% for r in mat2 %}
+                    <tr>
+                        {% for c in r %}
+                            <td>{{ c }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>
+

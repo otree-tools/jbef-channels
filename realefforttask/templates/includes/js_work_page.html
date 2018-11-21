@@ -3,23 +3,35 @@
 <script>
     $(function () {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + "/tasktracker/{{ player.id}}";
+        var ws_path = ws_scheme + '://' + window.location.host + "/RETtasktracker/{{ player.id}}";
         var socket = new ReconnectingWebSocket(ws_path);
         // Handle messages sent by the server.
+         var $answer = $('input#answer');
+        var $btn_answer = $("button.answer");
+
         socket.onmessage = function (event) {
             var obj = jQuery.parseJSON(event.data);
-            {# The rest of JS code here is truncated ... #}
+            $('div.task-container').html(obj.task_body);
+            $('span#num_tasks_total').html(obj.num_tasks_total);
+            $('span#num_tasks_correct').html(obj.num_tasks_correct);
         };
 
-        $("button.answer").on("click", function () {
+        $btn_answer.on("click", function () {
             var msg = {
-                'answer': $('input#answer').val(),
+                'answer': $answer.val(),
             };
             if (socket.readyState === WebSocket.OPEN) {
                 socket.send(JSON.stringify(msg));
             }
             ;
-            $("input#answer").val('');
+            $answer.val('');
+        });
+        $answer.keydown(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $btn_answer.click();
+                return false;
+            }
         });
 
     });

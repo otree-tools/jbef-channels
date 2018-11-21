@@ -6,75 +6,13 @@
 {% endblock %}
 
 {% block content %}
-
-    <head>
-        <style>
-            th, td {
-                padding: 4px 6px 4px 6px;
-            }
-
-            table#box1 {
-                background-color: #ecf2f9;
-            }
-
-            table#box2 {
-                background-color: #ecf2f9;
-            }
-        </style>
-    </head>
-
-    <p>
-        Your task is to first find <b>the largest number in each of the two boxes</b> and then <b>add up the two
-        numbers</b>. <br>
-        Submit your answer in the box below. The correct answer is <span id="correct_answer">{{ task.correct_answer }}</span>!
-    </p>
-
-    <table style="width:100%">
-        <tr>
-            <th class="box-heading"> Box 1</th>
-            <th></th>
-            <th class="box-heading"> Box 2</th>
-        </tr>
-        <tr>
-
-            <!-- NEST ANOTHER TABLE! -->
-            <td class="table-borders">
-                <table class="table-style" style="width:99%" id="box1">
-                    {% for r in task.mat1 %}
-                        <tr>
-                            {% for c in r %}
-                                <td>{{ c }}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            </td>
-
-            <!-- Some space -->
-            <td>
-
-            </td>
-            <!-- NEST ANOTHER TABLE! -->
-            <td class="table-borders">
-                <table class="table-style" style="width:99%" id="box2">
-                    {% for r in task.mat2 %}
-                        <tr>
-                            {% for c in r %}
-                                <td>{{ c }}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            </td>
-        </tr>
-    </table>
+    <div class="task-container">{{ player.get_or_create_task.html_body|safe }}</div>
     <div>Your answer is:</div>
-    <input type="number" id="answer" class="offer" style="background-color: white" required>
+    <input type="text" id="answer" class="offer" style="background-color: white" required>
     <button class="answer btn btn-outline-dark" type="button" data-feedback="false">Answer</button>
 
-    <p> Tasks attempted so far: <span id="tasks_attempted">{{ player.finished_tasks.count }}</span></p>
-    <p> Tasks correct so far: <span id="tasks_correct"> {{ player.num_tasks_correct }}</span></p>
-
+    <p> Tasks attempted so far: <span id="num_tasks_total">{{ player.num_tasks_total }}</span></p>
+    <p> Tasks correct so far: <span id="num_tasks_correct"> {{ player.num_tasks_correct }}</span></p>
 {% endblock %}
 
 {% block scripts %}
