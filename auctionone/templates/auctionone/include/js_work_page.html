@@ -1,0 +1,70 @@
+<script>
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/matrixtracker/{{ player.id }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+
+        var role = '{{ player.role }}';
+        if ( role === 'worker') {
+            var employer_payoff = 40 - '{{ wage }}';
+        }
+
+        socket.onmessage = function (event) {
+            console.log('message received:: ' + JSON.stringify((event.data)));
+            var obj = jQuery.parseJSON(event.data);
+
+            $('span#correct_answer').html(obj.correct_answer);
+            $('span#tasks_attempted').html(obj.tasks_attempted);
+            $('span#tasks_correct').html(obj.tasks_correct);
+
+            if ( role === 'worker') {
+                employer_payoff = 40 - {{ wage }} +20 * Number(obj.tasks_correct);
+                $('span#employer_payoff').html(employer_payoff);
+                }
+            if (obj.tasks_attepted > 0) {
+                $('span#feedback').html(obj.feedback);
+                $('#answer').val("");
+            }
+            if (obj.task_over) {
+                $('#form').submit();
+                return;
+            }
+            $('table#box1').empty();
+            $('table#box2').empty();
+            $.each(obj.mat1, function (i, row) {
+                var tr = $('<tr>');
+                $.each(row, function (j, cell) {
+                    $('<td>').html(cell).appendTo(tr);
+                });
+                $('table#box1').append(tr);
+            });
+            $.each(obj.mat2, function (i, row) {
+                var tr = $('<tr>');
+                $.each(row, function (j, cell) {
+                    $('<td>').html(cell).appendTo(tr);
+                });
+                $('table#box2').append(tr);
+            });
+        };
+        $("button.answer").on("click", function () {
+            if ($('input#answer').val()) {
+                var msg = {
+                    'answer': $('input#answer').val()
+                };
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(msg));
+                }
+            }
+            $("input#answer").val('');
+        });
+
+        $("input#answer").keydown(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $("button.answer").click();
+                return false;
+            }
+        });
+    });
+</script>
+

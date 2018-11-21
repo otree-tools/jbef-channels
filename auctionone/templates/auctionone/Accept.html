@@ -1,0 +1,57 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Fase assunzioni {{ player.round_number }}
+{% endblock %}
+
+{% block content %}
+    <table width="100%">
+    <tr>
+    <td>
+<div class="instructions well well-lg" style="height: 220px">
+<p>
+Rimangono <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
+    <span id="Semp">datori</span> di lavoro e <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
+    <span id="Sworker">lavoratori</span> sul mercato.
+</p>
+
+<p>
+Per accettare un'offerta, clicca su una delle offerte disponibili e poi "Accetto".
+Il pulsante "Accetto" apparirà dopo aver cliccato su una delle offerte. </p>
+    <div id="otree-timeout"><p>Tempo rimanente nella fase di assunzione:
+        <span id="otree-timer__time-left"></span></p></div>
+
+</div>
+    </td>
+            <td width="42%">
+                <div class="instructions well well-lg" style="background: #ecf2f9; height: 220px;">
+            <table align="top-left" style="color: steelblue">
+
+                <tr> <th  align="top-left"> Ultimi Cinque Eventi </th> </tr>
+
+                <tr> <td><span id="message1"> <br> </span></td></tr>
+                <tr> <td><span id="message2"> <br> </span></td></tr>
+                <tr> <td><span id="message3"> <br> </span></td></tr>
+                <tr> <td><span id="message4"> <br> </span></td></tr>
+                <tr> <td><span id="message5"> <br> </span></td></tr>
+            </table>
+                </div>
+    </tr>
+    </table>
+
+<br>
+{% include 'auctionone/include/open_contracts_block.html' %}
+
+<form><br>
+Accetta un'offerta cliccando su una delle offerte disponibili qui sopra e poi sul pulsante "Accetto". <br>
+
+        <input id="test" type="number" value="" readonly class="offer" style="background-color:white">
+        <input id="subbutton" type="hidden" value="Accetto" class="offer" >
+</form>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src= "{% static "auctionone/js/jquery.countdown.js" %}" ></script>
+    {% include 'auctionone/include/js_vars_for_auction_block.html' %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+
+{% load otree %}
+
+{% block title %}
+    Il conteggio
+{% endblock %}
+
+{% block content %}
+<p> Ogni compito consiste nel <b>trovare il numero più grande nel riquadro di sinistra</b> e
+    <b>il numero più grande nel riquadro di destra</b>, e poi <b>sommarli insieme</b>.
+   Scrivi la risposta nella casella sotto i riquadri, e poi invia.
+</p>
+
+
+<p>
+ Hai <b>5 minuti</b> per completare un numero <b>massimo di 10 compiti</b>.
+ </p>
+
+<p>
+ Quando sei pronto, clicca "Successivo" per cominciare.
+    </p>
+
+<p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Successivo</button> </p>
+
+{% endblock %}
