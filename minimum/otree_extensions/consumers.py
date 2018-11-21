@@ -10,7 +10,7 @@ class TaskTracker(JsonWebsocketConsumer):
 
     # the following 'receive' method is executed automatically by Channels when a message is received from a client
     def receive(self, text=None, bytes=None, **kwargs):
-        # using the keywork we get the player
+        # using the keyword we get the player
         p = Player.objects.get(id=self.kwargs['player_id'])
         # we receive the answer
         answer = text.get('answer')

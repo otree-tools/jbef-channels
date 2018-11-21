@@ -1,0 +1,20 @@
+
+{% load otree %}
+    <p>Le offerte disponibili sono: <span id="taken" style="color:darkred"></span> </p>
+    <div id="active_offers">
+        {% if active_contracts %}
+            {% for contract in active_contracts %}
+                <span  class='badge open_contract offer' data-pk={{ contract.pk }} data-amount={{ contract.amount }}> {{ contract.amount }}</span>
+            {% endfor %}
+        {% else %}
+            <b>Attualmente non ci sono offerte disponibili.</b>
+        {% endif %}
+    </div>
+
+
+<style>
+    .open_contract{
+        cursor: pointer!important;
+        font-size: medium;
+    }
+</style>

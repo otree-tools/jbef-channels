@@ -33,7 +33,7 @@ class Player(BasePlayer):
 
     # the following function creates a new task:
     # generates a random number, stores it
-    # and also register a correct answer for it
+    # and also registers a correct answer for it
     def create_task(self):
         self.task_body = random.randint(11, 89)
         self.last_correct_answer = 100 - self.task_body

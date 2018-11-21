@@ -1,0 +1,131 @@
+
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Conteggio
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+            th, td {
+                padding: 2px 2px 2px 2px;
+            }
+
+            table#box1 {
+                background-color: #ecf2f9;
+            }
+
+            table#box2 {
+                background-color: #ecf2f9;
+            }
+            .alert {margin-bottom: 0 }
+            .page-header {  padding-bottom: 0;
+                            padding-top: 0}
+
+        </style>
+    </head>
+
+    <p>
+        Il compito consiste nel trovare, <b>il numero più grande in ciascuno dei riquadri</b>
+e poi <b>sommarli</b>.
+<br>
+   Inserisci la tua risposta nella casella sottostante.
+    </p>
+
+    <table style="width:100%">
+        <tr>
+            <th class="box-heading"> Riquadro 1</th>
+            <th></th>
+            <th class="box-heading"> Riquadro 2</th>
+        </tr>
+        <tr>
+
+            <!-- NEST ANOTHER TABLE! -->
+            <td class="table-borders">
+                <table class="table-style" style="width:99%" id="box1">
+                </table>
+            </td>
+
+            <!-- Some space -->
+            <td>
+
+            </td>
+            <!-- NEST ANOTHER TABLE! -->
+            <td class="table-borders">
+                <table class="table-style" style="width:99%" id="box2">
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+    <table>
+    <tr>
+        <td>
+            <div>La tua risposta è:</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+            <input type="number" id="answer" class="offer" style="background-color: white" required>
+            <button class="answer" type="button" style="background-color: whitesmoke;
+            color: navy;
+            padding: 1px 10px 1px 10px;
+            border: groove;
+            border-color: lightsteelblue;
+            font-weight: bold;
+            margin: 1px;"
+            >Invia</button>
+        </td>
+        <td>
+            <span id="feedback"></span>
+        </td>
+
+    </tr>
+    </table>
+    <table>
+    <tr>
+        <td>
+            Tentativi finora:
+        </td>
+        <td>
+            <span id="tasks_attempted">{{ player.tasks_attempted }}</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Risposte corrette finora:
+        </td>
+        <td>
+            <span id="tasks_correct"> {{ player.tasks_correct }}</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Il tuo guadagno:
+        </td>
+        <td>
+            <span id="worker_payoff"> {{ wage }} </span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Attuale guadagno del tuo datore di lavoro:
+        </td>
+        <td>
+            <span id="employer_payoff"></span>
+        </td>
+    </tr>
+    </table>
+
+
+{% endblock %}
+
+{% block scripts %}
+    {#  Here we include javascript block where we connect via websockets to oTree server  #}
+    {% include 'auctionone/include/js_work_page.html' %}
+{% endblock %}
