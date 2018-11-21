@@ -1,9 +1,8 @@
-
-{% extends "global/Page.html" %}
+{% extends "auctionone/include/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Conteggio
+    Effort task
 {% endblock %}
 
 {% block content %}
@@ -28,17 +27,17 @@
     </head>
 
     <p>
-        Il compito consiste nel trovare, <b>il numero più grande in ciascuno dei riquadri</b>
-e poi <b>sommarli</b>.
+        The task is to find <b>the largest number in each of the two boxes</b>
+and then <b>sum them up</b>.
 <br>
-   Inserisci la tua risposta nella casella sottostante.
+   Incert your answer into the input box below.
     </p>
 
     <table style="width:100%">
         <tr>
-            <th class="box-heading"> Riquadro 1</th>
+            <th class="box-heading"> Box 1</th>
             <th></th>
-            <th class="box-heading"> Riquadro 2</th>
+            <th class="box-heading"> Box 2</th>
         </tr>
         <tr>
 
@@ -65,7 +64,7 @@ e poi <b>sommarli</b>.
     <table>
     <tr>
         <td>
-            <div>La tua risposta è:</div>
+            <div>Your answer is:</div>
         </td>
     </tr>
     <tr>
@@ -79,7 +78,7 @@ e poi <b>sommarli</b>.
             border-color: lightsteelblue;
             font-weight: bold;
             margin: 1px;"
-            >Invia</button>
+            >Answer</button>
         </td>
         <td>
             <span id="feedback"></span>
@@ -90,7 +89,7 @@ e poi <b>sommarli</b>.
     <table>
     <tr>
         <td>
-            Tentativi finora:
+            Tasks attempted:
         </td>
         <td>
             <span id="tasks_attempted">{{ player.tasks_attempted }}</span>
@@ -98,7 +97,7 @@ e poi <b>sommarli</b>.
     </tr>
     <tr>
         <td>
-            Risposte corrette finora:
+            Tasks correct:
         </td>
         <td>
             <span id="tasks_correct"> {{ player.tasks_correct }}</span>
@@ -106,7 +105,7 @@ e poi <b>sommarli</b>.
     </tr>
     <tr>
         <td>
-            Il tuo guadagno:
+            Your payoff:
         </td>
         <td>
             <span id="worker_payoff"> {{ wage }} </span>
@@ -114,7 +113,7 @@ e poi <b>sommarli</b>.
     </tr>
     <tr>
         <td>
-            Attuale guadagno del tuo datore di lavoro:
+            The employer's payoff:
         </td>
         <td>
             <span id="employer_payoff"></span>

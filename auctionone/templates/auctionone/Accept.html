@@ -1,8 +1,8 @@
-{% extends "global/Page.html" %}
+{% extends "auctionone/include/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Fase assunzioni {{ player.round_number }}
+    Auction stage {{ player.round_number }}
 {% endblock %}
 
 {% block content %}
@@ -11,15 +11,15 @@
     <td>
 <div class="instructions well well-lg" style="height: 220px">
 <p>
-Rimangono <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
-    <span id="Semp">datori</span> di lavoro e <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
-    <span id="Sworker">lavoratori</span> sul mercato.
+There are <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
+    <span id="Semp">employers</span> and <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
+    <span id="Sworker">workers</span> left in the market.
 </p>
 
 <p>
-Per accettare un'offerta, clicca su una delle offerte disponibili e poi "Accetto".
-Il pulsante "Accetto" apparirà dopo aver cliccato su una delle offerte. </p>
-    <div id="otree-timeout"><p>Tempo rimanente nella fase di assunzione:
+To accept an offer, click one of the offers available and then click the Accept-button.
+The "Accept" button will appear after an offer has been clicked. </p>
+    <div id="otree-timeout"><p>Time remaining in the auction:
         <span id="otree-timer__time-left"></span></p></div>
 
 </div>
@@ -28,7 +28,7 @@ Il pulsante "Accetto" apparirà dopo aver cliccato su una delle offerte. </p>
                 <div class="instructions well well-lg" style="background: #ecf2f9; height: 220px;">
             <table align="top-left" style="color: steelblue">
 
-                <tr> <th  align="top-left"> Ultimi Cinque Eventi </th> </tr>
+                <tr> <th  align="top-left"> The last five events </th> </tr>
 
                 <tr> <td><span id="message1"> <br> </span></td></tr>
                 <tr> <td><span id="message2"> <br> </span></td></tr>
@@ -42,13 +42,15 @@ Il pulsante "Accetto" apparirà dopo aver cliccato su una delle offerte. </p>
 
 <br>
 {% include 'auctionone/include/open_contracts_block.html' %}
-
+<div>
 <form><br>
-Accetta un'offerta cliccando su una delle offerte disponibili qui sopra e poi sul pulsante "Accetto". <br>
+
+    <p>To accept an offer,click one of the offers available and then click "Accept". <br>
 
         <input id="test" type="number" value="" readonly class="offer" style="background-color:white">
-        <input id="subbutton" type="hidden" value="Accetto" class="offer" >
+        <input id="subbutton" type="hidden" value="Accept" class="offer" >
 </form>
+    </div>
 {% endblock %}
 
 {% block scripts %}

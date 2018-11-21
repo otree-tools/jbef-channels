@@ -1,12 +1,10 @@
 from otree.api import Currency as c, currency_range
-from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants, Group, Subsession, JobContract
 import time
 
 
-
-# HELPFUL PAGE TYPES
+# 3 helpful page types
 class EmployerPage(Page):
     def is_displayed(self):
         return self.player.role() == 'employer' and self.extra_is_displayed()
@@ -31,7 +29,7 @@ class ActiveWorkerPage(Page):
         return True
 
 
-# ########### #THE REAL PAGES START HERE # ############# #
+# ########### the actual pages start here ############# #
 class Role(Page):
     def is_displayed(self):
         if self.subsession.round_number == 1:
@@ -39,8 +37,7 @@ class Role(Page):
 
 
 class WP(WaitPage):
-    title_text = "Attendere prego"
-    body_text = "Un nuovo round sta per cominciare, per favore attendi gli altri partecipanti."
+    body_text = "A new round is about to start, please wait for the other players."
 
     wait_for_all_groups = True
 
@@ -51,7 +48,7 @@ class WP(WaitPage):
 
 class CountDown(Page):
     timeout_seconds = 5
-    timer_text = "La prossima fase inizierà tra 5 secondi:  "
+    timer_text = "The next stage starts in 5 seconds:  "
 
 
 class Auction(EmployerPage):
@@ -78,8 +75,7 @@ class Accept(WorkerPage):
 
 
 class WPage(WaitPage):
-    title_text = "Attendere prego"
-    body_text = "La tua decisione è stata registrata... stiamo aspettando gli altri partecipanti."
+    body_text = "Your decision has been registered, please wait for the other participants."
 
     def after_all_players_arrive(self):
         for g in self.subsession.get_groups():
@@ -96,8 +92,7 @@ class AuctionResultsEmployer(EmployerPage):
         if self.player.matched == 1:
             if self.player.role() == "employer":
                 closed_contract = self.player.contract.get(accepted=True)
-            return {'initial_wage': closed_contract.amount,
-                    'final_wage': closed_contract.amount_updated,}
+            return {'wage': closed_contract.amount}
 
 
 class AuctionResultsWorker(WorkerPage):
@@ -105,16 +100,15 @@ class AuctionResultsWorker(WorkerPage):
         if self.player.matched == 1:
             if self.player.role() == "worker":
                 closed_contract = self.player.work_to_do.get(accepted=True)
-            return {'initial_wage': closed_contract.amount,
-                    'final_wage': closed_contract.amount_updated, }
+            return {'wage': closed_contract.amount}
 
 
 class Start(ActiveWorkerPage):
-    pass
+    ...
 
 
 class WorkPage(ActiveWorkerPage):
-    timer_text = "Tempo rimanente per completare questa parte:"
+    timer_text = "Time remaining in this stage"
     timeout_seconds = Constants.task_time
 
     def vars_for_template(self):
@@ -122,7 +116,7 @@ class WorkPage(ActiveWorkerPage):
             closed_contract = self.player.work_to_do.get(accepted=True)
         elif self.player.role() == "employer":
             closed_contract = self.player.contract.get(accepted=True)
-        return {'wage': closed_contract.amount, }
+        return {'wage': closed_contract.amount}
 
     def before_next_page(self):
         closed_contract = self.player.work_to_do.get(accepted=True)
@@ -133,7 +127,6 @@ class WorkPage(ActiveWorkerPage):
 
 
 class WaitP(WaitPage):
-    title_text = "Attendere prego"
     template_name = 'auctionone/WaitP.html'
 
     def vars_for_template(self):
@@ -150,18 +143,15 @@ class Results(Page):
         if self.player.role() == "employer":
             closed_contract = self.player.contract.get(accepted=True)
             worker_pk = closed_contract.worker
-            final_wage = closed_contract.amount
-            partner_payoff = worker_pk.pay
+            partner_payoff = worker_pk.payoff
         else:
             closed_contract = self.player.work_to_do.get(accepted=True)
             employer_pk = closed_contract.employer
-            final_wage = closed_contract.amount
-            partner_payoff = employer_pk.pay
+            partner_payoff = employer_pk.payoff
         return {'wage': closed_contract.amount,
                 'tasks_attempted': closed_contract.tasks_att,
                 'tasks_correct': closed_contract.tasks_corr,
-                'partner_payoff': partner_payoff,
-                'final_wage': final_wage, }
+                'partner_payoff': partner_payoff }
 
 
 page_sequence = [

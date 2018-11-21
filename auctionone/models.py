@@ -60,16 +60,16 @@ class Group(BaseGroup):
 
             if person.role() == 'employer':
                 if person.matched == 0:
-                    person.pay = 0
+                    person.payoff = 0
                 else:
                     closed_contract = person.contract.get(accepted=True)
-                    person.pay = 40 - closed_contract.amount + 20 * closed_contract.tasks_corr
+                    person.payoff = 40 - closed_contract.amount + 20 * closed_contract.tasks_corr
             if person.role() == 'worker':
                 if person.matched == 0:
-                    person.pay = 20
+                    person.payoff = 20
                 else:
                     closed_contract = person.work_to_do.get(accepted=True)
-                    person.pay = closed_contract.amount
+                    person.payoff = closed_contract.amount
 
     def get_channel_group_name(self):
         return 'auction_group_{}'.format(self.pk)
@@ -84,11 +84,7 @@ class Player(BasePlayer):
     tasks_attempted = models.PositiveIntegerField(initial=0)
     tasks_correct = models.PositiveIntegerField(initial=0)
     matched = models.BooleanField()
-    job_to_do_updated = models.BooleanField(initial=False)
-    offers_dump = models.StringField()
-    job_contract_dump = models.StringField()
-    pay = models.CurrencyField()
-    total_payoff = models.CurrencyField()
+    payoff = models.CurrencyField()
 
     def role(self):
         if self.id_in_group < Constants.num_employers + 1:
@@ -134,10 +130,8 @@ class JobContract(djmodels.Model):
     worker = djmodels.ForeignKey(Player, blank=True, null=True, related_name='work_to_do')
     amount = models.IntegerField()
     accepted = models.BooleanField()
-    amount_updated = models.IntegerField(blank=True)
     tasks_corr = models.PositiveIntegerField(initial=0)
     tasks_att = models.PositiveIntegerField(initial=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     auctionenddate = models.FloatField()
     day_over = models.BooleanField()

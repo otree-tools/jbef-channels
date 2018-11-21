@@ -31,10 +31,10 @@
             $('span#emps_left').html(employers_left);
             $('#workers_left').html(workers_left);
             if (employers_left === 1) {
-                $('span#Semp').html("datore");
+                $('span#Semp').html("employer");
             }
             if (workers_left === 1) {
-                $('span#Sworker').html("lavoratore");
+                $('span#Sworker').html("worker");
             }
 
             if (obj.last_message) {
@@ -59,7 +59,7 @@
                             return;
                         }
                         if (obj.already_taken) {
-                            $("span#taken").html("<b> L'offerta che hai tentato di accettare è appena stata presa da un altro partecipante, o cambiata. </b>");
+                            $("span#taken").html("<b>  The offer you tried to accept has just been changed or accepted by another participant.. </b>");
                             $("#test").val("");
                         }
                     }
