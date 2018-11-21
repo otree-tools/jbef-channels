@@ -38,7 +38,8 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['realefforttask'],
         'task': 'SumNumbers',
-        'task_params': {'difficulty': 2},
+        'task_params': {'num_digits': 4,
+                        'digits_range': [50, 99]},
     },
 
     {
@@ -47,7 +48,11 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['realefforttask'],
         'task': 'CountZeroes',
-        'task_params': {'num_rows': 10, 'num_columns': 5},
+        'task_params': {'num_rows': 10,
+                        'num_columns': 5,
+                        'value_to_count': 1,
+                        'selection_set': [0, 1, 2],
+                        },
     },
     {
         'name': 'realefforttask4',

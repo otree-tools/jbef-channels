@@ -14,7 +14,6 @@ class TaskTracker(JsonWebsocketConsumer):
     def receive(self, text=None, bytes=None, **kwargs):
         player = self.get_player()
         answer = text.get('answer')
-        print('AAAAA', answer)
         if answer:
             old_task = player.get_or_create_task()
             old_task.answer = answer

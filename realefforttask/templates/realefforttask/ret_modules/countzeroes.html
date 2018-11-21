@@ -1,12 +1,27 @@
-<h3>How many zeroes are in the table?</h3>
-<table class="table table-sm border" id="task2">
-    <tbody>
-    {% for r in mat %}
-        <tr>
-            {% for c in r %}
-                <td>{{ c }}</td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<h3>How many {{ value_to_count }}s are in the table?</h3>
+<div class="counting-table-wrapper">
+    <table class="table table-sm border counting-table" id="task2">
+        <tbody>
+        {% for r in mat %}
+            <tr>
+                {% for c in r %}
+                    <td>{{ c }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<style>
+    .counting-table {
+        width: auto;
+        margin: 0px auto;
+    }
+
+    .counting-table-wrapper {
+        border-radius: 5px;
+        width: 50%;
+        margin: 0px auto;
+        float: none;
+    }
+</style>

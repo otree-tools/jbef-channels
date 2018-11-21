@@ -78,33 +78,35 @@ class SumNumbers(TaskGenerator):
         return sum(self.numbers)
 
     def get_body(self, **kwargs):
-        diff = kwargs.get('difficulty', 2)
-        self.numbers = [random.randint(*self.digits_range) for _ in range(diff)]
+        num_digits = kwargs.get('num_digits', 2)
+        self.digits_range = kwargs.get('digits_range', self.digits_range)
+        self.numbers = [random.randint(*self.digits_range) for _ in range(num_digits)]
         return {'numbers': self.numbers}
 
     def get_context_for_body(self):
-        return {
-            "numbers": self.body['numbers'],
-        }
+        return {"numbers": self.numbers, }
 
 
 class CountZeroes(TaskGenerator):
     path_to_render = 'realefforttask/ret_modules/countzeroes.html'
 
     def get_correct_answer(self):
-        return self.data.count('0')
+        return self.data.count(str(self.value_to_count))
 
     def get_body(self, **kwargs):
         num_rows = kwargs.get('num_rows', 10)
         num_columns = kwargs.get('num_columns', 10)
+        selection_set = kwargs.get('selection_set', [0, 1])
+        self.value_to_count = kwargs.get('value_to_count', 0)
         nxm = num_rows * num_columns
-        self.data = [str(random.choice([0, 1])) for _ in range(nxm)]
+        self.data = [str(random.choice(selection_set)) for _ in range(nxm)]
         self.mat = chunkify(self.data, num_rows)
         return {'mat': self.mat}
 
     def get_context_for_body(self):
         return {
-            "mat": self.body['mat'],
+            "mat": self.mat,
+            "value_to_count": self.value_to_count,
         }
 
 
