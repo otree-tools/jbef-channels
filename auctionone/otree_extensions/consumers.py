@@ -37,8 +37,7 @@ class AuctionTracker(JsonWebsocketConsumer):
             JobContract.objects.filter(accepted=False, employer__group=group).values('pk', 'amount'))
         closed_contracts = list(
             JobContract.objects.filter(accepted=True, employer__group=group).values('id', 'employer_id', 'worker_id',
-                                                                                    'amount', 'accepted',
-                                                                                    'amount_updated', 'tasks_corr',
+                                                                                    'amount', 'accepted', 'tasks_corr',
                                                                                     'tasks_att'))
         contracts['active_contracts'] = active_contracts
         contracts['closed_contracts'] = closed_contracts
@@ -59,10 +58,10 @@ class AuctionTracker(JsonWebsocketConsumer):
             contract, created = employer.contract.get_or_create(defaults={'amount': wage_offer, 'accepted': False, })
             if created:
                 print("offer created")
-                group.last_message = str("Nuova offerta salariale di " + str(wage_offer) + ".")
+                group.last_message = str("A new wage offer of " + str(wage_offer) + ".")
             if not created:
                 group.last_message = str(
-                    "Un'offerta precedentemente di " + str(contract.amount) + " è ora di " + str(wage_offer) + ".")
+                    "The previous wage offer of " + str(contract.amount) + " is now " + str(wage_offer) + ".")
             group.save()
             contract.amount = wage_offer
             contract.save()
@@ -95,7 +94,7 @@ class AuctionTracker(JsonWebsocketConsumer):
                         contract.accepted = True
                         contract.save()
                         response['already_taken'] = False
-                        group.last_message = str("È stata accettata un offerta di " + wage_accepted + ".")
+                        group.last_message = str("A wage offer of " + wage_accepted + " has been accepted.")
                         group.save()
                         worker.matched = 1
                         worker.save()
@@ -113,7 +112,7 @@ class AuctionTracker(JsonWebsocketConsumer):
                     contract.worker = worker
                     contract.accepted = True
                     contract.save()
-                    group.last_message = str("È stata accettata un offerta di " + wage_accepted + ".")
+                    group.last_message = str("A wage offer of " + wage_accepted + " has been accepted.")
                     group.save()
                     worker.matched = 1
                     worker.save()
@@ -169,9 +168,9 @@ class MatrixTracker(JsonWebsocketConsumer):
             p.tasks_attempted += 1
             if int(answer) == p.last_correct_answer:
                 p.tasks_correct += 1
-                feedback = "La precedente risposta era corretta."
+                feedback = "The answer was correct."
             else:
-                feedback = "La precedente risposta " + str(answer) + " era sbagliata, la risposta corretta era " + str(
+                feedback = "The previous answer " + str(answer) + " was wrong, the correct answer was " + str(
                     p.last_correct_answer) + "."
             new_task = p.get_task()
             p.save()

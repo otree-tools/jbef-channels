@@ -1,26 +1,24 @@
-{% extends "global/Page.html" %}
-
+{% extends "auctionone/include/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Fase assunzioni {{ player.round_number }}
+    Auction {{ player.round_number }}
 {% endblock %}
 
 {% block content %}
-
     <table width="100%">
     <tr>
     <td>
 <div class="instructions well well-lg" style="height: 200px">
 <p>
-Rimangono <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
-    <span id="Semp">datori</span> di lavoro e <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
-    <span id="Sworker">lavoratori</span> sul mercato.
+There are <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
+    <span id="Semp">employers</span> and <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
+    <span id="Sworker">workers</span> in the market.
 </p>
 
-<p> Per offrire un salario ai potenziali lavoratori, clicca su uno dei pulsanti.
+<p> To offer a salary to the potential employees, click one of the offer buttons below.
 </p>
-<div id="otree-timeout"><p>Tempo rimanente nella fase di assunzione:
+<div id="otree-timeout"><p>Time remaining in the auction:
         <span id="otree-timer__time-left"></span></p></div>
 </div>
     </td>
@@ -28,7 +26,7 @@ Rimangono <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
                 <div class="instructions well well-lg" style="background: #ecf2f9; height: 200px">
             <table align="top-left" style="color: steelblue">
 
-                <tr> <th  align="top-left"> Ultimi Cinque Eventi </th> </tr>
+                <tr> <th  align="top-left"> The last five events </th> </tr>
 
                 <tr> <td><span id="message1"> <br> </span></td></tr>
                 <tr> <td><span id="message2"> <br> </span></td></tr>
@@ -43,18 +41,17 @@ Rimangono <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
 
     {% include 'auctionone/include/open_contracts_block.html' %}
 
-<div> La tua offerta di salario attuale: <b><span id="standing_offer"></span></b></div>
+    <div> <p>Your wage offer is: <b><span id="standing_offer"></span></b></p></div>
 
-    <p>Puoi offrire: </p>
+    <p>You can offer: </p>
+    <div style="margin: 0 10px 0 10px;">
         <form>
-
         <!-- ALL THE OFFER BUTTONS ARE HERE -->
             {% for offer in Constants.offer_range %}
                 <button type="button" data-offer={{ offer }} class="offer">{{ offer }}</button>
             {% endfor %}
-
     </form>
-
+    </div>
 {% endblock %}
 
 

@@ -1,61 +1,47 @@
-{% extends "global/Page.html" %}
+{% extends "auctionone/include/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Risultati del round {{ player.round_number }}
+    Results of the round {{ player.round_number }}
 {% endblock %}
 
 {% block content %}
 
     {% if player.matched == 0 and player.role == "employer" %}
-        <p>Non hai assunto un lavoratore in questo round. </p>
-        <p>Il tuo guadagno è <b>{{ player.pay |json }} punti.</b></p>
+        <p>You have not hired a worker this round </p>
+        <p>Your payoff is  <b>{{ player.payoff |json }} points.</b></p>
     {% elif player.matched == 0 and player.role == "worker" %}
-        <p>Non sei stato assunto in questo round. </p>
-        <p>Il tuo guadagno è <b>{{ player.pay |json }} punti.</b></p>
+        <p>You were not hired this round. </p>
+        <p>Your payoff is <b>{{ player.payoff |json }} points.</b></p>
 
     {% elif player.matched == 1 and player.role == "employer" %}
-        <p> <b>Hai assunto un lavoratore</b>, che ha completato correttamente
-	<b>{{ tasks_correct }} <span id="Scorr">compiti </span> </b>
-         e <span id="oi">tentati</span> {{ tasks_attempted }}. </p>
-        <p> Per ogni compito eseguito correttamente ricevi <b>20 punti</b>.</p>
-        <p> Il tuo guadagno è 40 - {{ final_wage }} + {{ tasks_correct }} * 20 = <b>{{ player.pay|json }} punti.</b></p>
-        <p> Il guadagno del tuo lavoratore è <b>{{ partner_payoff |json }} punti.</b></p>
+        <p> <b>You have hired a worker</b>, who completed correctly
+	<b>{{ tasks_correct }} <span id="Scorr">tasks </span> </b>
+         and tried {{ tasks_attempted }} <span id="oi">tasks</span>. </p>
+        <p> For each correct task you receive <b>20 points</b>.</p>
+        <p> Your payoff is: 40 - {{ wage }} + {{ tasks_correct }} * 20 = <b>{{ player.payoff |json }} points.</b></p>
+        <p> Your worker's payoff is <b>{{ partner_payoff |json }} points.</b></p>
     {% elif player.matched == 1 and player.role == "worker"  %}
-        <p> <b>Sei stato assunto</b> e hai completato correttamente <b>{{ tasks_correct }} <span id="Scorr">compiti</span></b>
-	    e ne hai <span id="oi">tentati</span> {{ tasks_attempted }}. </p>
-        <p> Ogni compito eseguito correttamente vale <b>20 punti</b> per il tuo datore di lavoro. </p>
-        <p> Il tuo guadagno è <b>{{ player.pay|json }} punti.</b></p>
-        <p> Il guadagno del tuo datore di lavoro è 40 - {{ final_wage }} + {{ tasks_correct }} * 20 = <b>{{ partner_payoff|json }} punti.</b></p>
-
-    {% elif player.matched == 1 and player.role == "worker" %}
-        <p> <b>Sei stato assunto</b> e hai completato correttamente <b>{{ tasks_correct }} <span id="Scorr">compiti</span></b>
-	    e ne hai <span id="oi">tentati</span> {{ tasks_attempted }}. </p>
-        <p> Ogni compito eseguito correttamente vale <b>20 punti</b> per il tuo datore di lavoro. </p>
-        <p> Il tuo guadagno è <b>{{ player.pay|json }} punti.</b></p>
-        <p> Il guadagno del tuo datore di lavoro è 40 - {{ final_wage }} + {{ tasks_correct }} * 20 = <b>{{ partner_payoff|json }} punti.</b></p>
+        <p> <b>You were hired this round </b> and you have completed <b>{{ tasks_correct }} <span id="Scorr">tasks</span></b>
+	    correctly and tried {{ tasks_attempted }} <span id="oi">tasks</span>.</p>
+        <p> Each correct task is worth <b>20 points </b> to the employer. </p>
+        <p> Your payoff is <b>{{ player.payoff |json }} points.</b></p>
+        <p> Your employer's payoff is: 40 - {{ wage }} + {{ tasks_correct }} * 20 = <b>{{ partner_payoff|json }} points.</b></p>
     {% endif %}
-
-    <p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Successivo</button> </p>
+    <p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Next</button> </p>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript"></script>
     <script>
-
+    <!-- Using spans because otherwise the if sentences could become hard to follow.-->
     window.onload = function() {
         if (1 === {{ tasks_correct |json }}) {
-            $("span#Scorr").html("compito");
+            $("span#Scorr").html("task");
         }
         if (1 === {{ tasks_attempted |json }}) {
-            $("span#Satt").html("compito");
-            $("span#oi").html("tentato");
-        }
-        if (1 === {{ player.pay|json }}) {
-            $("span#punto").html("punto");
-        }
-        if (1 === {{ partner_payoff|json }}) {
-            $("span#punti").html("punto");
+            $("span#Satt").html("task");
+            $("span#oi").html("task");
         }
     }
     </script>

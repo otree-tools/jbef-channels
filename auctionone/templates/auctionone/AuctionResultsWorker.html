@@ -1,28 +1,27 @@
-{% extends "global/Page.html" %}
-
+{% extends "auctionone/include/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Risultati della fase assunzioni {{ player.round_number }}
+    Results of the auction {{ player.round_number }}
 {% endblock %}
 
 {% block content %}
-    <p style="margin-left: 60px; margin-right: 60px"> <i>  La fase di assunzione è terminata.
-        Risultato: {{ group.num_contracts_closed |json }} <span id="scon">lavoratori </span> sono stati assunti
-        con i seguenti salari: {{ group.wage_list }}.
-        In questo round, <span id="emps_unmatched"> </span> <span id="semps">datori di lavoro</span>
-        e <span id="workers_unmatched"> </span> <span id="sworks"> lavoratori </span> sono senza contratto. </i> </p>
+    <p style="margin-left: 40px"> <i>  The hiring auction has ended.
+        Result: {{ group.num_contracts_closed |json }} <span id="scon">workers </span> have been hired with the
+        following wages: {{ group.wage_list }}.
+        In this round, <span id="emps_unmatched"> </span> <span id="semps">employers</span>
+        and <span id="workers_unmatched"> </span> <span id="sworks"> workers </span> were left without a contract. </i> </p>
 
 
 {% if player.matched == 1 %}
-    <p> <b>Sei stato assunto</b> con il salario di <b>{{ initial_wage }}</b>.</p>
+    <p> <b>You have been hired </b> with the wage of <b>{{ wage }}</b>.</p>
 {% else %}
-    <p> Non sei stato assunto.  </p>
+    <p> You have not been hired  </p>
 {% endif %}
 
-    <p> Nella prossima fase, tutti gli assunti avranno 5 minuti per lavorare. <br></p>
+     <p> In the next stage, all the hired workers have 5 minutes to work on a task. <br></p>
 
-    <p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Successivo</button> </p>
+    <p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Next</button> </p>
 
 {% endblock %}
 
@@ -33,15 +32,15 @@
         var emps_un = {{ Constants.num_employers|json }} - {{ group.num_contracts_closed|json }};
         $("span#emps_unmatched").html(emps_un);
         if (emps_un === 1) {
-            $("span#semps").html("datore di lavoro");
+            $("span#semps").html("employer");
         }
         var workers_un = {{ Constants.num_workers|json }} - {{ group.num_contracts_closed|json }};
         $('span#workers_unmatched').html(workers_un);
         if (workers_un === 1) {
-            $("span#sworks").html("lavoratore");
+            $("span#sworks").html("worker");
         }
         if (1 === {{ groups.num_contracts_closed|json }}) {
-            $("span#scon").html("lavoratore è stato assunte");
+            $("span#scon").html("worker ");
         }
     };
 </script>

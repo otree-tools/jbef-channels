@@ -1,8 +1,8 @@
-{% extends 'otree/WaitPage.html' %}
+{% extends 'auctionone/include/WaitPage.html' %}
 
 {% load otree %}
 {% block title %}
-    Attendere prego
+    Please wait
 {% endblock %}
 {% block content %}
     <head>
@@ -33,7 +33,7 @@
     {% if player.role == "worker" and player.matched == 1 %}
     {% else %}
         <div class="otree-timer alert alert-warning">
-        <div id="otree-timeout">Tempo rimanente nella fase di lavoro (approssimativamente):
+        <div id="otree-timeout">Time remaining in the working phase (approximately):
             <span class="glyphicon glyphicon-time"></span>
         <span id="otree-timer__time-left"></span></div>
         </div>
@@ -42,35 +42,36 @@
 
     {% if player.matched == 0 and player.role == "employer" %}
         <p>
-        I lavoratori assunti in questo round hanno ora 5 minuti per svolgere il lavoro.
-        Non hai assunto un lavoratore in questo round, per favore attendi.
+        The hired workers have now 5 minutes to work on the effort tasks.
+        You have not hired a worker,  please, wait for the round to end.
         </p>
 
     {% elif player.matched == 0 and player.role == "worker" %}
         <p>
-        I lavoratori assunti in questo round hanno ora 5 minuti per svolgere il lavoro.
-        Non sei stato assunto in questo round, per favore attendi. </p>
+        The hired workers have now 5 minutes to work on the effort tasks.
+        You have not been hired this round, please wait for the round to end. </p>
     {% elif player.matched == 1 and player.role == "employer" %}
         <p>
-        Hai assunto un lavoratore, il quale ha ora 5 minuti per svolgere il lavoro. Per favore, attendi.
+        You have hired a worker, who has now 5 minutes to work on the real effort tasks. Please wait.
         </p>
 
-        <p> Nel mentre, puoi provarci anche tu.
-            Lo svolgimento verrà <b>interrotto nel momento in cui i lavoratori saranno pronti</b>.
-            Questa fase (e quanti compiti completerai correttamente)
-            <b>non avrà alcun effetto sul tuo guadagno o su quello di chiunque altro</b>.</p>
+        <p> While you are waiting, you can also work on the real effort task.
+            This phase is going to be <b>interrupted immediately after all the workers are ready</b>.
+            This waiting period (and the number of tasks completed) <b>will not have any effect on your payoff
+                or the payoffs of the others</b>.
+        </p>
 
-    <h4> Nell'attesa: </h4>
+    <h4> While waiting </h4>
     <p>
-    Per prima cosa, trova <b>il numero più grande in entrambi i riquadri</b>. Poi <b>sommali</b>. <br>
-    Inserisci la tua risposta nella casella sottostante, poi invia.
+        First, <b>find the largest number in each of the two boxes</b>. Then, <b>sum them </b> together. <br>
+    Incert the result in the input box below and then submit it.
     </p>
 
     <table style="width:100%">
         <tr>
-            <th class="box-heading" > Riquadro 1</th>
+            <th class="box-heading" > Box 1</th>
             <th></th>
-            <th class="box-heading"> Riquadro 2</th>
+            <th class="box-heading"> Box 2</th>
         </tr>
         <tr>
             <!-- NEST ANOTHER TABLE! -->
@@ -95,7 +96,7 @@
     <table>
     <tr>
         <td>
-            <div>La tua risposta è:</div>
+            <div>Your answer:</div>
         </td>
     </tr>
     <tr>
@@ -108,7 +109,7 @@
             border-color: lightsteelblue;
             font-weight: bold;
             margin: 1px;"
-            >Invia</button>
+            >Answer</button>
         </td>
         <td>
             <span id="feedback"></span>
@@ -119,7 +120,7 @@
     <table>
     <tr>
         <td>
-            Tentativi finora:
+            Tasks attempted:
         </td>
         <td>
             <span id="tasks_attempted">{{ player.tasks_attempted }}</span>
@@ -127,7 +128,7 @@
     </tr>
     <tr>
         <td>
-            Risposte corrette finora:
+            Tasks correct:
         </td>
         <td>
             <span id="tasks_correct"> {{ player.tasks_correct }}</span>
@@ -139,11 +140,11 @@
 
     {% elif player.matched == 1 and player.role == "worker" and player.tasks_attempted >= 10 %}
         <p>
-        Hai completato i 10 tentativi disponibili. Per favore, attendi che il resto dei lavoratori assunti
-     finisca di svolgere il proprio lavoro.
+        You have attempted to solve all of the 10 tasks. Please, wait for the reminder of the time.
+
     {% elif player.matched == 1 and player.role == "worker" and player.tasks_attempted < 10 %}
         <p>
-        Per favore, attendi che il resto dei lavoratori assunti finisca di svolgere il proprio lavoro.
+        Please, wait for the other workers to finish their effort tasks.
         </p>
 
     {% endif %}
