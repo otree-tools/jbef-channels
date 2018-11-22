@@ -1,4 +1,4 @@
-{% extends "auctionone/include/Page.html" %}
+{% extends "auctionone/Page.html" %}
 {% load otree %}
 
 {% block title %}
@@ -6,54 +6,52 @@
 {% endblock %}
 
 {% block content %}
-    <table width="100%">
-    <tr>
-    <td>
-<div class="instructions well well-lg" style="height: 200px">
-<p>
-There are <b><span id="emps_left">{{ Constants.num_employers |json }}</span></b>
-    <span id="Semp">employers</span> and <b><span id="workers_left">{{ Constants.num_workers |json }}</span> </b>
-    <span id="Sworker">workers</span> in the market.
-</p>
+    <div class="general_info">
+        {% include 'auctionone/components/general_info_block.html' %}
+    </div>
+    {% if player.role == 'employer' %}
+        <p>
+            To offer a salary to the potential employees, click one of the offer buttons below.
+        </p>
+    {% else %}
+        <p>
+            To accept an offer, click one of the offers available and then click the Accept-button.
+            The "Accept" button will appear after an offer has been clicked.
+        </p>
+    {% endif %}
 
-<p> To offer a salary to the potential employees, click one of the offer buttons below.
-</p>
+    <div class="offer_container">
+        {% include 'auctionone/components/open_contracts_block.html' %}
+    </div>
 
-    </td>
-            <td width="42%">
-                <div class="instructions well well-lg" style="background: #ecf2f9; height: 200px">
-            <table align="top-left" style="color: steelblue">
-
-                <tr> <th  align="top-left"> The last five events </th> </tr>
-
-                <tr> <td><span id="message1"> <br> </span></td></tr>
-                <tr> <td><span id="message2"> <br> </span></td></tr>
-                <tr> <td><span id="message3"> <br> </span></td></tr>
-                <tr> <td><span id="message4"> <br> </span></td></tr>
-                <tr> <td><span id="message5"> <br> </span></td></tr>
-            </table>
-                </div>
-    </tr>
-    </table>
-
-
-    {% include 'auctionone/include/open_contracts_block.html' %}
-
-    <div> <p>Your wage offer is: <b><span id="standing_offer"></span></b></p></div>
-
-    <p>You can offer: </p>
-    <div style="margin: 0 10px 0 10px;">
-        <form>
-        <!-- ALL THE OFFER BUTTONS ARE HERE -->
+    {% if player.role == 'employer' %}
+        <p>You can offer: </p>
+        <div style="margin: 0 10px 0 10px;">
             {% for offer in Constants.offer_range %}
                 <button type="button" data-offer={{ offer }} class="offer">{{ offer }}</button>
             {% endfor %}
-    </form>
-    </div>
+        </div>
+    {% else %}
+        <div>
+            <p>To accept an offer,click one of the offers available and then click "Accept". <br>
+                <input id="temp_output" type="number" value="" readonly class="offer" style="background-color:white">
+                <input id="subbutton" type="hidden" value="Accept" class="offer">
+
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 
 {% block scripts %}
-    <script type="text/javascript" src= "{% static "auctionone/js/jquery.countdown.js" %}" ></script>
-    {% include 'auctionone/include/js_vars_for_auction_block.html' %}
+    {% include 'auctionone/channels/auction_channel.html' %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .open_contract {
+            cursor: pointer !important;
+            font-size: medium;
+        }
+    </style>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends "auctionone/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Results of the auction {{ player.round_number }}
+{% endblock %}
+
+{% block content %}
+    {% if player.role == 'worker' %}
+        {% if player.matched %}
+            <p><b>You have been hired </b> with the wage of <b>{{ player.accepted_offer.amount }}</b>.</p>
+        {% else %}
+            <p> You have not been hired </p>
+        {% endif %}
+    {% else %}
+        {% if player.matched %}
+            <p><b>You have hired a worker </b> with the wage of <b>{{ player.accepted_offer.amount }}</b>.
+        {% else %}
+            <p> You have not hired a worker. </p>
+        {% endif %}
+    {% endif %}
+
+    <p> In the next stage, all the hired workers have {{ Constants.task_time }} seconds to work on a task.</p>
+    {% next_button %}
+{% endblock %}
+

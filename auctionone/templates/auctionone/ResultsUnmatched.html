@@ -1,0 +1,18 @@
+{% extends "auctionone/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Results of the round {{ player.round_number }}
+{% endblock %}
+
+{% block content %}
+
+    {% if player.role == "employer" %}
+        <p>You have not hired a worker this round </p>
+
+    {% else %}
+        <p>You were not hired this round. </p>
+    {% endif %}
+    <p>Your payoff is <b>{{ player.payoff }}.</b></p>
+    {% next_button %}
+{% endblock %}

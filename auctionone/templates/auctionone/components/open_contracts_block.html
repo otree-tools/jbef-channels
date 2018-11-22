@@ -1,0 +1,14 @@
+<p>The standing wage offers are: <span id="taken" style="color:darkred"></span></p>
+<div id="active_offers" style="margin: 0 10px 0 10px;">
+    {% if group.open_offers %}
+        {% for offer in group.open_offers %}
+            <span class='badge open_contract offer'
+                  data-offer_id={{ offer.id }} data-amount={{ offer.amount }}> {{ offer.amount }}</span>
+        {% endfor %}
+    {% else %}
+        <b>There are no standing offers</b>
+    {% endif %}
+</div>
+<div><p>Your wage offer is: <b><span id="standing_offer"></span></b></p></div>
+
+

@@ -11,5 +11,4 @@ class WorkPage(Page):
 
 page_sequence = [
     WorkPage,
-
 ]

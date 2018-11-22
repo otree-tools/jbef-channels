@@ -1,130 +1,20 @@
-{% extends "auctionone/include/Page.html" %}
+{% extends "auctionone/Page.html" %}
 {% load otree %}
 
 {% block title %}
-    Effort task
+    Counting task - round {{ view.round_number }}
 {% endblock %}
 
 {% block content %}
-    <head>
-        <style>
-            th, td {
-                padding: 2px 2px 2px 2px;
-            }
+    <div class="task-container">{{ player.get_or_create_task.html_body|safe }}</div>
+    <div>Your answer is:</div>
+    <input type="text" id="answer" class="offer" style="background-color: white" required>
+    <button class="answer btn btn-outline-dark" type="button" data-feedback="false">Answer</button>
 
-            table#box1 {
-                background-color: #ecf2f9;
-            }
-
-            table#box2 {
-                background-color: #ecf2f9;
-            }
-            .alert {margin-bottom: 0 }
-            .page-header {  padding-bottom: 0;
-                            padding-top: 0}
-
-        </style>
-    </head>
-
-    <p>
-        The task is to find <b>the largest number in each of the two boxes</b>
-and then <b>sum them up</b>.
-<br>
-   Incert your answer into the input box below.
-    </p>
-
-    <table style="width:100%">
-        <tr>
-            <th class="box-heading"> Box 1</th>
-            <th></th>
-            <th class="box-heading"> Box 2</th>
-        </tr>
-        <tr>
-
-            <!-- NEST ANOTHER TABLE! -->
-            <td class="table-borders">
-                <table class="table-style" style="width:99%" id="box1">
-                </table>
-            </td>
-
-            <!-- Some space -->
-            <td>
-
-            </td>
-            <!-- NEST ANOTHER TABLE! -->
-            <td class="table-borders">
-                <table class="table-style" style="width:99%" id="box2">
-
-                </table>
-            </td>
-        </tr>
-    </table>
-
-
-    <table>
-    <tr>
-        <td>
-            <div>Your answer is:</div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-
-            <input type="number" id="answer" class="offer" style="background-color: white" required>
-            <button class="answer" type="button" style="background-color: whitesmoke;
-            color: navy;
-            padding: 1px 10px 1px 10px;
-            border: groove;
-            border-color: lightsteelblue;
-            font-weight: bold;
-            margin: 1px;"
-            >Answer</button>
-        </td>
-        <td>
-            <span id="feedback"></span>
-        </td>
-
-    </tr>
-    </table>
-    <table>
-    <tr>
-        <td>
-            Tasks attempted:
-        </td>
-        <td>
-            <span id="tasks_attempted">{{ player.tasks_attempted }}</span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Tasks correct:
-        </td>
-        <td>
-            <span id="tasks_correct"> {{ player.tasks_correct }}</span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Your payoff:
-        </td>
-        <td>
-            <span id="worker_payoff"> {{ wage }} </span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            The employer's payoff:
-        </td>
-        <td>
-            <span id="employer_payoff"></span>
-        </td>
-    </tr>
-    </table>
-
-
+    <p> Tasks attempted so far: <span id="num_tasks_total">{{ player.num_tasks_total }}</span></p>
+    <p> Tasks correct so far: <span id="num_tasks_correct"> {{ player.num_tasks_correct }}</span></p>
 {% endblock %}
 
 {% block scripts %}
-    {#  Here we include javascript block where we connect via websockets to oTree server  #}
-    {% include 'auctionone/include/js_work_page.html' %}
+    {% include 'auctionone/channels/work_channel.html' %}
 {% endblock %}

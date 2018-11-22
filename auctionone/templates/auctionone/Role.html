@@ -1,4 +1,4 @@
-{% extends "auctionone/include/Page.html" %}
+{% extends "auctionone/Page.html" %}
 {% load otree %}
 
 {% block title %}
@@ -6,115 +6,110 @@
 {% endblock %}
 
 {% block content %}
-    <p>You are participating in a labour market with
-        {% if Constants.num_employers == 1 %}
-            {{ Constants.num_employers }} employer and
-        {% else %}
-            {{ Constants.num_employers }} employers and
-        {% endif %}
-        {% if Constants.num_workers == 1 %}
-            {{ Constants.num_workers }} worker.
-        {% else %}
-            {{ Constants.num_workers }} workers.
-        {% endif %} </p>
+    <p>
+        You are participating in a labour market with
+        {{ Constants.num_employers }} employer{{ Constants.num_employers|pluralize }} and
+        {{ Constants.num_workers }} worker{{ Constants.num_workers|pluralize }}.
+    </p>
 
- <p> You have the role of <b>{% if player.role == 'worker' %} a worker {% else %} an employer{% endif %}</b>
- and you keep this role throughout the experiment. </p>
+    <p> You have the role of <b>{{ player.role }}</b> and you keep this role throughout the experiment. </p>
 
 
- <p> To start the experiment, please, click "Next". </p>
+    <p> To start the experiment, please, click "Next". </p>
 
-   <p> <button class="otree-btn-next btn btn-primary next-button otree-next-button">Next</button> </p>
+    {% next_button %}
 
     <h3>Structure of the experiment</h3>
     <p>
-    The experiment consists of {{ Constants.num_rounds }} rounds. Each round has the following stages:
+        The experiment consists of {{ Constants.num_rounds }} rounds. Each round has the following stages:
     </p>
 
-    <h6>
-    Hiring stage
-    </h6>
+    <h6>Hiring stage</h6>
     <p>
-    Each employer can make a wage offer on a public platform and each worker can accept one of these offers.
-    Once an offer is accepted, the respective employer and worker are matched for the remaining stages of a round.
-    All the hiring results are reported: how many were hired and at what wages.
+        Each employer can make a wage offer on a public platform and each worker can accept one of these offers.
+        Once an offer is accepted, the respective employer and worker are matched for the remaining stages of a round.
+        All the hiring results are reported: how many were hired and at what wages.
     </p>
 
-    <h6>
-    Work stage
-    </h6>
+    <h6>Work stage</h6>
     <p>
-    Each hired worker has 5 minutes to work on a real effort task.
-    The results are known by the worker and the employer hiring, and resulting payoffs are calculated.
+        Each hired worker has {{ Constants.task_time }} seconds to work on a real effort task.
+        The results are known by the worker and the employer hiring, and resulting payoffs are calculated.
     </p>
 
     <p>See the detailed instructions explaining the two parts of the experiment: </p>
 
     <h3>Hiring stage</h3>
     <p>
-    The hiring stage lasts at most 2 minutes. Each employer can post a wage offer on the public platform.
-    The offer must be between 30 and 100 points, in intervals of 5, and it can be updated while not accepted
-    but cannot be cancelled entirely.
+        The hiring stage lasts at most {{ Constants.auction_time }} seconds. Each employer can post a wage offer on the
+        public platform.
+        The offer must be between {{ lb }} and {{ ub }}, in intervals of {{ Constants.step }},
+        and it can be updated while not accepted
+        but cannot be cancelled entirely.
     </p>
 
     <p>
-    A worker can accept any one of the standing offers.
-    An accepted offer is removed from the platform and the respective worker and employer are pair up
-    for the rest of the round.
+        A worker can accept any one of the standing offers.
+        An accepted offer is removed from the platform and the respective worker and employer are pair up
+        for the rest of the round.
     </p>
 
     <p>
-    If an offer is not accepted within the 2 minute time window, the employer is not able to hire anyone.
-    Without a contract, workers and employers will not actively participate in remaining stages in a round,
-    but will start again in the next round.
+        If an offer is not accepted within the {{ Constants.auction_time }} seconds time window, the employer is not
+        able to hire anyone.
+        Without a contract, workers and employers will not actively participate in remaining stages in a round,
+        but will start again in the next round.
     </p>
 
     <p>
-    If left without a contract, an employer earns 0 points and a worker earns 20 points.
-    {% if Constants.num_employers > Constants.num_workers %}
-    There will be at least one unemployed worker every round.
-    {% endif %}
+        If left without a contract, an employer earns {{ Constants.unmatched_employer_payoff }} and a worker
+        earns {{ Constants.unmatched_worker_payoff }}.
+        {% if Constants.num_employers > Constants.num_workers %}
+            There will be at least one unemployed worker every round.
+        {% endif %}
     </p>
 
     <p>
-    If the employer hires a worker, the employer gets 40 points.
-    The wage is reduced from the 40 points and any potential revenue from the work tasks that round.
-    Worker's payoff consist of the wage.
+        If the employer hires a worker, the employer gets {{ Constants.employer_endowment }}.
+        The wage is reduced from the {{ Constants.employer_endowment }} and any potential revenue from the work tasks
+        that round.
+        Worker's payoff consist of the wage.
     </p>
 
     <p>
-    Workers will not know the identity of their employer and likewise
-    the employers will not know the identity of the worker.
-    The overall results of the hiring stage are however communicated to everyone:
-    that includes information on how many were hired and at what wages.
+        Workers will not know the identity of their employer and likewise
+        the employers will not know the identity of the worker.
+        The overall results of the hiring stage are however communicated to everyone:
+        that includes information on how many were hired and at what wages.
     </p>
 
     <h3>Work stage </h3>
     <p>
-    The hired workers have 5 minutes to work. They can attempt at most {{ Constants.max_task_amount }} counting tasks.
-    A task consists of two boxes, each containing 100 numbers.
-    The job is to find the biggest number in each of the two boxes and then add the two numbers together.
-    Each correctly completed task gives the employer a return of 20 points.
-    Wrong answers are worthless but count as attempted tasks. Workers can submit one answer per task.
+        The hired workers have {{ Constants.task_time }} seconds to work.
+        A task consists of two boxes, each containing {{ num_numbers }} numbers.
+        The job is to find the biggest number in each of the two boxes and then add the two numbers together.
+        Each correctly completed task gives the employer a return of {{ Constants.task_fee }}.
+        Wrong answers are worthless but count as attempted tasks. Workers can submit one answer per task.
     </p>
 
     <h3> Payoffs </h3>
     <p>
-    After the 5 minute period or the maximum of 10 tasks, all participants are directed to the results page.
-    The worker and employer hiring will get to know the number of tasks attempted and tasks correct by the worker
-    and the subsequent final payoffs of each other, but they will not learn this information for other participants.
+        After the {{ Constants.task_time }} seconds period , all participants are directed to the results page.
+        The worker and employer hiring will get to know the number of tasks attempted and tasks correct by the worker
+        and the subsequent final payoffs of each other, but they will not learn this information for other participants.
     </p>
     <h6>If the participant does not have a contract, the payoffs are the following:</h6>
-    <p>Employer’s payoff = 0 points </p>
-    <p>Worker’s payoff = 20 points </p>
+    <p>Employer’s payoff = {{ Constants.unmatched_employer_payoff }} </p>
+    <p>Worker’s payoff = {{ Constants.unmatched_worker_payoff }} </p>
     <h6>If the participant has a contract:</h6>
-    <p>Employer’s payoff = 40 - wage + 20 * number of correct tasks </p>
+    <p>Employer’s payoff = {{ Constants.employer_endowment }} - wage + {{ Constants.task_fee }} * number of correct
+        tasks </p>
     <p>Worker’s payoff = wage </p>
 
     <p>
-    In words, the employer receives a 40 points when hiring a worker, pays out the wage,
-    and receives revenue from correctly completed tasks.
-    What remains is the payoff of the employer and note that the payoff can also be negative.
-    A hired worker's payoff consists of the wage.
+        In words, the employer receives a {{ Constants.employer_endowment }} when hiring a worker, pays out the wage,
+        and receives revenue from correctly completed tasks.
+        What remains is the payoff of the employer and note that the payoff can also be negative.
+        A hired worker's payoff consists of the wage.
     </p>
 {% endblock %}

@@ -17,11 +17,6 @@ class MarketTracker(JsonWebsocketConsumer):
         personal_channel = self.get_player().get_personal_channel_name()
         return [group_name, personal_channel]
 
-    def connect(self, message, **kwargs):
-        print('someone connected')
-
-    def disconnect(self, message, **kwargs):
-        print('someone disconnected')
 
     def get_player(self):
         self.clean_kwargs()

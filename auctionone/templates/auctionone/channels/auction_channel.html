@@ -1,0 +1,58 @@
+<script>
+    $(function () {
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        var ws_path = ws_scheme + '://' + window.location.host + "/auction_channel/{{ player.id }}/{{ group.pk }}";
+        var socket = new ReconnectingWebSocket(ws_path);
+        send_message = function (msg) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(msg));
+            }
+        };
+
+        socket.onmessage = function (event) {
+            var obj = jQuery.parseJSON(event.data);
+            var $offer_container = $('div.offer_container');
+            var $general_info_container = $('div.general_info');
+            if (obj.day_over) {
+                $('form').submit();
+                return;
+            }
+            $offer_container.html(obj.open_offers);
+            $general_info_container.html(obj.general_info);
+        };
+        {% if player.role == "employer" %}
+            $("button.offer").on("click", function () {
+                create_or_update_contract($(this).data('offer'));
+            });
+
+            create_or_update_contract = function (amount) {
+                var msg = {
+                    offer_made: true,
+                    wage_offer: amount
+                };
+                send_message(msg);
+            };
+        {% else %}
+            var offer_id;
+            var $temp_output = $('#temp_output');
+            var $answer_btn = $('#subbutton');
+            $(document).on('click', '.open_contract', function () {
+                $temp_output.val($(this).data('amount'));
+                offer_id = $(this).data('offer_id');
+                $answer_btn.prop("type", "button");
+            });
+            $answer_btn.on('click', function () {
+                if ($temp_output.val() > 0) {
+                    accept_a_contract();
+                }
+            });
+            accept_a_contract = function () {
+                var msg = {
+                    offer_accepted: true,
+                    offer_id: offer_id,
+                };
+                send_message(msg);
+            };
+        {% endif %}
+    })
+</script>

@@ -65,7 +65,7 @@ SESSION_CONFIGS = [
     {
         'name': 'auctionone',
         'display_name': 'One sided auction and RET',
-        'num_demo_participants': 4,
+        'num_demo_participants': 3,
         'app_sequence': ['auctionone'],
 
     },
