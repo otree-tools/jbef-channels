@@ -27,6 +27,7 @@ class Constants(BaseConstants):
     offer_range = list(range(lower_boundary, upper_boundary, step))
     max_task_amount = 10
 
+
 class Subsession(BaseSubsession):
     def creating_session(self):
         # before any page is shown we create initial tasks for each of the players
@@ -35,29 +36,15 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    auctionenddate = models.FloatField()
-    work_end_date = models.FloatField()
     num_contracts_closed = models.IntegerField()
-    day_over = models.BooleanField()
     last_message = models.StringField()
     wage_list = models.StringField()
     contracts_dump = models.StringField()
 
-    def time_left(self):
-        now = time.time()
-        time_left = self.auctionenddate - now
-        time_left = round(time_left) if time_left > 0 else 0
-        return time_left
 
-    def time_work(self):
-            now = time.time()
-            time_left = self.work_end_date - now
-            time_left = round(time_left) if time_left > 0 else 0
-            return time_left
 
     def set_payoffs(self):
         for person in self.get_players():
-
             if person.role() == 'employer':
                 if person.matched == 0:
                     person.payoff = 0
@@ -87,7 +74,7 @@ class Player(BasePlayer):
     payoff = models.CurrencyField()
 
     def role(self):
-        if self.id_in_group < Constants.num_employers + 1:
+        if self.id_in_group <= Constants.num_employers:
             return 'employer'
         else:
             return 'worker'
@@ -117,6 +104,7 @@ class Player(BasePlayer):
             "mat2": listy,
             "correct_answer": self.last_correct_answer,
         }
+
 
 class Offer(djmodels.Model):
     employer = djmodels.ForeignKey(Player, related_name='offers')

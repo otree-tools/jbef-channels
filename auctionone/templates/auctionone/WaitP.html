@@ -150,24 +150,3 @@
     {% endif %}
 {% endblock %}
 
-{% block scripts %}
-    <script type="text/javascript" src="{% static "auctionone/js/jquery.countdown.js" %}"></script>
-    {% include 'auctionone/include/js_work_page.html' %}
-
-    <script>
-    var milliseconds = 1000 * {{time_left}};
-    update_create_countdown(milliseconds);
-    function update_create_countdown(milliseconds) {
-        $('div#otree-timeout').show();
-        var currentDate = new Date();
-
-        $('span#otree-timer__time-left').countdown(currentDate.valueOf() + milliseconds)
-            .on('update.countdown', function (event) {
-                // %-N is "Total count of minutes till the end, non-padded"
-                // %S is seconds left
-                var format = '%-N:%S';
-                $(this).html(event.strftime(format));
-            })
-    }
-    </script>
-{% endblock %}
