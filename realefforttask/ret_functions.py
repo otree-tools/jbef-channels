@@ -25,6 +25,7 @@ def get_random_list(max_len):
     return [randint(10, randint(low_upper_bound, high_upper_bound)) for i in range(max_len)]
 
 
+# Shared properties for the tasks collected under the TaskGenerator Class
 class TaskGenerator:
     path_to_render = None
 
