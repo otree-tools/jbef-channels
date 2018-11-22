@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+    <!--The next line adds the task specific content, getting the file name through the get_or_create_task function.-->
     <div class="task-container">{{ player.get_or_create_task.html_body|safe }}</div>
     <div>Your answer is:</div>
     <input type="text" id="answer" class="offer" style="background-color: white" required>

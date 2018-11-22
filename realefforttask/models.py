@@ -24,7 +24,7 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        # we look for a corresponding Task Generator in our library (ret_functions) that contain all task-generating
+        # we look for a corresponding Task Generator in our library (ret_functions.py) that contain all task-generating
         # functions. So the name of the generator in 'task_fun' parameter from settings.py should coincide with an
         # actual task-generating class from ret_functions.
         self.session.vars['task_fun'] = getattr(ret_functions, self.session.config['task'])
@@ -58,7 +58,7 @@ class Player(BasePlayer):
     def num_tasks_total(self):
         return self.tasks.filter(answer__isnull=False).count()
 
-    # in the following method we look if there are any unfinished (with no answer) tasks. If yes, we return an unfinished
+    # The following method checks if there are any unfinished (with no answer) tasks. If yes, we return the unfinished
     # task. If there are no uncompleted tasks we create a new one using a task-generating function from session settings
     def get_or_create_task(self):
         unfinished_tasks = self.tasks.filter(answer__isnull=True)
@@ -69,8 +69,9 @@ class Player(BasePlayer):
             task.save()
             return task
 
-# This is a custom model that contain information about individual tasks. Each player in each round can have as many
-# tasks as they tried to solve (we can call for the set of all tasks  solved by a player by calling for instance
+
+# This is a custom model that contains information about individual tasks. In each round, each player can have as many
+# tasks as they tried to solve (we can call for the set of all tasks solved by a player by calling for instance
 # player.tasks.all()
 # Each task has a body field, html_body - actual html code shown at each page, correct answer and an answer provided by
 # a player. In addition there are two automatically updated/created fields that track time of creation and of an update
