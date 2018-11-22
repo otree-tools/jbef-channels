@@ -157,10 +157,13 @@ class Results(Page):
 page_sequence = [
     Role,
     WP, CountDown,
-    Auction, Accept,
+    Auction,
+    Accept,
     WPage,
-    AuctionResultsEmployer, AuctionResultsWorker,
-    Start, WorkPage,
+    AuctionResultsEmployer,
+    AuctionResultsWorker,
+    Start,
+    WorkPage,
     WaitP,
     Results,
 ]
