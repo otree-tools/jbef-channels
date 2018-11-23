@@ -19,6 +19,8 @@
 
     {% next_button %}
 
+
+    <div style="margin: 50px 0 0 0 ">
     <h3>Structure of the experiment</h3>
     <p>
         The experiment consists of {{ Constants.num_rounds }} rounds. Each round has the following stages:
@@ -39,7 +41,7 @@
 
     <p>See the detailed instructions explaining the two parts of the experiment: </p>
 
-    <h3>Hiring stage</h3>
+    <h5>Hiring stage</h5>
     <p>
         The hiring stage lasts at most {{ Constants.auction_time }} seconds. Each employer can post a wage offer on the
         public platform.
@@ -83,7 +85,7 @@
         that includes information on how many were hired and at what wages.
     </p>
 
-    <h3>Work stage </h3>
+    <h5>Work stage </h5>
     <p>
         The hired workers have {{ Constants.task_time }} seconds to work.
         A task consists of two boxes, each containing {{ num_numbers }} numbers.
@@ -92,7 +94,7 @@
         Wrong answers are worthless but count as attempted tasks. Workers can submit one answer per task.
     </p>
 
-    <h3> Payoffs </h3>
+    <h5> Payoffs </h5>
     <p>
         After the {{ Constants.task_time }} seconds period , all participants are directed to the results page.
         The worker and employer hiring will get to know the number of tasks attempted and tasks correct by the worker
@@ -112,4 +114,5 @@
         What remains is the payoff of the employer and note that the payoff can also be negative.
         A hired worker's payoff consists of the wage.
     </p>
+    </div>
 {% endblock %}

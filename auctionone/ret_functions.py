@@ -1,12 +1,10 @@
-# this is the module responsible for generation functions for different rets
-# if you need new rets you need to define generating functions here and attach them to corresponding tasks
+# This is the module responsible for generation functions for different rets
+# If you need new rets you need to define generating functions here and attach them to corresponding tasks
+# For more explanations, look at the realefforttask application
 
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-import random
-import json
 from random import randint
-from string import digits, ascii_lowercase
 
 
 # function slices a list with n elements in each sublist (if possible)

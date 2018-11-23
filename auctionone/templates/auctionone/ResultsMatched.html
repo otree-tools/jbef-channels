@@ -8,15 +8,15 @@
 {% block content %}
     {% if player.role == "employer" %}
         <p><b>You have hired a worker</b>, who completed correctly
-            <b>{{ player.partner.num_tasks_correct }} <span id="Scorr">tasks </span> </b>
-            and tried {{ player.partner.num_tasks_total }} <span id="oi">tasks</span>. </p>
+            <b>{{ player.partner.num_tasks_correct }} <span>tasks </span> </b>
+            and tried {{ player.partner.num_tasks_total }} <span>tasks</span>. </p>
         <p> For each correct task you receive <b>{{ Constants.task_fee }}</b>.</p>
         <p> Your payoff is: {{ Constants.employer_endowment }} - {{ player.accepted_offer.amount }}
             + {{ player.partner.num_tasks_correct }} * {{ Constants.task_fee }} = <b>{{ player.payoff |json }} points.</b></p>
         <p> Your worker's payoff is <b>{{ player.partner.payoff }}</b></p>
     {% else %}
-        <p><b>You were hired this round </b> and you have completed <b>{{ player.num_tasks_correct }} <span id="Scorr">tasks</span></b>
-            correctly and tried {{ player.num_tasks_total }} <span id="oi">tasks</span>.</p>
+        <p><b>You were hired this round </b> and you have completed <b>{{ player.num_tasks_correct }} <span>tasks</span></b>
+            correctly and tried {{ player.num_tasks_total }} <span>tasks</span>.</p>
         <p> Each correct task is worth <b>{{ Constants.task_fee }} </b> to the employer. </p>
         <p> Your payoff is <b>{{ player.payoff }}.</b></p>
         <p> Your employer's payoff is: {{ Constants.employer_endowment }} - {{ player.accepted_offer.amount }}

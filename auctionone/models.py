@@ -23,16 +23,16 @@ class Constants(BaseConstants):
     name_in_url = 'auctionone'
     players_per_group = 3
     num_rounds = 8
-    num_employers = 2
+    num_employers = 1
     num_workers = players_per_group - num_employers
-    task_time = 30  # how much time a worker has to complete the job
+    task_time = 3000  # how much time a worker has to complete the job
     auction_time = 300  # number of seconds before auctioning day is over
     lb = 30  # upper and lower boundaries for job offers
     ub = 101
     step = 5
     offer_range = list(range(lb, ub, step))
-    unmatched_worker_payoff = c(0)
-    unmatched_employer_payoff = c(20)
+    unmatched_worker_payoff = c(20)
+    unmatched_employer_payoff = c(0)
     employer_endowment = c(40)
     task_fee = c(20)
     task_difficulty = 5
@@ -136,8 +136,9 @@ class Player(BasePlayer):
     def num_tasks_total(self):
         return self.tasks.filter(answer__isnull=False).count()
 
-    # in the following method we look if there are any unfinished (with no answer) tasks. If yes, we return an unfinished
-    # task. If there are no uncompleted tasks we create a new one using a task-generating function from session settings
+    # in the following method we look if there are any unfinished (with no answer) tasks.
+    # If yes, we return an unfinished task.
+    # If there are no uncompleted tasks we create a new one using a task-generating function from session settings.
     def get_or_create_task(self):
         unfinished_tasks = self.tasks.filter(answer__isnull=True)
         if unfinished_tasks.exists():

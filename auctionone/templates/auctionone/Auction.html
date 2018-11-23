@@ -15,7 +15,7 @@
         </p>
     {% else %}
         <p>
-            To accept an offer, click one of the offers available and then click the Accept-button.
+            To accept an offer, click one of the offers available and then click the Accept-button. <br>
             The "Accept" button will appear after an offer has been clicked.
         </p>
     {% endif %}
@@ -25,12 +25,14 @@
     </div>
 
     {% if player.role == 'employer' %}
+        <div><p>Your wage offer is: <b><span id="standing_offer"></span></b></p></div>
         <p>You can offer: </p>
         <div style="margin: 0 10px 0 10px;">
             {% for offer in Constants.offer_range %}
                 <button type="button" data-offer={{ offer }} class="offer">{{ offer }}</button>
             {% endfor %}
         </div>
+
     {% else %}
         <div>
             <p>To accept an offer,click one of the offers available and then click "Accept". <br>
