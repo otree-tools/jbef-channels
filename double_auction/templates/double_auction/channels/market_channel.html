@@ -26,6 +26,7 @@
             $contracts_container.html(obj.contracts);
             $profit_container.html(obj.profit);
             $form_container.html(obj.form);
+            $('input#price').focus();
             var has_over_message = obj.hasOwnProperty('presence');
             if (has_over_message) {
                 l(obj.presence);
@@ -64,7 +65,17 @@
                     socket.send(JSON.stringify(msg));
                 }
                 ;
-                $price_inp.val('');
+                $price_inp.val('').focus();
+            }
+        });
+        $form_container.on('keydown', 'input#price', function () {
+
+            var $btn_answer = $('button#submit_statement');
+            if (event.keyCode === 13) {
+
+                event.preventDefault();
+                $btn_answer.click();
+                return false;
             }
         });
         $form_container.on('click', 'button#retract_statement', function () {

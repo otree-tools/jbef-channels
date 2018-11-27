@@ -17,7 +17,6 @@ class MarketTracker(JsonWebsocketConsumer):
         personal_channel = self.get_player().get_personal_channel_name()
         return [group_name, personal_channel]
 
-
     def get_player(self):
         self.clean_kwargs()
         return Player.objects.get(pk=self.player_pk)
@@ -52,12 +51,14 @@ class MarketTracker(JsonWebsocketConsumer):
         if msg['action'] == 'new_statement':
             if player.role() == 'buyer':
                 try:
-                    player.bids.create(price=msg['price'], quantity=msg['quantity'])
+                    bid = player.bids.create(price=msg['price'], quantity=msg['quantity'])
+
                 except NotEnoughFunds:
                     print('not enough funds')
             else:
                 try:
-                    player.asks.create(price=msg['price'], quantity=msg['quantity'])
+                    ask = player.asks.create(price=msg['price'], quantity=msg['quantity'])
+
                 except NotEnoughItemsToSell:
                     print('not enough items to sell')
 
@@ -68,16 +69,16 @@ class MarketTracker(JsonWebsocketConsumer):
         asks = group.get_asks_html()
         bids = group.get_bids_html()
 
-
         spread = group.get_spread_html()
 
         self.group_send(group.get_channel_group_name(), {'asks': asks,
                                                          'bids': bids,
                                                          'spread': spread,
                                                          })
-
+        msg = dict()
         last_statement = player.get_last_statement()
+
         if last_statement:
-            self.send({'last_statement': last_statement.as_dict()})
-
-
+            msg['last_statement'] = last_statement.as_dict()
+        msg['form'] = player.get_form_html()
+        self.send(msg)

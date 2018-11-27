@@ -5,7 +5,7 @@ from os import environ
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
-EXTENSION_APPS = ['minimum', 'auctionone', 'realefforttask']
+EXTENSION_APPS = ['minimum', 'auctionone', 'realefforttask', 'double_auction']
 
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
@@ -68,6 +68,14 @@ SESSION_CONFIGS = [
         'num_demo_participants': 3,
         'app_sequence': ['auctionone'],
 
+    },
+    {
+        'name': 'double_auction',
+        'display_name': 'Double auction',
+        'num_demo_participants': 3,
+        'app_sequence': ['double_auction'],
+        'sellers': 1,
+        'buyers': 2,
     },
 ]
 
