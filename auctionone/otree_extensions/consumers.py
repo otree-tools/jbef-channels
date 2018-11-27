@@ -1,8 +1,6 @@
 from channels.generic.websockets import JsonWebsocketConsumer
-
-# we need to import our Player model to get and put some data there
+# we need to import our models to get and put some data there
 from auctionone.models import Player, Group, JobOffer, Constants
-import ast
 
 
 class AuctionTracker(JsonWebsocketConsumer):
@@ -64,8 +62,14 @@ class TaskTracker(JsonWebsocketConsumer):
             old_task = player.get_or_create_task()
             old_task.answer = answer
             old_task.save()
+            if old_task.answer == old_task.correct_answer:
+                feedback = "Your answer was correct."
+            else:
+                feedback = "Your previous answer " + old_task.answer + " was wrong, the correct answer was " + \
+                           old_task.correct_answer + "."
             new_task = player.get_or_create_task()
             self.send({'task_body': new_task.html_body,
                        'num_tasks_correct': player.num_tasks_correct,
                        'num_tasks_total': player.num_tasks_total,
+                       'feedback': feedback,
                        })

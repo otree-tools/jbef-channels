@@ -2,15 +2,10 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants, Group, Subsession
 
-import time
-
 
 class ActiveWorkerPage(Page):
     def is_displayed(self):
-        return self.player.role() == 'worker' and self.player.matched and self.extra_is_displayed()
-
-    def extra_is_displayed(self):
-        return True
+        return self.player.role() == 'worker' and self.player.matched
 
 
 # ########### the actual pages start here ############# #
@@ -50,7 +45,6 @@ class Start(ActiveWorkerPage):
         self.player.get_or_create_task()
 
 
-#
 class WorkPage(ActiveWorkerPage):
     timer_text = "Time remaining in this stage"
     timeout_seconds = Constants.task_time
