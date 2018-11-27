@@ -10,18 +10,35 @@
 <table class="table table-sm " id="decoding-table">
     <thead>
     <tr class="table-success">
-        <th class="text-right">Letter:</th>
-        <th class="text-left">Key:</th>
+
+
     </tr>
     </thead>
     <tbody>
-    {% for k,v  in task_dict.items %}
-        <tr>
+    <tr>
+        <th class="text-right">Letter:</th>
+
+        {% for k,v  in task_dict.items %}
 
             <td class="text-center">{{ v }}</td>
+
+
+
+
+        {% endfor %}
+    </tr>
+    <tr>
+        <th class="text-left">Key:</th>
+        {% for k,v  in task_dict.items %}
+
+
             <td class="text-center">{{ k }}</td>
-        </tr>
-    {% endfor %}
+
+
+
+
+        {% endfor %}
+    </tr>
     </tbody>
 </table>
 

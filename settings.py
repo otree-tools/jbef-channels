@@ -17,20 +17,20 @@ SESSION_CONFIG_DEFAULTS = {
 }
 
 SESSION_CONFIGS = [
-    # {
-    #     'name': 'minimum_ret',
-    #     'display_name': 'Simple RET example',
-    #     'num_demo_participants': 1,
-    #     'app_sequence': ['minimum'],
-    #
-    # },
+    {
+        'name': 'minimum_ret',
+        'display_name': 'Simple RET example',
+        'num_demo_participants': 1,
+        'app_sequence': ['minimum'],
+
+    },
     {
         'name': 'realefforttask',
         'display_name': 'Real Effort Task - 2 matrices',
         'num_demo_participants': 1,
         'app_sequence': ['realefforttask'],
         'task': 'TwoMatrices',
-        'task_params': {'difficulty': 10},
+        'task_params': {'difficulty': 5},
     },
     {
         'name': 'realefforttask2',
@@ -48,10 +48,10 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['realefforttask'],
         'task': 'CountZeroes',
-        'task_params': {'num_rows': 10,
-                        'num_columns': 5,
-                        'value_to_count': 1,
-                        'selection_set': [0, 1, 2],
+        'task_params': {'num_rows': 5,
+                        'num_columns': 10,
+                        # 'value_to_count': 1,
+                        # 'selection_set': [0, 1, 2],
                         },
     },
     {

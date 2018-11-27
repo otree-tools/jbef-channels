@@ -121,11 +121,11 @@ class Decoding(TaskGenerator):
     def get_body(self, **kwargs):
         dict_length = kwargs.get('dict_length', 5)
         task_len = kwargs.get('task_len', 5)
-        digs = list(digits)
+        digs = random.sample(list(digits), k=dict_length)
         random.shuffle(digs)
         lts = random.sample(ascii_lowercase, k=dict_length)
         self.task_dict = dict(zip(digs, lts))
-        self.question = random.choices(digits, k=task_len)
+        self.question = random.choices(digs, k=task_len)
 
         return {
             'question': self.question,

@@ -40,9 +40,13 @@ class AuctionTracker(JsonWebsocketConsumer):
 
         if text.get('offer_accepted') and player.role() == 'worker':
             offer_id = text['offer_id']
-            offer = JobOffer.objects.get(id=offer_id)
-            offer.worker = player
-            offer.save()
+            try:
+                offer = JobOffer.objects.get(id=offer_id, worker__isnull=True)
+                offer.worker = player
+                offer.save()
+            except JobOffer.DoesNotExist:
+                return
+
 
 
 class TaskTracker(JsonWebsocketConsumer):
