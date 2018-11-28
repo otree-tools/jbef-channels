@@ -9,10 +9,11 @@ This code contains four applications to use in oTree [Chen2016]_.
 
 The demo app based on this code is available at Heroku_.
 
-1. `minimum`: a bare  example how to use Django Channels in oTree projects
+1. :code:`minimum`: a bare  example how to use Django Channels in oTree projects
 to build a very simple real effort task (subtracting random number from X).
 
-2. `realefforttask`: a set of four different real effort tasks:
+
+2. :code:`realefforttask`: a set of four different real effort tasks:
     -  summing up _N_ numbers [Niederle2007]_.
     - finding max of two matrices [Schram2017]_.
     - decoding task [Erkal2011]_.
@@ -24,10 +25,10 @@ to build a very simple real effort task (subtracting random number from X).
     in `settings.py` configuration for your app.
 
 
-3. `auctionone` -  a gift-exchange game [Fehr1993]_ where employers hire workers in the
+3. :code:`auctionone` -  a gift-exchange game [Fehr1993]_ where employers hire workers in the
 open auction, and workers reciprocate their salary in a subsequent real effort task stage.
 
-4. `double_auction` -  a trading platform where buyers and sellers can
+4. :code:`double_auction` -  a trading platform where buyers and sellers can
 trade their goods by posting bids (for buyers) and asks (for sellers) [Smith1962]_.
 
 
