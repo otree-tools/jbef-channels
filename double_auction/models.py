@@ -103,7 +103,6 @@ class Group(BaseGroup):
     def presence_check(self):
         msg = {'market_over': False}
         if self.no_buyers_left():
-            # todo: check this out later
             self.active = False
             self.save()
             msg = {'market_over': True,
@@ -262,7 +261,6 @@ class Player(BasePlayer):
             else:
                 return self.bids.filter(active=True).latest('created_at')
         except ObjectDoesNotExist:
-            # todo: think a bit what happens if last bid is non existent?
             return
 
     def item_to_sell(self):
@@ -318,7 +316,6 @@ class Ask(BaseStatement):
         if num_items_available['num_items'] < int(instance.quantity):
             raise NotEnoughFunds(instance.player)
 
-    # TODO: move both sginsls (ask, bid) under one method
     @classmethod
     def post_save(cls, sender, instance, created, *args, **kwargs):
         if not created:
@@ -339,6 +336,8 @@ class Ask(BaseStatement):
 class Bid(BaseStatement):
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
+        # TODO: check for total amount of bids provided by a seller
+        # TODO: remove all bids and asks when a contract is done - does not make sense to have them
         if instance.player.endowment < float(instance.price) * int(instance.quantity):
             raise NotEnoughFunds(instance.player)
 
@@ -349,15 +348,13 @@ class Bid(BaseStatement):
         group = instance.player.group
         asks = Ask.active_statements.filter(player__group=group, price__lte=instance.price).order_by('created_at')
         if asks.exists():
-            ask = asks.last()  ## think about it??
-            # todo: redo all this mess
+            ask = asks.last()
             item = ask.player.item_to_sell()
             if item:
                 Contract.create(bid=instance,
                                 ask=ask,
                                 price=min([float(instance.price), ask.price]),
                                 item=item)
-
 
 
 class Slot(djmodels.Model):
