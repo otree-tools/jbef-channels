@@ -6,7 +6,7 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 EXTENSION_APPS = [
-    # 'minimum',
+    'minimum',
     'auctionone',
     'realefforttask',
     'double_auction'
