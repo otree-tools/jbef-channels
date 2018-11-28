@@ -38,14 +38,7 @@ class MarketTracker(JsonWebsocketConsumer):
         # buyer costs are associated with increasing cost of production (?)
         # seller values with diminishing marginal value
         # when two persons make a contract, an item is moved from  seller's cell to buyer's cell.
-        # so an item has a location field. but
 
-        # todo: remove bids and asks of passive players (those who have no money or items to sell)
-        # todo: validate correct price is inserted
-        # todo: config quantity (more than 1 if settings are set for that)
-        # # TODO NBNBNBNB - clean active bids/asks for passive players
-        # todo: syncrhonize timers among the entire group - via waitpage at the beginning
-        # todo: check group availiaibity based on .active property of sellers/buyers
 
 
         if msg['action'] == 'new_statement':
@@ -66,15 +59,15 @@ class MarketTracker(JsonWebsocketConsumer):
             to_del = player.get_last_statement()
             if to_del:
                 to_del.delete()
-        asks = group.get_asks_html()
-        bids = group.get_bids_html()
 
         spread = group.get_spread_html()
+        for p in group.get_players():
+            self.group_send(p.get_personal_channel_name(), {'asks': p.get_asks_html(),
+                                                            'bids': p.get_bids_html()})
 
-        self.group_send(group.get_channel_group_name(), {'asks': asks,
-                                                         'bids': bids,
-                                                         'spread': spread,
-                                                         })
+        self.group_send(group.get_channel_group_name(), {
+            'spread': spread,
+        })
         msg = dict()
         last_statement = player.get_last_statement()
 

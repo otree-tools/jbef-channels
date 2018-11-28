@@ -1,5 +1,5 @@
 {% for b in bids %}
-    <tr>
+    <tr {% if b.player.pk == player.pk %}class="text-light bg-success"{% endif %}>
         <td class="filterable-cell">{{ b.price }}</td>
         <td class="filterable-cell ">{{ b.quantity }} </td>
     </tr>

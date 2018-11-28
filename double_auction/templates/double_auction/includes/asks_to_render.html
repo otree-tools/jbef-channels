@@ -1,6 +1,7 @@
 {% for a in asks %}
-    <tr>
+    <tr {% if a.player.pk == player.pk %}class="text-light bg-success"{% endif %}>
         <td class="filterable-cell">{{ a.price }}</td>
         <td class="filterable-cell">{{ a.quantity }}</td>
+
     </tr>
 {% endfor %}

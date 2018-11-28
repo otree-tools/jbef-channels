@@ -15,12 +15,11 @@ from channels import Group as ChannelGroup
 
 from .exceptions import NotEnoughFunds, NotEnoughItemsToSell
 
-author = 'Philipp Chapkovski (c) 2018 , Higher School of Economics, Moscow.' \
-         'Chapkovski@gmail.com'
+author = ''
 
 doc = """
 A double auction for oTree.
-A working paper with description is available here: http://chapkovski.github.io
+
 Instructions are mostly taken from http://veconlab.econ.virginia.edu/da/da.php, Virginia University.
 """
 
@@ -37,6 +36,9 @@ class Constants(BaseConstants):
     price_max_numbers = 10
     price_digits = 2
     initial_quantity = 1
+    seller_cost_range = (1, 10)
+    buyer_value_range = (1, 10)
+    endowment_range = (10, 50)
 
 
 class Subsession(BaseSubsession):
@@ -46,6 +48,8 @@ class Subsession(BaseSubsession):
     def creating_session(self):
         self.num_buyers = self.session.config.get('buyers')
         self.num_sellers = self.session.config.get('sellers')
+        if self.session.num_participants % (self.num_buyers + self.num_sellers) != 0:
+            raise Exception('Number of participants is not divisible by number of sellers and buyers')
 
 
 class Group(BaseGroup):
@@ -71,18 +75,6 @@ class Group(BaseGroup):
 
     def get_asks(self):
         return Ask.active_statements.filter(player__group=self).order_by('-created_at')
-
-    def get_bids_html(self):
-        bids = self.get_bids()
-        return mark_safe(render_to_string('double_auction/includes/bids_to_render.html', {
-            'bids': bids,
-        }))
-
-    def get_asks_html(self):
-        asks = self.get_asks()
-        return mark_safe(render_to_string('double_auction/includes/asks_to_render.html', {
-            'asks': asks
-        }))
 
     def get_spread_html(self):
         return mark_safe(render_to_string('double_auction/includes/spread_to_render.html', {
@@ -193,6 +185,20 @@ class Player(BasePlayer):
         return mark_safe(render_to_string('double_auction/includes/repo_to_render.html', {
             'repository': self.get_repo_context()
         }))
+
+    def get_asks_html(self):
+        asks = self.group.get_asks()
+        return mark_safe(render_to_string('double_auction/includes/asks_to_render.html',
+                                          {'asks': asks,
+                                           'player': self}))
+
+    def get_bids_html(self):
+        bids = self.group.get_bids()
+        return mark_safe(render_to_string('double_auction/includes/bids_to_render.html',
+                                          {
+                                              'bids': bids,
+                                              'player': self}
+                                          ))
 
     def get_contracts_queryset(self):
         contracts = self.get_contracts()
@@ -328,8 +334,6 @@ class Ask(BaseStatement):
                                 ask=instance,
                                 price=min([bid.price, float(instance.price)]),
                                 item=item)
-            else:
-                print('NOTHING TO SELL')
 
 
 class Bid(BaseStatement):
@@ -353,9 +357,7 @@ class Bid(BaseStatement):
                                 ask=ask,
                                 price=min([float(instance.price), ask.price]),
                                 item=item)
-            else:
-                # todo: deal with it
-                print('NOTHING TO SELL')
+
 
 
 class Slot(djmodels.Model):
@@ -396,8 +398,6 @@ class Contract(djmodels.Model):
 
     @classmethod
     def create(cls, item, bid, ask, price):
-        # todo: check if buyer has funds
-        # todo: check if buyer has free slots
         buyer = bid.player
         seller = ask.player
         cost = item.slot.cost

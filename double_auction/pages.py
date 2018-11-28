@@ -14,19 +14,20 @@ class IntroWp(WaitPage):
 
 class GeneratingInitialsWP(WaitPage):
     def after_all_players_arrive(self):
+        c = Constants
         g = self.group
         for s in g.get_sellers():
             # we create slots for both sellers and buyers, but for sellers we fill them with items
             # and also pregenerate costs. For buyers they are initially empty
-            for i in range(Constants.units_per_seller):
-                slot = s.slots.create(cost=random.randint(0, 10))
+            for i in range(c.units_per_seller):
+                slot = s.slots.create(cost=random.randint(*c.seller_cost_range))
                 item = Item(slot=slot, quantity=Constants.initial_quantity)
                 item.save()
 
         for b in g.get_buyers():
             for i in range(Constants.units_per_buyer):
-                b.endowment = random.randrange(100, 200)
-                b.slots.create(value=random.randint(0, 10))
+                b.endowment = random.randrange(*c.endowment_range)
+                b.slots.create(value=random.randint(*c.buyer_value_range))
 
 
 class Market(Page):

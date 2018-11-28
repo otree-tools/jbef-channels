@@ -4,7 +4,7 @@ from otree.api import (
 )
 import random
 
-author = "Philip Chapkovski, chapkovski@gmail.com"
+author = ""
 
 
 class Constants(BaseConstants):

@@ -7,7 +7,7 @@ from django.db import models as djmodels
 from django.db.models import F
 from . import ret_functions
 
-author = 'Philipp Chapkovski, chapkovski@gmail.com'
+author = ''
 
 doc = """
     multi-round real effort task

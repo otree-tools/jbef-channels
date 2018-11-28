@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from .ret_functions import TwoMatrices
 from django.db.models import F
 
-author = 'Essi Kujansuu, EUI, essi.kujansuu@eui.eu, adapting work of Philipp Chapkovski, UZH, chapkovski@gmail.com'
+author = ''
 
 doc = """
 Adaptation of Fehr et al. 1993 auction.
