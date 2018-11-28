@@ -14,7 +14,7 @@ The demo app based on this code is available at Heroku_.
 to build a very simple real effort task (subtracting random number from X).
 
 
-2.:code:`realefforttask`: a set of four different real effort tasks:
+2. :code:`realefforttask`: a set of four different real effort tasks:
 
 -  summing up *N* numbers [Niederle2007]_.
 - finding max of two matrices [Schram2017]_.
