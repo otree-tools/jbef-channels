@@ -402,11 +402,10 @@ class Contract(djmodels.Model):
         item.slot = new_slot
         value = new_slot.value
         contract = cls(item=item, bid=bid, ask=ask, price=price, cost=cost, value=value)
-        bid.active = False
-        ask.active = False
-        ask.save()
-        bid.save()
         item.save()
+        Ask.active_statements.filter(player=seller).update(active=False)
+        Bid.active_statements.filter(player=buyer).update(active=False)
+
         buyer.endowment -= contract.price
         contract_parties = [buyer, seller]
         contract.save()
@@ -428,6 +427,10 @@ class Contract(djmodels.Model):
         group = buyer.group
         group_channel = ChannelGroup(group.get_channel_group_name())
         group_channel.send({'text': json.dumps({'presence': group.presence_check()})})
+        for p in group.get_players():
+            group_channel = ChannelGroup(p.get_personal_channel_name())
+            group_channel.send({'text': json.dumps({'asks': p.get_asks_html(),
+                                                    'bids': p.get_bids_html()})})
 
         return contract
 
