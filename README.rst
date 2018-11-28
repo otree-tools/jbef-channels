@@ -3,15 +3,15 @@ Real time interactions in oTree using Django Channels
 =====
 Auctions and real effort tasks
 --------
-
+Internal crossreferences, like example_.
 
 This code contains four applications to use in oTree 
-Chen et al 2016 see `my-reference-label`_.
+Chen et al 2016
 
 
 References
 --------
-Internal crossreferences, like example_.
+
 .. _example:
 
 This is an example crossreference target.
