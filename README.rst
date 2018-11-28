@@ -12,4 +12,5 @@ Chen et al 2016 see `my-reference-label`_.
 References
 --------
 
-.. _`my-reference-label`: Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88-97.
+.. _`my-reference-label`
+Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88-97.
