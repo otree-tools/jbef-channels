@@ -313,10 +313,10 @@ class Ask(BaseStatement):
     def pre_save(cls, sender, instance, *args, **kwargs):
         items_available = Item.objects.filter(slot__owner=instance.player)
         if items_available.count() == 0:
-            raise NotEnoughItemsToSell
+            raise NotEnoughFunds(instance.player)
         num_items_available = items_available.aggregate(num_items=Sum('quantity'))
         if num_items_available['num_items'] < int(instance.quantity):
-            raise NotEnoughItemsToSell
+            raise NotEnoughFunds(instance.player)
 
     # TODO: move both sginsls (ask, bid) under one method
     @classmethod
@@ -340,7 +340,7 @@ class Bid(BaseStatement):
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
         if instance.player.endowment <= float(instance.price) * int(instance.quantity):
-            raise NotEnoughFunds
+            raise NotEnoughFunds(instance.player)
 
     @classmethod
     def post_save(cls, sender, instance, created, *args, **kwargs):

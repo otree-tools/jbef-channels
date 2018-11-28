@@ -17,6 +17,7 @@
         var $form_container = $('div.form_container');
         var $profit_container = $('tbody.profit_container');
         var $market_over_modal = $('div.market_over_modal');
+        var $warning_modal = $('div.warning_modal');
         socket.onmessage = function (event) {
             var obj = jQuery.parseJSON(event.data);
             $asks_container.html(obj.asks);
@@ -29,13 +30,19 @@
             $('input#price').focus();
             var has_over_message = obj.hasOwnProperty('presence');
             if (has_over_message) {
-                l(obj.presence);
                 if (obj.presence.market_over === true) {
                     $market_over_modal.find('.modal-message').html(obj.presence.over_message);
                     $market_over_modal.modal({backdrop: 'static', keyboard: false}, 'show');
                     socket.close();
                 }
             }
+            var has_warning = obj.hasOwnProperty('warning');
+            if (has_warning) {
+                $warning_modal.find('.modal-message').html(obj.warning);
+                $warning_modal.modal({backdrop: 'static', keyboard: false}, 'show');
+                $('.warning-btn').focus();
+            }
+
             var has_last_statement = obj.hasOwnProperty('last_statement');
 
 
