@@ -22,9 +22,9 @@ to build a very simple real effort task (subtracting random number from X).
 - counting 0s in a matrix [Abeler2011]_.
 
 This app also provides a platform for development one's own tasks using
-TaskGenerator class from `ret_functions` module located in `realefforttask` app folder.
-To use it, create a child of `TaskGenerator` class in `ret_functions` module, and reference it
-in `settings.py` configuration for your app.
+TaskGenerator class from :code:`ret_functions` module located in :code:`realefforttask` app folder.
+To use it, create a child of :code:`TaskGenerator` class in :code:`ret_functions` module, and reference it
+in :code:`settings.py` configuration for your app.
 
 
 3. :code:`auctionone` -  a gift-exchange game [Fehr1993]_ where employers hire workers in the
