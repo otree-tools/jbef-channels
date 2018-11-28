@@ -339,7 +339,7 @@ class Ask(BaseStatement):
 class Bid(BaseStatement):
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
-        if instance.player.endowment <= float(instance.price) * int(instance.quantity):
+        if instance.player.endowment < float(instance.price) * int(instance.quantity):
             raise NotEnoughFunds(instance.player)
 
     @classmethod
