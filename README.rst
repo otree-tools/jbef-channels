@@ -3,10 +3,9 @@ Real time interactions in oTree using Django Channels
 =====
 Auctions and real effort tasks
 --------
-Internal crossreferences, like [r1_].
 
-This code contains four applications to use in oTree 
-[r1_]
+
+This code contains four applications to use in oTree r1_.
 
 
 References
