@@ -9,8 +9,12 @@ This code contains four applications to use in oTree [Chen2016]_.
 
 The demo app based on this code is available at Heroku_.
 
+
 1. :code:`minimum`: a bare  example how to use Django Channels in oTree projects
-to build a very simple real effort task (subtracting random number from X). 2. :code:`realefforttask`: a set of four different real effort tasks:
+to build a very simple real effort task (subtracting random number from X).
+
+
+2.:code:`realefforttask`: a set of four different real effort tasks:
 
 -  summing up *N* numbers [Niederle2007]_.
 - finding max of two matrices [Schram2017]_.
