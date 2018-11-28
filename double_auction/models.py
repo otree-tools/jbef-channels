@@ -336,8 +336,6 @@ class Ask(BaseStatement):
 class Bid(BaseStatement):
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
-        # TODO: check for total amount of bids provided by a seller
-        # TODO: remove all bids and asks when a contract is done - does not make sense to have them
         if instance.player.endowment < float(instance.price) * int(instance.quantity):
             raise NotEnoughFunds(instance.player)
 
