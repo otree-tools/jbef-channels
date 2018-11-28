@@ -5,7 +5,7 @@ Auctions and real effort tasks
 --------
 
 
-This code contains four applications to use in oTree (Chen 2016).
+This code contains four applications to use in oTree [CIT2002]_.
 
 The demo app based on this code is available at Heroku_.
 
@@ -32,4 +32,4 @@ References
 --------
 .. _Heroku: https://jbef-channels.herokuapp.com/
 
-Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88-97.
+.. [CIT2002] Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88-97.
