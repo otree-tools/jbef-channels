@@ -10,5 +10,5 @@ _coverage_results/
 _static_root
 _bots*s
 __temp*
-__pycache__/
+*/__pycache__/*
 .DS_Store
