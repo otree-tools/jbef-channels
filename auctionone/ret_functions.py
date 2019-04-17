@@ -5,6 +5,9 @@
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from random import randint
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # function slices a list with n elements in each sublist (if possible)
@@ -30,7 +33,7 @@ class TaskGenerator:
         self.body = self.get_body(**kwargs)
         self.correct_answer = self.get_correct_answer()
         self.html_body = self.get_html_body()
-        print('DEBUG - CORRECT ANSWER', self.correct_answer)
+        logger.info(f'Correct answer:{self.correct_answer}')
 
     def get_context_for_body(self):
         return {}
@@ -66,4 +69,3 @@ class TwoMatrices(TaskGenerator):
             "mat2": self.body['listy'],
             "correct_answer": self.correct_answer,
         }
-

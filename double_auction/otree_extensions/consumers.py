@@ -1,8 +1,9 @@
 from channels.generic.websockets import JsonWebsocketConsumer
-import random
 from double_auction.models import Constants, Player, Group
-import json
 from double_auction.exceptions import NotEnoughFunds, NotEnoughItemsToSell
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class MarketTracker(JsonWebsocketConsumer):
@@ -39,21 +40,19 @@ class MarketTracker(JsonWebsocketConsumer):
         # seller values with diminishing marginal value
         # when two persons make a contract, an item is moved from  seller's cell to buyer's cell.
 
-
-
         if msg['action'] == 'new_statement':
             if player.role() == 'buyer':
                 try:
                     bid = player.bids.create(price=msg['price'], quantity=msg['quantity'])
 
                 except NotEnoughFunds:
-                    print('not enough funds')
+                    logger.warning('not enough funds')
             else:
                 try:
                     ask = player.asks.create(price=msg['price'], quantity=msg['quantity'])
 
                 except NotEnoughItemsToSell:
-                    print('not enough items to sell')
+                    logger.warning('not enough items to sell')
 
         if msg['action'] == 'retract_statement':
             to_del = player.get_last_statement()

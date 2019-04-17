@@ -1,13 +1,13 @@
 # this is the module responsible for generation functions for different rets
 # if you need new rets you need to define generating functions here and attach them to corresponding tasks
 
+import random
+from random import randint
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-import random
-import json
-from random import randint
 from string import digits, ascii_lowercase
-
+import logging
+logger =logging.getLogger(__name__)
 
 # function slices a list with n elements in each sublist (if possible)
 def slicelist(l, n):
@@ -33,7 +33,7 @@ class TaskGenerator:
         self.body = self.get_body(**kwargs)
         self.correct_answer = self.get_correct_answer()
         self.html_body = self.get_html_body()
-        print('DEBUG - CORRECT ANSWER', self.correct_answer)
+        logger.info(f'Correct answer: {self.correct_answer}')
 
     def get_context_for_body(self):
         return {}
