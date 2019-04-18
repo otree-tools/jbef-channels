@@ -1,0 +1,57 @@
+{% extends "otree/BaseAdmin.html" %}
+{% block head_title %}
+    Double auction
+{% endblock %}
+{% block body_main %}
+    {% with anbar=nbar|default:None %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top  fixed-top-2">
+            <a class="navbar-brand" href="{% url 'da_home' %}">Double auction - home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto ">
+                    <li class="nav-item {% if anbar == 'home' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'da_home' %}">Home <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item {% if anbar == 'asks' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'asks' %}">Asks</a>
+                    </li>
+
+                    <li class="nav-item {% if anbar == 'bids' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'bids' %}">Bids</a>
+                    </li>
+
+                    <li class="nav-item {% if anbar == 'contracts' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'contracts' %}">Contracts</a>
+                    </li>
+
+                </ul>
+                {% if export_activated|default:False %}
+                    {% include 'double_auction/admin/includes/initial_export_button.html' %}
+                {% endif %}
+
+
+            </div>
+        </nav>
+    {% endwith %}
+    {{ block.super }}
+
+{% endblock %}
+{% block internal_styles %}
+    {{ block.super }}
+    <style>
+        .fixed-top-2 {
+            margin-top: 56px;
+            margin-bottom: 56px;
+        }
+
+        .container {
+            margin-top: 60px;
+        }
+    </style>
+{% endblock %}

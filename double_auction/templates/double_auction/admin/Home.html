@@ -1,0 +1,14 @@
+{% extends "double_auction/admin/BaseDAAdmin.html" %}
+
+{% block title %}
+Double auction - exporting data
+{% endblock %}
+
+{% block content %}
+<div class="list-group">
+    <a href="{% url 'asks' %}" class="list-group-item list-group-item-action">Asks</a>
+    <a href="{% url 'bids' %}" class="list-group-item list-group-item-action">Bids</a>
+    <a href="{% url 'contracts' %}" class="list-group-item list-group-item-action">Contracts</a>
+</div>
+{% endblock %}
+

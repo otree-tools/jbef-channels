@@ -293,6 +293,7 @@ class BaseStatement(BaseRecord):
     # initially all bids and asks are active. when the contracts are created with their participation they got passive
     active = models.BooleanField(initial=True)
     active_statements = ActiveStatementManager()
+    objects = djmodels.Manager()
 
     class Meta:
         abstract = True
@@ -307,6 +308,7 @@ class BaseStatement(BaseRecord):
 
 
 class Ask(BaseStatement):
+    """An ask is a request of a price for which an owner is ready to sell the items available in their repository."""
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
         items_available = Item.objects.filter(slot__owner=instance.player)
@@ -334,6 +336,8 @@ class Ask(BaseStatement):
 
 
 class Bid(BaseStatement):
+    """A bid is an offer of a price by which a potential buyer is ready to purchase an item."""
+
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
         if instance.player.endowment < float(instance.price) * int(instance.quantity):
@@ -356,6 +360,7 @@ class Bid(BaseStatement):
 
 
 class Slot(djmodels.Model):
+    """A slot is a space with an associated cost or value (depending on a type of a player (buyer or seller). """
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     owner = djmodels.ForeignKey(to=Player, related_name="slots", )
@@ -364,6 +369,7 @@ class Slot(djmodels.Model):
 
 
 class Item(djmodels.Model):
+    """This is a repository of items people have for trading in the trading sessions."""
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     slot = djmodels.OneToOneField(to=Slot, related_name='item')
@@ -371,6 +377,7 @@ class Item(djmodels.Model):
 
 
 class Contract(djmodels.Model):
+    """This model contains information about all contracts done during the trading session (aka round)."""
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # the o2o field to item should be reconsidered if we make quantity flexible

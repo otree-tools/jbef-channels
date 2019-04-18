@@ -1,0 +1,24 @@
+{% extends "double_auction/admin/BaseDAAdmin.html" %}
+{% load static  %}
+{% block title %}
+
+    Contracts
+
+{% endblock %}
+
+{% block content %}
+
+    {% if contracts %}
+
+            {% for s in contracts %}
+{{ s }}
+            {% endfor %}
+
+        {% include 'double_auction/admin/includes/pagination_footer.html' %}
+    {% else %}
+       No data on contracts have been found.
+    {% endif %}
+{% endblock %}
+
+
+
