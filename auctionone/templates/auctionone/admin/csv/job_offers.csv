@@ -1,3 +1,4 @@
-{% for s in data %}
-{{ s }}
+Session,Employer code,Round number,Group id,Amount,Offer accepted,Worker code,Offer made,Offer accepted
+{% for j in data %}
+{{ j.employer.session.code }},{{ j.employer.participant.code }},{{ j.employer.round_number }},{{ j.employer.group.id_in_subsession }},{{ j.amount }},{% if j.worker %}Yes {% else %}No{% endif %},{{ j.worker.participant.code|default_if_none:"" }},"{{ j.created_at }}",{% if j.worker %}"{{ j.updated_at }}"{% endif %}
 {% endfor %}
