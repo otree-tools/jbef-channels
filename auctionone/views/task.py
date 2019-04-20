@@ -1,7 +1,8 @@
 from auctionone.models import Task
 from .csv import ExportToCSV
 from .generic import PaginatedListView
-
+from django.http import HttpResponse
+from django.template import loader
 
 class TaskList(PaginatedListView):
     url_pattern = r'^export/gift_exchange/tasks$'

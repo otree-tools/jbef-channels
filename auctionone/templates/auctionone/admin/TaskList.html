@@ -1,9 +1,7 @@
 {% extends "auctionone/admin/BaseDAAdmin.html" %}
 {% load static %}
 {% block title %}
-
     Tasks
-
 {% endblock %}
 
 {% block content %}
@@ -11,12 +9,25 @@
     {% if tasks %}
         <table class="table-hover table-striped table">
             <thead>
-
-
+            <th>Session</th>
+            <th>Round</th>
+            <th>Participant</th>
+            <th>User Answer</th>
+            <th>Correct answer</th>
+            <th>Is correct?</th>
+            <th>Created at</th>
+            <th>Answered at</th>
             </thead>
-            {% for s in tasks %}
+            {% for t in tasks %}
                 <tr>
-                   {{ s }}
+                    <td>{{ t.player.session.code }}</td>
+                    <td>{{ t.player.round_number }}</td>
+                    <td>{{ t.player.participant.code }}</td>
+                    <td>{{ t.answer }}</td>
+                    <td>{{ t.correct_answer }}</td>
+                    <td>{% if t.answer == t.correct_answer %}Yes{% else %}No{% endif %}</td>
+                    <td>{{ t.created_at|date:'Y-m-d H:i:s.u' }}</td>
+                    <td>{{ t.updated_at|date:'Y-m-d H:i:s.u' }}</td>
                 </tr>
             {% endfor %}
         </table>
