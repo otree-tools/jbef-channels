@@ -1,4 +1,0 @@
-Session,Participant,Round,Price,Created at
-{% for s in data %}
-{{ s.player.session.code }},{{ s.player.participant.code }},{{ s.player.round_number }},{{ s.price }},"{{ s.created_at }}"
-{% endfor %}

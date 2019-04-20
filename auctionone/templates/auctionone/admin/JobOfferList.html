@@ -1,0 +1,28 @@
+{% extends "auctionone/admin/BaseDAAdmin.html" %}
+{% load static %}
+{% block title %}
+    Job offers
+{% endblock %}
+
+{% block content %}
+
+    {% if job_offers %}
+        <table class="table-hover table-striped table">
+            <thead>
+
+            </thead>
+            {% for s in job_offers %}
+                <tr>
+                   {{ s }}
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% include 'auctionone/admin/includes/pagination_footer.html' %}
+    {% else %}
+        No data on job offers have been found.
+    {% endif %}
+{% endblock %}
+
+
+

@@ -4,10 +4,10 @@ from django.urls import reverse
 
 # Welcoming page
 class HomeView(TemplateView):
-    template_name = 'double_auction/admin/Home.html'
-    url_name = 'da_home'
-    url_pattern = r'^export/double_auction$'
-    display_name = 'Double Auction - export data'
+    template_name = 'auctionone/admin/Home.html'
+    url_name = 'geg_home'
+    url_pattern = r'^export/gift_exchange$'
+    display_name = 'Gift Exchange game - export data'
     navbar_active_tag = 'home'
 
     def get_context_data(self, **kwargs):
@@ -21,7 +21,6 @@ class PaginatedListView(ListView):
     export_link_name = None
     export_activated = None
     title = ''
-    context_object_name = 'statements'
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
@@ -36,7 +35,3 @@ class PaginatedListView(ListView):
             c['export_link'] = self.export_link_name
         c['export_activated'] = self.export_activated or False
         return c
-
-
-class StatementListView(PaginatedListView):
-    template_name = 'double_auction/admin/StatementList.html'

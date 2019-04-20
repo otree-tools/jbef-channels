@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from django.http import HttpResponse
-from django.template import loader, Context
+from django.template import loader
 
 
 class ExportToCSV(ListView):

@@ -1,4 +1,3 @@
-from .ask import AskList, AskCSVExport
-from .bid import BidList, BidCSVExport
-from .contract import ContractList, ContractCSVExport
 from .generic import HomeView
+from .job_offer import JobOfferList, JobOfferToCSV
+from .task import TaskList, TasksToCSV

@@ -1,0 +1,31 @@
+{% extends "auctionone/admin/BaseDAAdmin.html" %}
+{% load static %}
+{% block title %}
+
+    Tasks
+
+{% endblock %}
+
+{% block content %}
+
+    {% if tasks %}
+        <table class="table-hover table-striped table">
+            <thead>
+
+
+            </thead>
+            {% for s in tasks %}
+                <tr>
+                   {{ s }}
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% include 'auctionone/admin/includes/pagination_footer.html' %}
+    {% else %}
+        No data on tasks have been found.
+    {% endif %}
+{% endblock %}
+
+
+

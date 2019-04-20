@@ -1,0 +1,4 @@
+Session,Round,Participant,Task type,User Answer,Correct answer,Is correct?,Created at,Answered at
+{% for t in data %}
+{{ t.player.session.code }},{{ t.player.round_number }},{{ t.player.participant.code }},"{{ t.task_name }}","{{ t.answer }}","{{ t.correct_answer }}",{% if t.answer == t.correct_answer %}Yes{% else %}No{% endif %},"{{ t.created_at|date:'Y-m-d H:i:s.u' }}","{{ t.updated_at|date:'Y-m-d H:i:s.u' }}"
+{% endfor %}

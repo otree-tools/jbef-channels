@@ -1,24 +1,23 @@
 from .generic import PaginatedListView
-from double_auction.models import Contract
 from .csv import ExportToCSV
+from auctionone.models import JobOffer
 
 
-class ContractList(PaginatedListView):
-    template_name = 'double_auction/admin/ContractsList.html'
-    url_name = 'contracts'
-    url_pattern = r'^export/double_auction/contracts$'
-    context_object_name = 'contracts'
+class JobOfferList(PaginatedListView):
+    template_name = 'auctionone/admin/JobOfferList.html'
+    url_name = 'gift_exchange_offers'
+    url_pattern = r'^export/gift_exchange/job_offers$'
+    context_object_name = 'job_offers'
     paginate_by = 50
-    navbar_active_tag = 'contracts'
+    navbar_active_tag = 'job_offers'
     export_activated = True
-    export_link_name = 'contract_csv'
-    model = Contract
-    queryset = Contract.objects.all()
+    export_link_name = 'job_offers_csv'
+    queryset = JobOffer.objects.all()
 
 
-class ContractCSVExport(ExportToCSV):
-    filename = 'contracts.csv'
-    template_name = 'double_auction/admin/csv/contracts.csv'
-    queryset = Contract.objects.all()
-    url_name = 'contract_csv'
-    url_pattern = r'^export/double_auction/contracts/csv$'
+class JobOfferToCSV(ExportToCSV):
+    filename = 'job_offers.csv'
+    template_name = 'auctionone/admin/csv/job_offers.csv'
+    queryset = JobOffer.objects.all()
+    url_name = 'job_offers_csv'
+    url_pattern = r'^export/gift_exchange/job_offers/csv$'
