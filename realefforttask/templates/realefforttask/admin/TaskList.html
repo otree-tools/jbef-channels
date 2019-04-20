@@ -1,0 +1,69 @@
+{% extends "otree/BaseAdmin.html" %}
+{% block head_title %}
+    Real effort tasks - data
+{% endblock %}
+{% block body_main %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top  fixed-top-2">
+
+        {% include 'double_auction/admin/includes/initial_export_button.html' %}
+
+
+    </nav>
+
+
+
+
+    {{ block.super }}
+
+
+
+
+{% endblock %}
+{% block content %}
+
+    {% if tasks %}
+        <table class="table-hover table-striped table">
+            <thead>
+            <th>Session</th>
+            <th>Round</th>
+            <th>Participant</th>
+            <th>Task type</th>
+            <th>User Answer</th>
+            <th>Correct answer</th>
+            <th>Is correct?</th>
+            <th>Created at</th>
+            <th>Answered at</th>
+            </thead>
+            {% for t in tasks %}
+                <tr>
+                    <td>{{ t.player.session.code }}</td>
+                    <td>{{ t.player.round_number }}</td>
+                    <td>{{ t.player.participant.code }}</td>
+                    <td>{{ t.task_name }}</td>
+                    <td>{{ t.answer }}</td>
+                    <td>{{ t.correct_answer }}</td>
+                    <td>{% if t.answer == t.correct_answer %}Yes{% else %}No{% endif %}</td>
+                    <td>{{ t.created_at|date:'Y-m-d H:i:s.u' }}</td>
+                    <td>{{ t.updated_at|date:'Y-m-d H:i:s.u' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% include 'realefforttask/admin/includes/pagination_footer.html' %}
+    {% else %}
+        No data on tasks have been found.
+    {% endif %}
+{% endblock %}
+{% block internal_styles %}
+    {{ block.super }}
+    <style>
+        .fixed-top-2 {
+            margin-top: 56px;
+            margin-bottom: 56px;
+        }
+
+        .container {
+            margin-top: 60px;
+        }
+    </style>
+{% endblock %}

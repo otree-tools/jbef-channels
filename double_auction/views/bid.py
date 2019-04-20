@@ -5,7 +5,7 @@ from .csv import ExportToCSV
 
 class BidList(StatementListView):
     url_name = 'bids'
-    url_pattern = r'^export/bids$'
+    url_pattern = r'^export/double_auction/bids$'
     navbar_active_tag = 'bids'
     export_activated = True
     export_link_name = 'bid_csv'
@@ -19,4 +19,4 @@ class BidCSVExport(ExportToCSV):
     template_name = 'double_auction/admin/csv/statements.csv'
     queryset = Bid.objects.all()
     url_name = 'bid_csv'
-    url_pattern = r'^export/bids/csv$'
+    url_pattern = r'^export/double_auction/bids/csv$'

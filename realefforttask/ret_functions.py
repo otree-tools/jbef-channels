@@ -7,7 +7,9 @@ from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from string import digits, ascii_lowercase
 import logging
-logger =logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
+
 
 # function slices a list with n elements in each sublist (if possible)
 def slicelist(l, n):
@@ -50,6 +52,7 @@ class TaskGenerator:
 
 class TwoMatrices(TaskGenerator):
     path_to_render = 'realefforttask/ret_modules/twomatrices.html'
+    name = 'Find max of two matrices'
 
     def get_correct_answer(self):
         return max(self.listx) + max(self.listy)
@@ -74,6 +77,7 @@ class TwoMatrices(TaskGenerator):
 class SumNumbers(TaskGenerator):
     path_to_render = 'realefforttask/ret_modules/sumnumbers.html'
     digits_range = (10, 99)
+    name = 'Sum of N numbers'
 
     def get_correct_answer(self):
         return sum(self.numbers)
@@ -90,7 +94,7 @@ class SumNumbers(TaskGenerator):
 
 class CountZeroes(TaskGenerator):
     path_to_render = 'realefforttask/ret_modules/countzeroes.html'
-
+    name = 'Count 0s in the matrix of digits'
     def get_correct_answer(self):
         return self.data.count(str(self.value_to_count))
 
@@ -113,7 +117,7 @@ class CountZeroes(TaskGenerator):
 
 class Decoding(TaskGenerator):
     path_to_render = 'realefforttask/ret_modules/decoding.html'
-
+    name = 'Deconding tasks (numbers to letters)'
     def get_correct_answer(self):
         correct_answer = ''.join([self.task_dict[i] for i in self.question])
         return correct_answer

@@ -87,7 +87,7 @@ class Task(djmodels.Model):
     answer = models.StringField(null=True)
     created_at = djmodels.DateTimeField(auto_now_add=True)
     updated_at = djmodels.DateTimeField(auto_now=True)
-
+    task_name = models.StringField()
     # the following method creates a new task, and requires as an input a task-generating function and (if any) some
     # parameters fed into task-generating function.
     @classmethod
@@ -96,5 +96,6 @@ class Task(djmodels.Model):
         task = cls(player=player,
                    body=proto_task.body,
                    html_body=proto_task.html_body,
-                   correct_answer=proto_task.correct_answer)
+                   correct_answer=proto_task.correct_answer,
+                   task_name = proto_task.name)
         return task

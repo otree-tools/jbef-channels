@@ -5,7 +5,7 @@ from .csv import ExportToCSV
 
 class AskList(StatementListView):
     url_name = 'asks'
-    url_pattern = r'^export/asks$'
+    url_pattern = r'^export/double_auction/asks$'
     navbar_active_tag = 'asks'
     export_activated = True
     export_link_name = 'ask_csv'
@@ -20,4 +20,4 @@ class AskCSVExport(ExportToCSV):
     queryset = Ask.objects.all()
     model = Ask
     url_name = 'ask_csv'
-    url_pattern = r'^export/asks/csv$'
+    url_pattern = r'^export/double_auction/asks/csv$'
