@@ -1,14 +1,27 @@
 from channels.generic.websockets import JsonWebsocketConsumer
-# we need to import our models to get and put some data there
-from auctionone.models import Player, Group, JobOffer, Constants
+from auctionone.models import Player, Group, JobOffer
+
+from otree.models import Participant
+from otree.models_concrete import ParticipantToPlayerLookup
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-class AuctionTracker(JsonWebsocketConsumer):
-    url_pattern = r'^/auction_channel/(?P<player_pk>[0-9]+)/(?P<group_pk>[0-9]+)$'
-
+class GeneralTracker(JsonWebsocketConsumer):
     def clean_kwargs(self):
-        self.player_pk = self.kwargs['player_pk']
-        self.group_pk = self.kwargs['group_pk']
+        participant = Participant.objects.get(code__exact=self.kwargs['participant_code'])
+        cur_page_index = participant._index_in_pages
+        lookup = ParticipantToPlayerLookup.objects.get(participant=participant, page_index=cur_page_index)
+        self.player_pk = lookup.player_pk
+
+    def get_player(self):
+        self.clean_kwargs()
+        return Player.objects.get(id=self.player_pk)
+
+
+class AuctionTracker(GeneralTracker):
+    url_pattern = r'^/auction_channel/(?P<participant_code>.+)$'
 
     def connection_groups(self, **kwargs):
         group_name = self.get_group().get_channel_group_name()
@@ -16,12 +29,8 @@ class AuctionTracker(JsonWebsocketConsumer):
         return [group_name, personal_channel]
 
     def get_group(self):
-        self.clean_kwargs()
-        return Group.objects.get(pk=self.group_pk)
-
-    def get_player(self):
-        self.clean_kwargs()
-        return Player.objects.get(pk=self.player_pk)
+        player = self.get_player()
+        return Group.objects.get(pk=player.group.pk)
 
     def receive(self, text=None, bytes=None, **kwargs):
         self.clean_kwargs()
@@ -46,14 +55,8 @@ class AuctionTracker(JsonWebsocketConsumer):
                 return
 
 
-
-class TaskTracker(JsonWebsocketConsumer):
-    url_pattern = (
-        r'^/auction_one_tasktracker/(?P<player_id>[0-9]+)$')
-
-    def get_player(self):
-        self.player_id = self.kwargs['player_id']
-        return Player.objects.get(id=self.player_id)
+class TaskTracker(GeneralTracker):
+    url_pattern = r'^/auction_one_tasktracker/(?P<participant_code>.+)$'
 
     def receive(self, text=None, bytes=None, **kwargs):
         player = self.get_player()

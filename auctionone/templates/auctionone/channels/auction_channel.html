@@ -1,7 +1,7 @@
 <script>
     $(function () {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + "/auction_channel/{{ player.id }}/{{ group.pk }}";
+        var ws_path = ws_scheme + '://' + window.location.host + "/auction_channel/{{ participant.code }}";
         var socket = new ReconnectingWebSocket(ws_path);
         send_message = function (msg) {
             if (socket.readyState === WebSocket.OPEN) {

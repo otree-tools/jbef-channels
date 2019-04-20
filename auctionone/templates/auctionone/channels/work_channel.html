@@ -3,10 +3,10 @@
 <script>
     $(function () {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + "/auction_one_tasktracker/{{ player.id}}";
+        var ws_path = ws_scheme + '://' + window.location.host + "/auction_one_tasktracker/{{ participant.code }}";
         var socket = new ReconnectingWebSocket(ws_path);
         // Handle messages sent by the server.
-         var $answer = $('input#answer');
+        var $answer = $('input#answer');
         var $btn_answer = $("button.answer");
 
         socket.onmessage = function (event) {

@@ -3,7 +3,7 @@
 <script>
     $(function () {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + "/RETtasktracker/{{ player.id}}";
+        var ws_path = ws_scheme + '://' + window.location.host + "/RETtasktracker/{{ participant.code}}";
         var socket = new ReconnectingWebSocket(ws_path);
         // Handle messages sent by the server.
          var $answer = $('input#answer');

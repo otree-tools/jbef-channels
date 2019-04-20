@@ -1,17 +1,21 @@
 from channels.generic.websockets import JsonWebsocketConsumer
-from double_auction.models import Constants, Player, Group
+from double_auction.models import Player, Group
 from double_auction.exceptions import NotEnoughFunds, NotEnoughItemsToSell
+from otree.models import Participant
+from otree.models_concrete import ParticipantToPlayerLookup
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 class MarketTracker(JsonWebsocketConsumer):
-    url_pattern = (r'^/market_channel/(?P<player_pk>[0-9]+)/(?P<group_pk>[0-9]+)$')
+    url_pattern = r'^/market_channel/(?P<participant_code>.+)$'
 
     def clean_kwargs(self):
-        self.player_pk = self.kwargs['player_pk']
-        self.group_pk = self.kwargs['group_pk']
+        participant = Participant.objects.get(code__exact=self.kwargs['participant_code'])
+        cur_page_index = participant._index_in_pages
+        lookup = ParticipantToPlayerLookup.objects.get(participant=participant, page_index=cur_page_index)
+        self.player_pk = lookup.player_pk
 
     def connection_groups(self, **kwargs):
         group_name = self.get_group().get_channel_group_name()
@@ -23,8 +27,8 @@ class MarketTracker(JsonWebsocketConsumer):
         return Player.objects.get(pk=self.player_pk)
 
     def get_group(self):
-        self.clean_kwargs()
-        return Group.objects.get(pk=self.group_pk)
+        player = self.get_player()
+        return Group.objects.get(pk=player.group.pk)
 
     def receive(self, text=None, bytes=None, **kwargs):
         self.clean_kwargs()
@@ -74,3 +78,6 @@ class MarketTracker(JsonWebsocketConsumer):
             msg['last_statement'] = last_statement.as_dict()
         msg['form'] = player.get_form_html()
         self.send(msg)
+
+    def connect(self, message, **kwargs):
+        logger.info(f'Connected: {self.kwargs["participant_code"]}')
