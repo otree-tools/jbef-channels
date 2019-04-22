@@ -1,6 +1,7 @@
 from channels.generic.websockets import JsonWebsocketConsumer
 from double_auction.models import Player, Group
 from double_auction.exceptions import NotEnoughFunds, NotEnoughItemsToSell
+from double_auction import channels_checker
 from otree.models import Participant
 from otree.models_concrete import ParticipantToPlayerLookup
 import logging

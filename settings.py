@@ -81,6 +81,16 @@ SESSION_CONFIGS = [
         'app_sequence': ['double_auction'],
         'sellers': 1,
         'buyers': 2,
+            units_per_seller = 4
+    units_per_buyer = 4
+    time_per_round = 300
+    multiple_unit_trading = False
+    price_max_numbers = 10
+    price_digits = 2
+    initial_quantity = 1
+    seller_cost_range = (1, 10)
+    buyer_value_range = (1, 10)
+    endowment_range = (10, 50)
     },
 ]
 

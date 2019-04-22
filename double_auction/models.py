@@ -27,7 +27,6 @@ Instructions are mostly taken from http://veconlab.econ.virginia.edu/da/da.php, 
 class Constants(BaseConstants):
     name_in_url = 'double_auction'
     players_per_group = None
-
     num_rounds = 1
     units_per_seller = 4
     units_per_buyer = 4

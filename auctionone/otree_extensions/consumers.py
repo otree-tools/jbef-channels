@@ -1,9 +1,9 @@
 from channels.generic.websockets import JsonWebsocketConsumer
 from auctionone.models import Player, Group, JobOffer
-
 from otree.models import Participant
 from otree.models_concrete import ParticipantToPlayerLookup
 import logging
+from auctionone import channels_checker
 
 logger = logging.getLogger(__name__)
 

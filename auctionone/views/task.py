@@ -4,6 +4,7 @@ from .generic import PaginatedListView
 from django.http import HttpResponse
 from django.template import loader
 
+
 class TaskList(PaginatedListView):
     url_pattern = r'^export/gift_exchange/tasks$'
     url_name = 'gift_exchange_tasks'

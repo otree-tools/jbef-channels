@@ -3,6 +3,7 @@ from realefforttask.models import Player
 from otree.models import Participant
 from otree.models_concrete import ParticipantToPlayerLookup
 import logging
+from realefforttask import channels_checker
 
 logger = logging.getLogger(__name__)
 
