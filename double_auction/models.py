@@ -28,25 +28,45 @@ class Constants(BaseConstants):
     name_in_url = 'double_auction'
     players_per_group = None
     num_rounds = 1
-    units_per_seller = 4
-    units_per_buyer = 4
-    time_per_round = 300
     multiple_unit_trading = False
     price_max_numbers = 10
     price_digits = 2
     initial_quantity = 1
-    seller_cost_range = (1, 10)
-    buyer_value_range = (1, 10)
-    endowment_range = (10, 50)
+    variable_params = ('num_sellers',
+                       'num_buyers',
+                       'units_per_seller',
+                       'units_per_buyer',
+                       'time_per_round',
+                       'multiple_unit_trading',
+                       'seller_cost_lb',
+                       'seller_cost_ub',
+                       'buyer_value_lb',
+                       'buyer_value_ub',
+                       'endowment_lb',
+                       'endowment_ub',
+                       )
 
 
 class Subsession(BaseSubsession):
     num_sellers = models.IntegerField()
     num_buyers = models.IntegerField()
+    units_per_seller = models.IntegerField()
+    units_per_buyer = models.IntegerField()
+    time_per_round = models.IntegerField()
+    multiple_unit_trading = models.BooleanField()
+    seller_cost_lb = models.FloatField()
+    seller_cost_ub = models.FloatField()
+    buyer_value_lb = models.FloatField()
+    buyer_value_ub = models.FloatField()
+    endowment_lb = models.FloatField()
+    endowment_ub = models.FloatField()
+
+    def set_config(self):
+        for k in Constants.variable_params:
+            setattr(self, k, self.session.config.get(k))
 
     def creating_session(self):
-        self.num_buyers = self.session.config.get('buyers')
-        self.num_sellers = self.session.config.get('sellers')
+        self.set_config()
         if self.session.num_participants % (self.num_buyers + self.num_sellers) != 0:
             raise Exception('Number of participants is not divisible by number of sellers and buyers')
 
@@ -308,6 +328,7 @@ class BaseStatement(BaseRecord):
 
 class Ask(BaseStatement):
     """An ask is a request of a price for which an owner is ready to sell the items available in their repository."""
+
     @classmethod
     def pre_save(cls, sender, instance, *args, **kwargs):
         items_available = Item.objects.filter(slot__owner=instance.player)
