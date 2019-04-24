@@ -2,6 +2,14 @@
 {% block title %}Info:{% endblock %}
 {% block content %}
     <table class="table-stripped table table-sm table-bordered  ">
+    <tr>
+            <td>Number of sellers:</td>
+            <td>{{ subsession.num_sellers }}</td>
+        </tr>
+        <tr>
+            <td>Number of buyers:</td>
+            <td>{{ subsession.num_buyers }}</td>
+        </tr>
         <tr>
             <td>Your role:</td>
             <td>{{ player.role|capfirst }}</td>

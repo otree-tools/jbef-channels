@@ -43,7 +43,7 @@ class Market(Page):
         c['bids'] = self.group.get_bids()
         c['repository'] = self.player.get_repo_context()
         c['contracts'] = self.player.get_contracts_queryset()
-
+        c['page_index'] = self.participant._index_in_pages
         return c
 
 

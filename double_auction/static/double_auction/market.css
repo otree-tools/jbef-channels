@@ -41,6 +41,8 @@
 
     float: left;
     line-height: 0.3em;
+     font-size: smaller;
+    white-space: nowrap;
 }
 
 .tablecol-4 > tbody > tr > td,

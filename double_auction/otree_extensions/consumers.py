@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 
 
 class MarketTracker(JsonWebsocketConsumer):
-    url_pattern = r'^/market_channel/(?P<participant_code>.+)$'
+    url_pattern = r'^/market_channel/(?P<participant_code>.+)/(?P<page_index>\d+)$'
 
     def clean_kwargs(self):
         participant = Participant.objects.get(code__exact=self.kwargs['participant_code'])
-        cur_page_index = participant._index_in_pages
+        cur_page_index = self.kwargs['page_index']
         lookup = ParticipantToPlayerLookup.objects.get(participant=participant, page_index=cur_page_index)
         self.player_pk = lookup.player_pk
 
