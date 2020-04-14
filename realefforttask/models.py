@@ -80,7 +80,7 @@ class Task(djmodels.Model):
     class Meta:
         ordering = ['-created_at']
 
-    player = djmodels.ForeignKey(to=Player, related_name='tasks')
+    player = djmodels.ForeignKey(to=Player, related_name='tasks', on_delete=djmodels.CASCADE)
     body = models.LongStringField()
     html_body = models.LongStringField()
     correct_answer = models.StringField()

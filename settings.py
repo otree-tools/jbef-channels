@@ -6,10 +6,10 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 EXTENSION_APPS = [
-    'minimum',
-    'auctionone',
+    # 'minimum',
+    # 'auctionone',
     'realefforttask',
-    'double_auction'
+    # 'double_auction'
 ]
 
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
@@ -22,13 +22,13 @@ SESSION_CONFIG_DEFAULTS = {
 }
 
 SESSION_CONFIGS = [
-    {
-        'name': 'minimum_ret',
-        'display_name': 'Simple RET example',
-        'num_demo_participants': 1,
-        'app_sequence': ['minimum'],
-
-    },
+    # {
+    #     'name': 'minimum_ret',
+    #     'display_name': 'Simple RET example',
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['minimum'],
+    #
+    # },
     {
         'name': 'realefforttask',
         'display_name': 'Real Effort Task - 2 matrices',
@@ -37,61 +37,61 @@ SESSION_CONFIGS = [
         'task': 'TwoMatrices',
         'task_params': {'difficulty': 5},
     },
-    {
-        'name': 'realefforttask2',
-        'display_name': 'Real Effort Task - sum of N numbers',
-        'num_demo_participants': 1,
-        'app_sequence': ['realefforttask'],
-        'task': 'SumNumbers',
-        'task_params': {'num_digits': 4,
-                        'digits_range': [50, 99]},
-    },
-
-    {
-        'name': 'realefforttask3',
-        'display_name': 'Real Effort Task - count 0s',
-        'num_demo_participants': 1,
-        'app_sequence': ['realefforttask'],
-        'task': 'CountZeroes',
-        'task_params': {'num_rows': 5,
-                        'num_columns': 10,
-                        # 'value_to_count': 1,
-                        # 'selection_set': [0, 1, 2],
-                        },
-    },
-    {
-        'name': 'realefforttask4',
-        'display_name': 'Real Effort Task - Decoding',
-        'num_demo_participants': 1,
-        'app_sequence': ['realefforttask'],
-        'task': 'Decoding',
-        'task_params': {'dict_length': 10, 'task_len': 5},
-    },
-    {
-        'name': 'auctionone',
-        'display_name': 'One sided auction and RET',
-        'num_demo_participants': 3,
-        'app_sequence': ['auctionone'],
-
-    },
-    {
-        'name': 'double_auction',
-        'display_name': 'Double auction',
-        'num_demo_participants': 3,
-        'app_sequence': ['double_auction'],
-        'num_sellers': 1,
-        'num_buyers': 2,
-        'units_per_seller': 4,
-        'units_per_buyer': 4,
-        'time_per_round': 300,
-        'multiple_unit_trading': False,
-        'seller_cost_lb': 1,
-        'seller_cost_ub': 10,
-        'buyer_value_lb': 1,
-        'buyer_value_ub': 10,
-        'endowment_lb': 10,
-        'endowment_ub': 50,
-    },
+    # {
+    #     'name': 'realefforttask2',
+    #     'display_name': 'Real Effort Task - sum of N numbers',
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['realefforttask'],
+    #     'task': 'SumNumbers',
+    #     'task_params': {'num_digits': 4,
+    #                     'digits_range': [50, 99]},
+    # },
+    #
+    # {
+    #     'name': 'realefforttask3',
+    #     'display_name': 'Real Effort Task - count 0s',
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['realefforttask'],
+    #     'task': 'CountZeroes',
+    #     'task_params': {'num_rows': 5,
+    #                     'num_columns': 10,
+    #                     # 'value_to_count': 1,
+    #                     # 'selection_set': [0, 1, 2],
+    #                     },
+    # },
+    # {
+    #     'name': 'realefforttask4',
+    #     'display_name': 'Real Effort Task - Decoding',
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['realefforttask'],
+    #     'task': 'Decoding',
+    #     'task_params': {'dict_length': 10, 'task_len': 5},
+    # },
+    # {
+    #     'name': 'auctionone',
+    #     'display_name': 'One sided auction and RET',
+    #     'num_demo_participants': 3,
+    #     'app_sequence': ['auctionone'],
+    #
+    # },
+    # {
+    #     'name': 'double_auction',
+    #     'display_name': 'Double auction',
+    #     'num_demo_participants': 3,
+    #     'app_sequence': ['double_auction'],
+    #     'num_sellers': 1,
+    #     'num_buyers': 2,
+    #     'units_per_seller': 4,
+    #     'units_per_buyer': 4,
+    #     'time_per_round': 300,
+    #     'multiple_unit_trading': False,
+    #     'seller_cost_lb': 1,
+    #     'seller_cost_ub': 10,
+    #     'buyer_value_lb': 1,
+    #     'buyer_value_ub': 10,
+    #     'endowment_lb': 10,
+    #     'endowment_ub': 50,
+    # },
 ]
 
 # ISO-639 code
