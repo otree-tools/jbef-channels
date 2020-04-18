@@ -59,14 +59,14 @@ SESSION_CONFIGS = [
     #                     # 'selection_set': [0, 1, 2],
     #                     },
     # },
-    # {
-    #     'name': 'realefforttask4',
-    #     'display_name': 'Real Effort Task - Decoding',
-    #     'num_demo_participants': 1,
-    #     'app_sequence': ['realefforttask'],
-    #     'task': 'Decoding',
-    #     'task_params': {'dict_length': 10, 'task_len': 5},
-    # },
+    {
+        'name': 'realefforttask4',
+        'display_name': 'Real Effort Task - Decoding',
+        'num_demo_participants': 1,
+        'app_sequence': ['realefforttask'],
+        'task': 'Decoding',
+        'task_params': {'dict_length': 10, 'task_len': 5},
+    },
     # {
     #     'name': 'auctionone',
     #     'display_name': 'One sided auction and RET',
